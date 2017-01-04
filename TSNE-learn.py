@@ -57,7 +57,8 @@ X = np.vstack([digits.data[digits.target==i]
 y = np.hstack([digits.target[digits.target==i]
                for i in range(10)])
 
-digits_proj = TSNE(random_state=RS).fit_transform(X)
+digits_proj = TSNE(n_components=2,random_state=RS).fit_transform(X)
+print(digits_proj)
 
 def scatter(x, colors):
     # We choose a color palette with seaborn.
