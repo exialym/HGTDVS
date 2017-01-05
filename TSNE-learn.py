@@ -34,8 +34,8 @@ sns.set_context("notebook", font_scale=1.5,
                 rc={"lines.linewidth": 2.5})
 
 # We'll generate an animation with matplotlib and moviepy.
-# from moviepy.video.io.bindings import mplfig_to_npimage
-# import moviepy.editor as mpy
+from moviepy.video.io.bindings import mplfig_to_npimage
+import moviepy.editor as mpy
 
 # 手写数据集
 digits = load_digits()
@@ -133,4 +133,5 @@ plt.imshow(P_binary_s[::10, ::10], interpolation='none', cmap=pal)
 plt.axis('off')
 plt.title("$p_{j|i}$ (variable $\sigma$)", fontdict={'fontsize': 16})
 plt.savefig('similarity-generated.png', dpi=120)
+
 
