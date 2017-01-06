@@ -140,6 +140,8 @@ def scatter(x, colors):
 """
 hack SKLearn里的梯度下降算法，
 记录下梯度下降的每一步，绘制动画
+绘制映射点的变化
+绘制概率矩阵的变化
 """
 # 将每一步计算后所有点的坐标保存在这个数组里
 positions = []
@@ -276,7 +278,7 @@ X_iter = np.dstack(position.reshape(-1, 2)
 print(X_iter)
 print(X_iter.shape)
 
-# 将每一步的结果渲染为视频
+# 将每一步的点坐标结果渲染为视频
 f, ax, sc, txts = scatter(X_iter[..., -1], y)
 
 
@@ -290,7 +292,34 @@ def make_frame_mpl(t):
         txt.set_y(ytext)
     return mplfig_to_npimage(f)
 
-animation = mpy.VideoClip(make_frame_mpl,
-                          duration=X_iter.shape[2]/40.)
-animation.write_videofile("TSNE_step.mp4", fps=25, codec="mpeg4", audio=False)
+animation = mpy.VideoClip(make_frame_mpl, duration=X_iter.shape[2]/40.)
+animation.write_videofile("TSNE_point_step.mp4", fps=25, codec="mpeg4", audio=False)
+
+# 绘制概率变化
+n = 1. / (pdist(X_iter[..., -1], "sqeuclidean") + 1)
+print(n.shape)
+
+Q = n / (2.0 * np.sum(n))
+Q = squareform(Q)
+
+f = plt.figure(figsize=(6, 6))
+pal = sns.light_palette("blue", as_cmap=True)
+ax = plt.subplot(aspect='equal')
+im = ax.imshow(Q, interpolation='none', cmap=pal)
+plt.axis('tight')
+plt.axis('off')
+
+
+def make_frame_mpl(t):
+    i = int(t*40)
+    n = 1. / (pdist(X_iter[..., i], "sqeuclidean") + 1)
+    Q = n / (2.0 * np.sum(n))
+    Q = squareform(Q)
+    im.set_data(Q)
+    return mplfig_to_npimage(f)
+
+animation = mpy.VideoClip(make_frame_mpl, duration=X_iter.shape[2]/40.)
+animation.write_videofile("TSNE_probability_step.mp4", fps=25, codec="mpeg4", audio=False)
+
+
 
