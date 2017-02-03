@@ -319,7 +319,7 @@ def make_frame_mpl(t):
     return mplfig_to_npimage(f)
 
 animation = mpy.VideoClip(make_frame_mpl, duration=X_iter.shape[2]/40.)
-animation.write_videofile("TSNE_probability_step.mp4", fps=25, codec="mpeg4", audio=False)
+animation.write_videofile("TSNE_probability_step.mp4", fps=30, codec="mpeg4", audio=False)
 
 
 
