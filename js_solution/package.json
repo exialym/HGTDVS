@@ -1,14 +1,23 @@
 {
   "name": "hgtdvs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "High-dimensional Geographical & Timing Data Visualization System",
+  "main": "entry.js",
   "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "dev": "webpack-dev-server --inline --history-api-fallback",
+    "prod": "npm run build && node server.bundle.js",
+    "build:client": "webpack",
+    "build:server": "webpack --config webpack.server.config.js",
+    "build": "npm run build:client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "exialym",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^2.2.1"
+    "css-loader": "^0.26.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
   }
 }
