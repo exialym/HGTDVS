@@ -1,7 +1,7 @@
 /**
  * Created by exialym on 2017/2/6.
  */
-require('./main.css');
+require('./public/main.css');
 var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
 
@@ -119,7 +119,7 @@ function threeStart() {
   initScene();
   initLight();
   initObject();
-  loop();
+  //loop();
   renderer.clear();
   renderer.render(scene,camera);
 }
