@@ -96,13 +96,30 @@ function initObject() {
   }
 }
 
+/*
+ *旋转
+ */
+var t=0;
+function loop(){
+  t++;
+  renderer.clear();
+  cube[0].rotation.set(t/100,0,0);
+  cube[1].rotation.set(0,t/100,0);
+  cube[2].rotation.set(0,0,t/100);
+  /*camera.position.x = 400*Math.cos(t/100);
+   camera.position.y = 400*Math.sin(t/200);
+   camera.position.z = 50*Math.cos(t/100);*/
+  camera.lookAt( {x:0, y:0, z:0 } );
+  renderer.render(scene,camera);
+  window.requestAnimationFrame(loop);
+}
 function threeStart() {
   initThree();
   initCamera();
   initScene();
   initLight();
   initObject();
-  //loop();
+  loop();
   renderer.clear();
   renderer.render(scene,camera);
 }
