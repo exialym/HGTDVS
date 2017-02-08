@@ -12,7 +12,9 @@ var renderer, scene, camera;
 
 var particles, uniforms;
 
-var PARTICLE_SIZE = 20;
+var PARTICLE_SIZE = 10;
+var colorNormal = new THREE.Color(0x0088ff);
+var colorFloated = new THREE.Color(0x8800ff);
 
 var raycaster, intersects;
 var mouse, INTERSECTED;
@@ -31,12 +33,7 @@ function init() {
 
   //
 
-
-
-
-
-
-  var particleNum = 500;
+  var particleNum = 5000;
 
   var geometry = new THREE.BufferGeometry();
 
@@ -44,7 +41,7 @@ function init() {
   var colors = new Float32Array( particleNum * 3 );
   var sizes = new Float32Array( particleNum );
 
-  var color = new THREE.Color();
+
 
   var n = 100, n2 = n / 2; // particles spread in the cube
 
@@ -60,39 +57,35 @@ function init() {
     positions[ i + 1 ] = y;
     positions[ i + 2 ] = z;
 
-    // colors
+    colors[ i ]     = colorNormal.r;
+    colors[ i + 1 ] = colorNormal.g;
+    colors[ i + 2 ] = colorNormal.b;
 
-    var vx = ( x / n ) + 0.5;
-    var vy = ( y / n ) + 0.5;
-    var vz = ( z / n ) + 0.5;
-
-    color.setRGB( vx, vy, vz );
-
-    colors[ i ]     = color.r;
-    colors[ i + 1 ] = color.g;
-    colors[ i + 2 ] = color.b;
-
-    sizes[ i ] = PARTICLE_SIZE * 0.5;
+    sizes[ i ] = PARTICLE_SIZE * 1.5;
 
   }
   geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-  geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+  geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
   geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
 
+  geometry.computeBoundingSphere();
+
+  var sprite = new THREE.TextureLoader().load( require("./public/img/disc.png") );
+  var material = new THREE.PointsMaterial( { size:PARTICLE_SIZE, vertexColors: THREE.VertexColors, sizeAttenuation: false, map: sprite, alphaTest: 0.5, transparent: true } );
+
+
+  // var material = new THREE.ShaderMaterial( {
   //
-
-  var material = new THREE.ShaderMaterial( {
-
-    uniforms: {
-      color:   { value: new THREE.Color( 0xffffff ) },
-      texture: { value: new THREE.TextureLoader().load( require("./public/img/disc.png") ) }
-    },
-    vertexShader: document.getElementById( 'vertexshader' ).textContent,
-    fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-
-    alphaTest: 0.9
-
-  } );
+  //   uniforms: {
+  //     color:   { value: new THREE.Color( 0xffffff ) },
+  //     texture: { value: new THREE.TextureLoader().load( require("./public/img/disc.png") ) }
+  //   },
+  //   vertexShader: document.getElementById( 'vertexshader' ).textContent,
+  //   fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+  //
+  //   alphaTest: 0.9
+  //
+  // } );
 
   //
 
@@ -160,19 +153,25 @@ function render() {
 
     if ( INTERSECTED != intersects[ 0 ].index ) {
 
-      attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE;
+      attributes.color.array[ INTERSECTED*3 ] = colorNormal.r;
+      attributes.color.array[ INTERSECTED*3+1 ] = colorNormal.g;
+      attributes.color.array[ INTERSECTED*3+2 ] = colorNormal.b;
 
       INTERSECTED = intersects[ 0 ].index;
 
-      attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE * 1.25;
-      attributes.size.needsUpdate = true;
+      attributes.color.array[ INTERSECTED*3 ] = colorFloated.r;
+      attributes.color.array[ INTERSECTED*3+1 ] = colorFloated.g;
+      attributes.color.array[ INTERSECTED*3+2 ] = colorFloated.b;
+      attributes.color.needsUpdate = true;
 
     }
 
   } else if ( INTERSECTED !== null ) {
 
-    attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE;
-    attributes.size.needsUpdate = true;
+    attributes.color.array[ INTERSECTED*3 ] = colorNormal.r;
+    attributes.color.array[ INTERSECTED*3+1 ] = colorNormal.g;
+    attributes.color.array[ INTERSECTED*3+2 ] = colorNormal.b;
+    attributes.color.needsUpdate = true;
     INTERSECTED = null;
 
   }
