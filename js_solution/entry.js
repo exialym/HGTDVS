@@ -8,16 +8,17 @@ var THREE = require('./lib/three/three');
 
 //if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var renderer, scene, camera;
+var renderer, scene, camera, attributes;
 
 var particles, uniforms;
 
 var PARTICLE_SIZE = 10;
 var colorNormal = new THREE.Color(0x0088ff);
 var colorFloated = new THREE.Color(0x8800ff);
+var colorChosen = new THREE.Color(0xffffff);
 
 var raycaster, intersects;
-var mouse, INTERSECTED;
+var mouse, INTERSECTED, chosenPointIndex;
 
 init();
 animate();
@@ -108,6 +109,29 @@ function init() {
 
   window.addEventListener( 'resize', onWindowResize, false );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  container.addEventListener('click', onContainerClick, false );
+
+}
+
+function onContainerClick(event) {
+  event.preventDefault();
+  if (chosenPointIndex !== INTERSECTED) {
+    attributes.color.array[ chosenPointIndex*3 ] = colorNormal.r;
+    attributes.color.array[ chosenPointIndex*3+1 ] = colorNormal.g;
+    attributes.color.array[ chosenPointIndex*3+2 ] = colorNormal.b;
+    attributes.color.needsUpdate = true;
+    if (INTERSECTED !== null) {
+      attributes.color.array[ INTERSECTED*3 ] = colorChosen.r;
+      attributes.color.array[ INTERSECTED*3+1 ] = colorChosen.g;
+      attributes.color.array[ INTERSECTED*3+2 ] = colorChosen.b;
+      attributes.color.needsUpdate = true;
+      chosenPointIndex = INTERSECTED;
+    } else {
+      chosenPointIndex = null;
+    }
+  }
+  console.log(INTERSECTED);
+  console.log(chosenPointIndex);
 
 }
 
@@ -139,38 +163,52 @@ function animate() {
 
 function render() {
 
-  particles.rotation.x += 0.0005;
-  particles.rotation.y += 0.001;
+  // particles.rotation.x += 0.0005;
+  // particles.rotation.y += 0.001;
 
   var geometry = particles.geometry;
-  var attributes = geometry.attributes;
+  attributes = geometry.attributes;
 
   raycaster.setFromCamera( mouse, camera );
 
   intersects = raycaster.intersectObject( particles );
-
+  //如果鼠标下有点
   if ( intersects.length > 0 ) {
-
+    //如果鼠标下点有变化
     if ( INTERSECTED != intersects[ 0 ].index ) {
+      //检查刚才鼠标下是否有点
+      if ( INTERSECTED !== null ) {
+        //检查上一个点是不是被选中的点，不是回归正常色，是回归选中色
+        if (chosenPointIndex !== INTERSECTED) {
+          attributes.color.array[INTERSECTED * 3] = colorNormal.r;
+          attributes.color.array[INTERSECTED * 3 + 1] = colorNormal.g;
+          attributes.color.array[INTERSECTED * 3 + 2] = colorNormal.b;
+        } else  {
+          attributes.color.array[INTERSECTED * 3] = colorChosen.r;
+          attributes.color.array[INTERSECTED * 3 + 1] = colorChosen.g;
+          attributes.color.array[INTERSECTED * 3 + 2] = colorChosen.b;
+        }
+      }
 
-      attributes.color.array[ INTERSECTED*3 ] = colorNormal.r;
-      attributes.color.array[ INTERSECTED*3+1 ] = colorNormal.g;
-      attributes.color.array[ INTERSECTED*3+2 ] = colorNormal.b;
-
+      //指向当前点，变为浮动色
       INTERSECTED = intersects[ 0 ].index;
-
       attributes.color.array[ INTERSECTED*3 ] = colorFloated.r;
       attributes.color.array[ INTERSECTED*3+1 ] = colorFloated.g;
       attributes.color.array[ INTERSECTED*3+2 ] = colorFloated.b;
       attributes.color.needsUpdate = true;
-
     }
-
+  //当前鼠标下没有点，但刚才有
   } else if ( INTERSECTED !== null ) {
 
-    attributes.color.array[ INTERSECTED*3 ] = colorNormal.r;
-    attributes.color.array[ INTERSECTED*3+1 ] = colorNormal.g;
-    attributes.color.array[ INTERSECTED*3+2 ] = colorNormal.b;
+    if (chosenPointIndex !== INTERSECTED) {
+      attributes.color.array[INTERSECTED * 3] = colorNormal.r;
+      attributes.color.array[INTERSECTED * 3 + 1] = colorNormal.g;
+      attributes.color.array[INTERSECTED * 3 + 2] = colorNormal.b;
+    } else {
+      attributes.color.array[INTERSECTED * 3] = colorChosen.r;
+      attributes.color.array[INTERSECTED * 3 + 1] = colorChosen.g;
+      attributes.color.array[INTERSECTED * 3 + 2] = colorChosen.b;
+    }
     attributes.color.needsUpdate = true;
     INTERSECTED = null;
 
