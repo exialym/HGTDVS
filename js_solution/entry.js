@@ -5,122 +5,178 @@ require('./public/main.css');
 var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
 
-var $webgl = $('#webgl');
 
-function initDisplay() {
-  $webgl.width(window.innerWidth).height(window.innerHeight);
-}
+//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-initDisplay();
-$(window).resize(function() {
-  initDisplay();
-});
+var renderer, scene, camera;
 
-//初始化渲染器
-var webgl = document.getElementById('webgl');
-var webglWidth = webgl.clientWidth;
-var webglHeight = webgl.clientHeight;
-var renderer;//定义一个全局变量renderer
-function initThree(){
-  //生成渲染器对象（属性：抗锯齿效果为设置有效）
-  renderer=new THREE.WebGLRenderer({
-    antialias:true,//antialias:true/false是否开启反锯齿
-    precision:"highp",//precision:highp/mediump/lowp着色精度选择
-    alpha:true,//alpha:true/false是否可以设置背景色透明
-    premultipliedAlpha:false,//?
-    stencil:false,//?
-    preserveDrawingBuffer:true,//preserveDrawingBuffer:true/false是否保存绘图缓冲
-    maxLights:1//maxLights:最大灯光数
-  });
-  //指定渲染器的高宽（和画布框大小一致）
-  renderer.setSize(webglWidth, webglHeight );
-  //将创建的canvas元素（此处的canvas元素为three.js创建）添加到html文档当中
-  webgl.appendChild(renderer.domElement);
-  //设置渲染器的清除色
-}
+var particles, uniforms;
 
-//初始化相机
-var camera;
-function initCamera() {
-  camera = new THREE.PerspectiveCamera(45,webglWidth/webglHeight,1,10000);
-  //此处为设置透视投影的相机，默认情况下，相机的上方向为Y轴，右方向为X轴，沿着Z轴垂直朝里（视野角：fov； 纵横比：aspect； 相机离视最近的距离：near； 相机离视体积最远距离：far）
-  camera.position.x = 400;//设置相机的位置坐标
-  camera.position.y = 0;
-  camera.position.z = 0;
-  //设置相机的上为z轴方向
-  camera.up.x = 0;
-  camera.up.y = 0;
-  camera.up.z = 1;
-  //设置视野的中心坐标
-  camera.lookAt({x:0, y:0, z:0});
-}
+var PARTICLE_SIZE = 20;
 
+var raycaster, intersects;
+var mouse, INTERSECTED;
 
-/*
- *设置场景，所有的元素只有在添加到场景当中之后才能够生效
- */
-var scene;
-function initScene() {
+init();
+animate();
+
+function init() {
+
+  var container = document.getElementById( 'webgl' );
+
   scene = new THREE.Scene();
-}
 
-/*
- *设置光源
- */
-var light;
-function initLight() {
-  light = new THREE.DirectionalLight(0x0000FF,1.0,0);//设置平行光DirectionalLight
-  light.position.set(50,50,50);//光源向量，即光源的位置
-  //还可以添加多个光源，多行注释中即为添加2、3号光源
-  /*light2 = new THREE.DirectionalLight(0xFF00CC,1.0,0);
-   light2.position.set(0,50,0);
-   light3 = new THREE.DirectionalLight(0x0000CC,1.0,0);
-   light3.position.set(50,0,0);*/
-  scene.add(light);//追加光源到场景
-  /*scene.add(light2);
-   scene.add(light3);*/
-}
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+  camera.position.z = 250;
 
-/*
- *设置物体
- */
-var cube=Array();
-function initObject() {
-  for(var i=0;i<4;i++){
-    cube[i]=new THREE.Mesh(//mesh是three.js的一个类
-      new THREE.CubeGeometry(50,50,50),//形状 (宽 高 深度)
-      new THREE.MeshLambertMaterial({color:0x0000FF})//材质
-    );
-    scene.add(cube[i]);
-    cube[i].position.set(0,-120+80*i,0);
+  //
+
+
+
+
+
+
+  var particleNum = 500;
+
+  var geometry = new THREE.BufferGeometry();
+
+  var positions = new Float32Array( particleNum * 3 );
+  var colors = new Float32Array( particleNum * 3 );
+  var sizes = new Float32Array( particleNum );
+
+  var color = new THREE.Color();
+
+  var n = 100, n2 = n / 2; // particles spread in the cube
+
+  for ( var i = 0; i < positions.length; i += 3 ) {
+
+    // positions
+
+    var x = Math.random() * n - n2;
+    var y = Math.random() * n - n2;
+    var z = Math.random() * n - n2;
+
+    positions[ i ]     = x;
+    positions[ i + 1 ] = y;
+    positions[ i + 2 ] = z;
+
+    // colors
+
+    var vx = ( x / n ) + 0.5;
+    var vy = ( y / n ) + 0.5;
+    var vz = ( z / n ) + 0.5;
+
+    color.setRGB( vx, vy, vz );
+
+    colors[ i ]     = color.r;
+    colors[ i + 1 ] = color.g;
+    colors[ i + 2 ] = color.b;
+
+    sizes[ i ] = PARTICLE_SIZE * 0.5;
+
   }
+  geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+  geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+  geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+
+  //
+
+  var material = new THREE.ShaderMaterial( {
+
+    uniforms: {
+      color:   { value: new THREE.Color( 0xffffff ) },
+      texture: { value: new THREE.TextureLoader().load( require("./public/img/disc.png") ) }
+    },
+    vertexShader: document.getElementById( 'vertexshader' ).textContent,
+    fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+
+    alphaTest: 0.9
+
+  } );
+
+  //
+
+  particles = new THREE.Points( geometry, material );
+  scene.add( particles );
+
+  //
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( renderer.domElement );
+
+  //
+
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
+
+  //
+
+  window.addEventListener( 'resize', onWindowResize, false );
+  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
 }
 
-/*
- *旋转
- */
-var t=0;
-function loop(){
-  t++;
-  renderer.clear();
-  cube[0].rotation.set(t/100,0,0);
-  cube[1].rotation.set(0,t/100,0);
-  cube[2].rotation.set(0,0,t/100);
-  /*camera.position.x = 400*Math.cos(t/100);
-   camera.position.y = 400*Math.sin(t/200);
-   camera.position.z = 50*Math.cos(t/100);*/
-  camera.lookAt( {x:0, y:0, z:0 } );
-  renderer.render(scene,camera);
-  window.requestAnimationFrame(loop);
+function onDocumentMouseMove( event ) {
+
+  event.preventDefault();
+
+  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
 }
-function threeStart() {
-  initThree();
-  initCamera();
-  initScene();
-  initLight();
-  initObject();
-  //loop();
-  renderer.clear();
-  renderer.render(scene,camera);
+
+function onWindowResize() {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+
 }
-threeStart();
+
+function animate() {
+
+  requestAnimationFrame( animate );
+
+  render();
+
+}
+
+function render() {
+
+  particles.rotation.x += 0.0005;
+  particles.rotation.y += 0.001;
+
+  var geometry = particles.geometry;
+  var attributes = geometry.attributes;
+
+  raycaster.setFromCamera( mouse, camera );
+
+  intersects = raycaster.intersectObject( particles );
+
+  if ( intersects.length > 0 ) {
+
+    if ( INTERSECTED != intersects[ 0 ].index ) {
+
+      attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE;
+
+      INTERSECTED = intersects[ 0 ].index;
+
+      attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE * 1.25;
+      attributes.size.needsUpdate = true;
+
+    }
+
+  } else if ( INTERSECTED !== null ) {
+
+    attributes.size.array[ INTERSECTED ] = PARTICLE_SIZE;
+    attributes.size.needsUpdate = true;
+    INTERSECTED = null;
+
+  }
+
+  renderer.render( scene, camera );
+
+}
