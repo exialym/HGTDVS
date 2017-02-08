@@ -4,11 +4,12 @@
 require('./public/main.css');
 var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
+require('./lib/three/TrackballControls')
 
 
 //if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var renderer, scene, camera, attributes;
+var renderer, scene, camera, controls, attributes;
 
 var particles, uniforms;
 
@@ -34,13 +35,24 @@ function init() {
 
   //
 
+  controls = new THREE.TrackballControls( camera );
+  controls.rotateSpeed = 1.0;
+  controls.zoomSpeed = 1.2;
+  controls.panSpeed = 0.8;
+  controls.noZoom = false;
+  controls.noPan = false;
+  controls.staticMoving = true;
+  controls.dynamicDampingFactor = 0.3;
+
+  //
+
   var particleNum = 5000;
 
   var geometry = new THREE.BufferGeometry();
 
   var positions = new Float32Array( particleNum * 3 );
   var colors = new Float32Array( particleNum * 3 );
-  var sizes = new Float32Array( particleNum );
+  //var sizes = new Float32Array( particleNum );
 
 
 
@@ -62,36 +74,30 @@ function init() {
     colors[ i + 1 ] = colorNormal.g;
     colors[ i + 2 ] = colorNormal.b;
 
-    sizes[ i ] = PARTICLE_SIZE * 1.5;
+    //sizes[ i ] = PARTICLE_SIZE * 1.5;
 
   }
   geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
   geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
-  geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+  //geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
 
   geometry.computeBoundingSphere();
 
   var sprite = new THREE.TextureLoader().load( require("./public/img/disc.png") );
-  var material = new THREE.PointsMaterial( { size:PARTICLE_SIZE, vertexColors: THREE.VertexColors, sizeAttenuation: false, map: sprite, alphaTest: 0.5, transparent: true } );
-
-
-  // var material = new THREE.ShaderMaterial( {
-  //
-  //   uniforms: {
-  //     color:   { value: new THREE.Color( 0xffffff ) },
-  //     texture: { value: new THREE.TextureLoader().load( require("./public/img/disc.png") ) }
-  //   },
-  //   vertexShader: document.getElementById( 'vertexshader' ).textContent,
-  //   fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
-  //
-  //   alphaTest: 0.9
-  //
-  // } );
-
-  //
-
+  var material = new THREE.PointsMaterial({
+    size:PARTICLE_SIZE,
+    vertexColors: THREE.VertexColors,
+    sizeAttenuation: false,
+    map: sprite,
+    alphaTest: 0.5,
+    transparent: true
+  });
   particles = new THREE.Points( geometry, material );
   scene.add( particles );
+
+  //
+  scene.add( new THREE.AxisHelper( 20 ) );
+
 
   //
 
@@ -213,7 +219,7 @@ function render() {
     INTERSECTED = null;
 
   }
-
+  controls.update();
   renderer.render( scene, camera );
 
 }
