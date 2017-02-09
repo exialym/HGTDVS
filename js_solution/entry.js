@@ -25,6 +25,7 @@ var relatedPointsDistance = Infinity;
 
 var raycaster, intersects;
 var mouse, INTERSECTED, chosenPoint, preChooseFlag;
+var relatedPointIndex = [];
 
 init();
 animate();
@@ -133,8 +134,9 @@ function init() {
 
 function onContainerMouseDown(event) {
   event.preventDefault();
+  //如果点击地方不是被选中的点
   if (chosenPoint !== INTERSECTED) {
-
+    //点击的地方是个点时缓存这个点
     if (INTERSECTED) {
       preChooseFlag = INTERSECTED;
     } else {
@@ -146,23 +148,17 @@ function onContainerMouseDown(event) {
 }
 function onContainerMouseUp(event) {
   event.preventDefault();
+  //如果鼠标落下时是一个有效的点
   if (preChooseFlag) {
-
+    //如果鼠标抬起时和落下时鼠标下的点一样
     if (INTERSECTED && INTERSECTED.index === preChooseFlag.index) {
+      //如果有选中的点，取消
       if (chosenPoint) {
         attributes.color.array[ chosenPoint.index*3 ] = colorNormal.r;
         attributes.color.array[ chosenPoint.index*3+1 ] = colorNormal.g;
         attributes.color.array[ chosenPoint.index*3+2 ] = colorNormal.b;
       }
-
-      attributes.color.array[ INTERSECTED.index*3 ] = colorChosen.r;
-      attributes.color.array[ INTERSECTED.index*3+1 ] = colorChosen.g;
-      attributes.color.array[ INTERSECTED.index*3+2 ] = colorChosen.b;
-      displayNearest({
-        x:attributes.position.array[ INTERSECTED.index*3 ],
-        y:attributes.position.array[ INTERSECTED.index*3+1 ],
-        z:attributes.position.array[ INTERSECTED.index*3+2 ],
-      });
+      displayNearest(INTERSECTED);
       attributes.color.needsUpdate = true;
       chosenPoint = INTERSECTED;
     } else {
@@ -197,15 +193,27 @@ function animate() {
   render();
 }
 
-function displayNearest(position) {
-
+function displayNearest(point) {
+  var pos = [
+    attributes.position.array[ point.index*3 ],
+    attributes.position.array[ point.index*3+1 ],
+    attributes.position.array[ point.index*3+2 ]
+  ];
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
-  var imagePositionsInRange = kdtree.nearest([position.x, position.y, position.z], relatedPointsNum, relatedPointsDistance);
-
+  var imagePositionsInRange = kdtree.nearest(pos, relatedPointsNum, relatedPointsDistance);
+  for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+    attributes.color.array[relatedPointIndex[i] * 3] = colorNormal.r;
+    attributes.color.array[relatedPointIndex[i] * 3 + 1] = colorNormal.g;
+    attributes.color.array[relatedPointIndex[i] * 3 + 2] = colorNormal.b;
+  }
+  relatedPointIndex = [];
+  attributes.color.array[ point.index*3 ] = colorChosen.r;
+  attributes.color.array[ point.index*3+1 ] = colorChosen.g;
+  attributes.color.array[ point.index*3+2 ] = colorChosen.b;
   for ( var i = 0, il = imagePositionsInRange.length; i < il; i ++ ) {
     var object = imagePositionsInRange[i];
     var objectIndex = object[0].pos;
-
+    relatedPointIndex.push(objectIndex);
     attributes.color.array[ objectIndex*3 ] = colorRelated.r;
     attributes.color.array[ objectIndex*3+1 ] = colorRelated.g;
     attributes.color.array[ objectIndex*3+2 ] = colorRelated.b;

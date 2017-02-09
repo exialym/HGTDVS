@@ -36,8 +36,8 @@
       <file leaf-file-name="entry.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="256" column="72" lean-forward="true" selection-start-line="256" selection-start-column="72" selection-end-line="256" selection-end-column="72" />
+            <state relative-caret-position="882">
+              <caret line="274" column="3" lean-forward="true" selection-start-line="274" selection-start-column="3" selection-end-line="274" selection-end-column="3" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -141,6 +141,7 @@
     <findStrings>
       <find>module.</find>
       <find>PARTICLE_SIZE</find>
+      <find>chosenPointIndex</find>
     </findStrings>
     <replaceStrings>
       <replace>chosenPoint</replace>
@@ -376,12 +377,12 @@
       <workItem from="1486522204085" duration="9865000" />
       <workItem from="1486562151039" duration="2449000" />
       <workItem from="1486610687329" duration="427000" />
-      <workItem from="1486611189329" duration="7895000" />
+      <workItem from="1486611189329" duration="8821000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33393000" />
+    <option name="totallyTimeSpent" value="34319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
@@ -808,8 +809,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/entry.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="256" column="72" lean-forward="true" selection-start-line="256" selection-start-column="72" selection-end-line="256" selection-end-column="72" />
+        <state relative-caret-position="882">
+          <caret line="274" column="3" lean-forward="true" selection-start-line="274" selection-start-column="3" selection-end-line="274" selection-end-column="3" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
