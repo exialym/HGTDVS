@@ -24,7 +24,7 @@ var relatedPointsNum = 100;
 var relatedPointsDistance = Infinity;
 
 var raycaster, intersects;
-var mouse, INTERSECTED, chosenPointIndex, preChooseFlag;
+var mouse, INTERSECTED, chosenPoint, preChooseFlag;
 
 init();
 animate();
@@ -133,37 +133,44 @@ function init() {
 
 function onContainerMouseDown(event) {
   event.preventDefault();
-  if (chosenPointIndex !== INTERSECTED) {
+  if (chosenPoint !== INTERSECTED) {
 
-    if (INTERSECTED !== null) {
+    if (INTERSECTED) {
       preChooseFlag = INTERSECTED;
     } else {
-      //chosenPointIndex = null;
+      //chosenPoint = undifined;
     }
   }
   console.log(INTERSECTED);
-  console.log(chosenPointIndex);
+  console.log(chosenPoint);
 }
 function onContainerMouseUp(event) {
   event.preventDefault();
-  if (preChooseFlag !== null) {
+  if (preChooseFlag) {
 
-    if (INTERSECTED === preChooseFlag) {
-      attributes.color.array[ chosenPointIndex*3 ] = colorNormal.r;
-      attributes.color.array[ chosenPointIndex*3+1 ] = colorNormal.g;
-      attributes.color.array[ chosenPointIndex*3+2 ] = colorNormal.b;
-      attributes.color.array[ INTERSECTED*3 ] = colorChosen.r;
-      attributes.color.array[ INTERSECTED*3+1 ] = colorChosen.g;
-      attributes.color.array[ INTERSECTED*3+2 ] = colorChosen.b;
-      displayNearest({x:0,y:0,z:0});
+    if (INTERSECTED && INTERSECTED.index === preChooseFlag.index) {
+      if (chosenPoint) {
+        attributes.color.array[ chosenPoint.index*3 ] = colorNormal.r;
+        attributes.color.array[ chosenPoint.index*3+1 ] = colorNormal.g;
+        attributes.color.array[ chosenPoint.index*3+2 ] = colorNormal.b;
+      }
+
+      attributes.color.array[ INTERSECTED.index*3 ] = colorChosen.r;
+      attributes.color.array[ INTERSECTED.index*3+1 ] = colorChosen.g;
+      attributes.color.array[ INTERSECTED.index*3+2 ] = colorChosen.b;
+      displayNearest({
+        x:attributes.position.array[ INTERSECTED.index*3 ],
+        y:attributes.position.array[ INTERSECTED.index*3+1 ],
+        z:attributes.position.array[ INTERSECTED.index*3+2 ],
+      });
       attributes.color.needsUpdate = true;
-      chosenPointIndex = INTERSECTED;
+      chosenPoint = INTERSECTED;
     } else {
-      //chosenPointIndex = null;
+      //chosenPoint = null;
     }
   }
   console.log(INTERSECTED);
-  console.log(chosenPointIndex);
+  console.log(chosenPoint);
 
 }
 
@@ -202,7 +209,6 @@ function displayNearest(position) {
     attributes.color.array[ objectIndex*3 ] = colorRelated.r;
     attributes.color.array[ objectIndex*3+1 ] = colorRelated.g;
     attributes.color.array[ objectIndex*3+2 ] = colorRelated.b;
-    // update the attribute
     attributes.color.needsUpdate = true;
 
   }
@@ -210,54 +216,53 @@ function displayNearest(position) {
 
 function render() {
 
-  // particles.rotation.x += 0.0005;
-  // particles.rotation.y += 0.001;
-
   var geometry = particles.geometry;
   attributes = geometry.attributes;
 
   raycaster.setFromCamera( mouse, camera );
-
+  //获取鼠标下的点
   intersects = raycaster.intersectObject( particles );
   //如果鼠标下有点
   if ( intersects.length > 0 ) {
     //如果鼠标下点有变化
-    if ( INTERSECTED != intersects[ 0 ].index ) {
+    if ( INTERSECTED != intersects[ 0 ] ) {
       //检查刚才鼠标下是否有点
-      if ( INTERSECTED !== null ) {
-        //检查上一个点是不是被选中的点，不是回归正常色，是回归选中色
-        if (chosenPointIndex !== INTERSECTED) {
-          attributes.color.array[INTERSECTED * 3] = colorNormal.r;
-          attributes.color.array[INTERSECTED * 3 + 1] = colorNormal.g;
-          attributes.color.array[INTERSECTED * 3 + 2] = colorNormal.b;
+      if (INTERSECTED) {
+        //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
+        if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
+          attributes.color.array[INTERSECTED.index * 3] = colorChosen.r;
+          attributes.color.array[INTERSECTED.index * 3 + 1] = colorChosen.g;
+          attributes.color.array[INTERSECTED.index * 3 + 2] = colorChosen.b;
         } else  {
-          attributes.color.array[INTERSECTED * 3] = colorChosen.r;
-          attributes.color.array[INTERSECTED * 3 + 1] = colorChosen.g;
-          attributes.color.array[INTERSECTED * 3 + 2] = colorChosen.b;
+          attributes.color.array[INTERSECTED.index * 3] = colorNormal.r;
+          attributes.color.array[INTERSECTED.index * 3 + 1] = colorNormal.g;
+          attributes.color.array[INTERSECTED.index * 3 + 2] = colorNormal.b;
+
         }
       }
 
       //指向当前点，变为浮动色
-      INTERSECTED = intersects[ 0 ].index;
-      attributes.color.array[ INTERSECTED*3 ] = colorFloated.r;
-      attributes.color.array[ INTERSECTED*3+1 ] = colorFloated.g;
-      attributes.color.array[ INTERSECTED*3+2 ] = colorFloated.b;
+      INTERSECTED = intersects[ 0 ];
+      attributes.color.array[ INTERSECTED.index*3 ] = colorFloated.r;
+      attributes.color.array[ INTERSECTED.index*3+1 ] = colorFloated.g;
+      attributes.color.array[ INTERSECTED.index*3+2 ] = colorFloated.b;
       attributes.color.needsUpdate = true;
     }
   //当前鼠标下没有点，但刚才有
-  } else if ( INTERSECTED !== null ) {
+  } else if (INTERSECTED) {
+    //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
+    if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
+      attributes.color.array[INTERSECTED.index * 3] = colorChosen.r;
+      attributes.color.array[INTERSECTED.index * 3 + 1] = colorChosen.g;
+      attributes.color.array[INTERSECTED.index * 3 + 2] = colorChosen.b;
+    } else  {
+      attributes.color.array[INTERSECTED.index * 3] = colorNormal.r;
+      attributes.color.array[INTERSECTED.index * 3 + 1] = colorNormal.g;
+      attributes.color.array[INTERSECTED.index * 3 + 2] = colorNormal.b;
 
-    if (chosenPointIndex !== INTERSECTED) {
-      attributes.color.array[INTERSECTED * 3] = colorNormal.r;
-      attributes.color.array[INTERSECTED * 3 + 1] = colorNormal.g;
-      attributes.color.array[INTERSECTED * 3 + 2] = colorNormal.b;
-    } else {
-      attributes.color.array[INTERSECTED * 3] = colorChosen.r;
-      attributes.color.array[INTERSECTED * 3 + 1] = colorChosen.g;
-      attributes.color.array[INTERSECTED * 3 + 2] = colorChosen.b;
     }
     attributes.color.needsUpdate = true;
-    INTERSECTED = null;
+    INTERSECTED = undefined;
 
   }
   controls.update();
