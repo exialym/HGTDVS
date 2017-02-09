@@ -2,7 +2,7 @@
  * Created by exialym on 2017/2/6.
  */
 require('./public/main.css');
-var $ = require('./lib/jquery-3.1.1');
+//var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
 require('./lib/three/TrackballControls');
 require('./lib/three/TypedArrayUtils');
@@ -14,17 +14,19 @@ var renderer, scene, camera, controls, attributes;
 
 var particles, uniforms, kdtree;
 
+var particleNum = 10000;
 var PARTICLE_SIZE = 5;
 var colorNormal = new THREE.Color(0x19A1F2);
 var colorFloated = new THREE.Color(0x8800ff);
 var colorChosen = new THREE.Color(0xFC021E);
 var colorRelated = new THREE.Color(0xFFFF3A);
-var colorFade = new THREE.Color(0xFFFFff);
-var relatedPointsNum = 100;
+var colorFade = new THREE.Color(0x3B51A6);
+var relatedPointsNum = 1000;
 var relatedPointsDistance = Infinity;
 
 var raycaster, intersects;
 var mouse, INTERSECTED, chosenPoint, preChooseFlag;
+var mouseFlag = [];
 var relatedPointIndex = [];
 
 init();
@@ -52,13 +54,12 @@ function init() {
 
   //
 
-  var particleNum = 10000;
+
 
   var geometry = new THREE.BufferGeometry();
 
   var positions = new Float32Array( particleNum * 3 );
   var colors = new Float32Array( particleNum * 3 );
-  //var sizes = new Float32Array( particleNum );
 
 
 
@@ -79,13 +80,9 @@ function init() {
     colors[ i ]     = colorNormal.r;
     colors[ i + 1 ] = colorNormal.g;
     colors[ i + 2 ] = colorNormal.b;
-
-    //sizes[ i ] = PARTICLE_SIZE * 1.5;
-
   }
   geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
   geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
-  //geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
 
   geometry.computeBoundingSphere();
 
@@ -97,7 +94,7 @@ function init() {
     map: sprite,
     alphaTest: 0.5,
     transparent: true,
-    opacity:0.7
+    opacity:0.7,
   });
   particles = new THREE.Points( geometry, material );
   //create particles with buffer geometry
@@ -134,39 +131,34 @@ function init() {
 
 function onContainerMouseDown(event) {
   event.preventDefault();
-  //如果点击地方不是被选中的点
-  if (chosenPoint !== INTERSECTED) {
-    //点击的地方是个点时缓存这个点
-    if (INTERSECTED) {
-      preChooseFlag = INTERSECTED;
-    } else {
-      //chosenPoint = undifined;
-    }
-  }
-  console.log(INTERSECTED);
-  console.log(chosenPoint);
+  mouseFlag[0] = mouse.x;
+  mouseFlag[1] = mouse.y;
 }
 function onContainerMouseUp(event) {
   event.preventDefault();
-  //如果鼠标落下时是一个有效的点
-  if (preChooseFlag) {
-    //如果鼠标抬起时和落下时鼠标下的点一样
-    if (INTERSECTED && INTERSECTED.index === preChooseFlag.index) {
+  //如果鼠标抬起时和落下时位置一样
+  if (mouseFlag[0] === mouse.x && mouseFlag[1] === mouse.y) {
+    //如果鼠标下有点
+    if (INTERSECTED) {
       //如果有选中的点，取消
       if (chosenPoint) {
-        attributes.color.array[ chosenPoint.index*3 ] = colorNormal.r;
-        attributes.color.array[ chosenPoint.index*3+1 ] = colorNormal.g;
-        attributes.color.array[ chosenPoint.index*3+2 ] = colorNormal.b;
+        changeColor(chosenPoint.index,colorFade);
       }
       displayNearest(INTERSECTED);
       attributes.color.needsUpdate = true;
       chosenPoint = INTERSECTED;
     } else {
-      //chosenPoint = null;
+      chosenPoint = undefined;
+      for (var i = 0;i < particleNum;i++) {
+        changeColor(i,colorNormal);
+      }
+      attributes.color.needsUpdate = true;
     }
   }
-  console.log(INTERSECTED);
-  console.log(chosenPoint);
+  //console.log(INTERSECTED);
+  //console.log(chosenPoint);
+  console.log(mouse.x);
+  console.log(mouse.y);
 
 }
 
@@ -201,25 +193,27 @@ function displayNearest(point) {
   ];
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
   var imagePositionsInRange = kdtree.nearest(pos, relatedPointsNum, relatedPointsDistance);
-  for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
-    attributes.color.array[relatedPointIndex[i] * 3] = colorNormal.r;
-    attributes.color.array[relatedPointIndex[i] * 3 + 1] = colorNormal.g;
-    attributes.color.array[relatedPointIndex[i] * 3 + 2] = colorNormal.b;
+  if (chosenPoint) {
+    for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+      changeColor(relatedPointIndex[i],colorFade);
+    }
+  } else {
+    for (var i = 0;i < particleNum;i++) {
+      changeColor(i,colorFade);
+    }
   }
+
   relatedPointIndex = [];
-  attributes.color.array[ point.index*3 ] = colorChosen.r;
-  attributes.color.array[ point.index*3+1 ] = colorChosen.g;
-  attributes.color.array[ point.index*3+2 ] = colorChosen.b;
-  for ( var i = 0, il = imagePositionsInRange.length; i < il; i ++ ) {
-    var object = imagePositionsInRange[i];
+  changeColor(point.index,colorChosen);
+  for ( var j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
+    var object = imagePositionsInRange[j];
     var objectIndex = object[0].pos;
     relatedPointIndex.push(objectIndex);
-    attributes.color.array[ objectIndex*3 ] = colorRelated.r;
-    attributes.color.array[ objectIndex*3+1 ] = colorRelated.g;
-    attributes.color.array[ objectIndex*3+2 ] = colorRelated.b;
-    attributes.color.needsUpdate = true;
+    changeColor(objectIndex,colorRelated);
+
 
   }
+  attributes.color.needsUpdate = true;
 }
 
 function render() {
@@ -238,36 +232,48 @@ function render() {
       if (INTERSECTED) {
         //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
         if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
-          attributes.color.array[INTERSECTED.index * 3] = colorChosen.r;
-          attributes.color.array[INTERSECTED.index * 3 + 1] = colorChosen.g;
-          attributes.color.array[INTERSECTED.index * 3 + 2] = colorChosen.b;
-        } else  {
-          attributes.color.array[INTERSECTED.index * 3] = colorNormal.r;
-          attributes.color.array[INTERSECTED.index * 3 + 1] = colorNormal.g;
-          attributes.color.array[INTERSECTED.index * 3 + 2] = colorNormal.b;
-
+          changeColor(INTERSECTED.index,colorChosen);
+        } else if  (chosenPoint) {
+          var flag = false;
+          for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+            if (INTERSECTED.index===relatedPointIndex[i]) {
+              changeColor(INTERSECTED.index,colorRelated);
+              flag = true;
+              break;
+            }
+          }
+          if (!flag) {
+            changeColor(INTERSECTED.index,colorFade);
+          }
+        } else {
+          changeColor(INTERSECTED.index,colorNormal);
         }
       }
 
       //指向当前点，变为浮动色
       INTERSECTED = intersects[ 0 ];
-      attributes.color.array[ INTERSECTED.index*3 ] = colorFloated.r;
-      attributes.color.array[ INTERSECTED.index*3+1 ] = colorFloated.g;
-      attributes.color.array[ INTERSECTED.index*3+2 ] = colorFloated.b;
+      changeColor(INTERSECTED.index,colorFloated);
       attributes.color.needsUpdate = true;
     }
   //当前鼠标下没有点，但刚才有
   } else if (INTERSECTED) {
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
-      attributes.color.array[INTERSECTED.index * 3] = colorChosen.r;
-      attributes.color.array[INTERSECTED.index * 3 + 1] = colorChosen.g;
-      attributes.color.array[INTERSECTED.index * 3 + 2] = colorChosen.b;
-    } else  {
-      attributes.color.array[INTERSECTED.index * 3] = colorNormal.r;
-      attributes.color.array[INTERSECTED.index * 3 + 1] = colorNormal.g;
-      attributes.color.array[INTERSECTED.index * 3 + 2] = colorNormal.b;
-
+      changeColor(INTERSECTED.index,colorChosen);
+    } else if  (chosenPoint) {
+      var flag = false;
+      for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+        if (INTERSECTED.index===relatedPointIndex[i]) {
+          changeColor(INTERSECTED.index,colorRelated);
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        changeColor(INTERSECTED.index,colorFade);
+      }
+    } else {
+      changeColor(INTERSECTED.index,colorNormal);
     }
     attributes.color.needsUpdate = true;
     INTERSECTED = undefined;
@@ -276,4 +282,9 @@ function render() {
   controls.update();
   renderer.render( scene, camera );
 
+}
+function changeColor(index,color) {
+  attributes.color.array[index * 3] = color.r;
+  attributes.color.array[index * 3 + 1] = color.g;
+  attributes.color.array[index * 3 + 2] = color.b;
 }
