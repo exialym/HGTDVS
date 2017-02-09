@@ -155,11 +155,6 @@ function onContainerMouseUp(event) {
       attributes.color.needsUpdate = true;
     }
   }
-  //console.log(INTERSECTED);
-  //console.log(chosenPoint);
-  console.log(mouse.x);
-  console.log(mouse.y);
-
 }
 
 function onDocumentMouseMove( event ) {
