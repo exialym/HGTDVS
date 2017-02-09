@@ -6,7 +6,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: './entry.js',
   output: {
-    path: __dirname + 'public',
+    path: __dirname + '/public',
     filename: 'bundle.js',
     publicPath: '/'
   },
