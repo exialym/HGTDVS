@@ -13,13 +13,13 @@ var renderer, scene, camera, controls, attributes;
 
 var particles, uniforms;
 
-var PARTICLE_SIZE = 10;
-var colorNormal = new THREE.Color(0x0088ff);
+var PARTICLE_SIZE = 5;
+var colorNormal = new THREE.Color(0x19A1F2);
 var colorFloated = new THREE.Color(0x8800ff);
 var colorChosen = new THREE.Color(0xffffff);
 
 var raycaster, intersects;
-var mouse, INTERSECTED, chosenPointIndex;
+var mouse, INTERSECTED, chosenPointIndex, preChooseFlag;
 
 init();
 animate();
@@ -87,10 +87,11 @@ function init() {
   var material = new THREE.PointsMaterial({
     size:PARTICLE_SIZE,
     vertexColors: THREE.VertexColors,
-    sizeAttenuation: false,
+    sizeAttenuation: true,
     map: sprite,
     alphaTest: 0.5,
-    transparent: true
+    transparent: true,
+    opacity:0.7
   });
   particles = new THREE.Points( geometry, material );
   scene.add( particles );
@@ -115,25 +116,39 @@ function init() {
 
   window.addEventListener( 'resize', onWindowResize, false );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  container.addEventListener('click', onContainerClick, false );
+  container.addEventListener('mousedown', onContainerMouseDown, false );
+  container.addEventListener('mouseup', onContainerMouseUp, false );
 
 }
 
-function onContainerClick(event) {
+function onContainerMouseDown(event) {
   event.preventDefault();
   if (chosenPointIndex !== INTERSECTED) {
-    attributes.color.array[ chosenPointIndex*3 ] = colorNormal.r;
-    attributes.color.array[ chosenPointIndex*3+1 ] = colorNormal.g;
-    attributes.color.array[ chosenPointIndex*3+2 ] = colorNormal.b;
-    attributes.color.needsUpdate = true;
+
     if (INTERSECTED !== null) {
+      preChooseFlag = INTERSECTED;
+    } else {
+      //chosenPointIndex = null;
+    }
+  }
+  console.log(INTERSECTED);
+  console.log(chosenPointIndex);
+}
+function onContainerMouseUp(event) {
+  event.preventDefault();
+  if (preChooseFlag !== null) {
+
+    if (INTERSECTED === preChooseFlag) {
+      attributes.color.array[ chosenPointIndex*3 ] = colorNormal.r;
+      attributes.color.array[ chosenPointIndex*3+1 ] = colorNormal.g;
+      attributes.color.array[ chosenPointIndex*3+2 ] = colorNormal.b;
       attributes.color.array[ INTERSECTED*3 ] = colorChosen.r;
       attributes.color.array[ INTERSECTED*3+1 ] = colorChosen.g;
       attributes.color.array[ INTERSECTED*3+2 ] = colorChosen.b;
       attributes.color.needsUpdate = true;
       chosenPointIndex = INTERSECTED;
     } else {
-      chosenPointIndex = null;
+      //chosenPointIndex = null;
     }
   }
   console.log(INTERSECTED);
