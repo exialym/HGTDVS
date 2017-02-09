@@ -4,19 +4,24 @@
 require('./public/main.css');
 var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
-require('./lib/three/TrackballControls')
+require('./lib/three/TrackballControls');
+require('./lib/three/TypedArrayUtils');
 
 
 //if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 var renderer, scene, camera, controls, attributes;
 
-var particles, uniforms;
+var particles, uniforms, kdtree;
 
 var PARTICLE_SIZE = 5;
 var colorNormal = new THREE.Color(0x19A1F2);
 var colorFloated = new THREE.Color(0x8800ff);
-var colorChosen = new THREE.Color(0xffffff);
+var colorChosen = new THREE.Color(0xFC021E);
+var colorRelated = new THREE.Color(0xFFFF3A);
+var colorFade = new THREE.Color(0xFFFFff);
+var relatedPointsNum = 100;
+var relatedPointsDistance = Infinity;
 
 var raycaster, intersects;
 var mouse, INTERSECTED, chosenPointIndex, preChooseFlag;
@@ -36,17 +41,17 @@ function init() {
   //
 
   controls = new THREE.TrackballControls( camera );
-  controls.rotateSpeed = 1.0;
-  controls.zoomSpeed = 1.2;
+  controls.rotateSpeed = 5.0;
+  controls.zoomSpeed = 2.2;
   controls.panSpeed = 0.8;
   controls.noZoom = false;
   controls.noPan = false;
-  controls.staticMoving = true;
+  controls.staticMoving = false;
   controls.dynamicDampingFactor = 0.3;
 
   //
 
-  var particleNum = 5000;
+  var particleNum = 10000;
 
   var geometry = new THREE.BufferGeometry();
 
@@ -94,6 +99,11 @@ function init() {
     opacity:0.7
   });
   particles = new THREE.Points( geometry, material );
+  //create particles with buffer geometry
+  var distanceFunction = function(a, b){
+    return Math.pow(a[0] - b[0], 2) +  Math.pow(a[1] - b[1], 2) +  Math.pow(a[2] - b[2], 2);
+  };
+  kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
   scene.add( particles );
 
   //
@@ -145,6 +155,7 @@ function onContainerMouseUp(event) {
       attributes.color.array[ INTERSECTED*3 ] = colorChosen.r;
       attributes.color.array[ INTERSECTED*3+1 ] = colorChosen.g;
       attributes.color.array[ INTERSECTED*3+2 ] = colorChosen.b;
+      displayNearest({x:0,y:0,z:0});
       attributes.color.needsUpdate = true;
       chosenPointIndex = INTERSECTED;
     } else {
@@ -175,11 +186,26 @@ function onWindowResize() {
 }
 
 function animate() {
-
   requestAnimationFrame( animate );
-
   render();
+}
 
+function displayNearest(position) {
+
+  // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
+  var imagePositionsInRange = kdtree.nearest([position.x, position.y, position.z], relatedPointsNum, relatedPointsDistance);
+
+  for ( var i = 0, il = imagePositionsInRange.length; i < il; i ++ ) {
+    var object = imagePositionsInRange[i];
+    var objectIndex = object[0].pos;
+
+    attributes.color.array[ objectIndex*3 ] = colorRelated.r;
+    attributes.color.array[ objectIndex*3+1 ] = colorRelated.g;
+    attributes.color.array[ objectIndex*3+2 ] = colorRelated.b;
+    // update the attribute
+    attributes.color.needsUpdate = true;
+
+  }
 }
 
 function render() {
