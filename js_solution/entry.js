@@ -21,7 +21,7 @@ var colorFloated = new THREE.Color(0x8800ff);
 var colorChosen = new THREE.Color(0xFC021E);
 var colorRelated = new THREE.Color(0xFFFF3A);
 var colorFade = new THREE.Color(0x3B51A6);
-var relatedPointsNum = 1000;
+var relatedPointsNum = 100;
 var relatedPointsDistance = Infinity;
 
 var raycaster, intersects;
@@ -30,15 +30,26 @@ var mouseFlag = [];
 var relatedPointIndex = [];
 
 var $webgl = $('#webgl');
+var $relatedNumSlider = $('#relatedNum');
+var $relatedNumLable = $relatedNumSlider.next();
 var webglW, webglH;
 $(document).ready(function () {
   init();
   animate();
+  $relatedNumSlider.val(relatedPointsNum);
+  $relatedNumSlider.attr('min','5');
+  $relatedNumSlider.attr('max',particleNum+'');
+  $relatedNumLable.html(relatedPointsNum);
+  $relatedNumSlider.bind('change', function () {
+    relatedPointsNum = $('#relatedNum').val();
+    $relatedNumLable.html(relatedPointsNum);
+    displayNearest(chosenPoint);
+  });
 });
 
 
-function init() {
 
+function init() {
   var container = document.getElementById( 'webgl' );
 
   webglW = $webgl.width();
@@ -52,7 +63,7 @@ function init() {
   //
 
   controls = new THREE.TrackballControls( camera, container );
-  controls.rotateSpeed = 5.0;
+  controls.rotateSpeed = 2.0;
   controls.zoomSpeed = 2.2;
   controls.panSpeed = 0.8;
   controls.noZoom = false;
@@ -188,13 +199,15 @@ function animate() {
 }
 
 function displayNearest(point) {
+  if (!point)
+    return;
   var pos = [
     attributes.position.array[ point.index*3 ],
     attributes.position.array[ point.index*3+1 ],
     attributes.position.array[ point.index*3+2 ]
   ];
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
-  var imagePositionsInRange = kdtree.nearest(pos, relatedPointsNum, relatedPointsDistance);
+  var imagePositionsInRange = kdtree.nearest(pos, Number(relatedPointsNum)+1, relatedPointsDistance);
   if (chosenPoint) {
     for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
       changeColor(relatedPointIndex[i],colorFade);
@@ -206,15 +219,14 @@ function displayNearest(point) {
   }
 
   relatedPointIndex = [];
-  changeColor(point.index,colorChosen);
+
   for ( var j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
     var object = imagePositionsInRange[j];
     var objectIndex = object[0].pos;
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
-
-
   }
+  changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
 
