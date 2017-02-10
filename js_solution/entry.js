@@ -51,7 +51,7 @@ function init() {
 
   //
 
-  controls = new THREE.TrackballControls( camera );
+  controls = new THREE.TrackballControls( camera, container );
   controls.rotateSpeed = 5.0;
   controls.zoomSpeed = 2.2;
   controls.panSpeed = 0.8;
@@ -168,11 +168,8 @@ function onContainerMouseUp(event) {
 function onDocumentMouseMove( event ) {
 
   event.preventDefault();
-
-  mouse.x = ( event.clientX / webglW ) * 2 - 1;
-  mouse.y = - ( event.clientY / webglH ) * 2 + 1;
-  console.log(mouse.x);
-  console.log(mouse.y);
+  mouse.x = ( event.offsetX / webglW ) * 2 - 1;
+  mouse.y = - ( event.offsetY / webglH ) * 2 + 1;
 
 }
 
