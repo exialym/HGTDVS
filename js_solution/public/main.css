@@ -1,5 +1,42 @@
 body {
-  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   margin: 0; }
+
+header {
+  flex: none;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  background-color: #1f7e9a; }
+
+main {
+  display: flex;
+  flex: 1 0 auto;
+  /* 2 */ }
+  main .figures {
+    flex: 1;
+    display: flex;
+    flex-direction: column; }
+    main .figures .figurs-top {
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: row;
+      flex-wrap: nowrap; }
+      main .figures .figurs-top .map {
+        flex-basis: 50%; }
+      main .figures .figurs-top .webgl {
+        flex-basis: 50%; }
+    main .figures .parallel {
+      flex: none;
+      background-color: #1f7e9a;
+      flex: 0 0 12em; }
+  main nav {
+    /* two aside fix to 12em */
+    flex: 0 0 12em;
+    padding: 1em;
+    border-radius: 3px;
+    background: rgba(147, 128, 108, 0.1); }
 
 /*# sourceMappingURL=main.css.map */

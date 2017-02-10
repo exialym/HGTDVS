@@ -2,7 +2,7 @@
  * Created by exialym on 2017/2/6.
  */
 require('./public/main.css');
-//var $ = require('./lib/jquery-3.1.1');
+var $ = require('./lib/jquery-3.1.1');
 var THREE = require('./lib/three/three');
 require('./lib/three/TrackballControls');
 require('./lib/three/TypedArrayUtils');
@@ -29,16 +29,24 @@ var mouse, INTERSECTED, chosenPoint, preChooseFlag;
 var mouseFlag = [];
 var relatedPointIndex = [];
 
-init();
-animate();
+var $webgl = $('#webgl');
+var webglW, webglH;
+$(document).ready(function () {
+  init();
+  animate();
+});
+
 
 function init() {
 
   var container = document.getElementById( 'webgl' );
 
+  webglW = $webgl.width();
+  webglH = $webgl.height();
+
   scene = new THREE.Scene();
 
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+  camera = new THREE.PerspectiveCamera( 45, webglW / webglH, 1, 10000 );
   camera.position.z = 250;
 
   //
@@ -112,7 +120,7 @@ function init() {
 
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize( webglW, webglH );
   container.appendChild( renderer.domElement );
 
   //
@@ -123,7 +131,7 @@ function init() {
   //
 
   window.addEventListener( 'resize', onWindowResize, false );
-  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  container.addEventListener( 'mousemove', onDocumentMouseMove, false );
   container.addEventListener('mousedown', onContainerMouseDown, false );
   container.addEventListener('mouseup', onContainerMouseUp, false );
 
@@ -161,17 +169,19 @@ function onDocumentMouseMove( event ) {
 
   event.preventDefault();
 
-  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  mouse.x = ( event.clientX / webglW ) * 2 - 1;
+  mouse.y = - ( event.clientY / webglH ) * 2 + 1;
+  console.log(mouse.x);
+  console.log(mouse.y);
 
 }
 
 function onWindowResize() {
 
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = webglW / webglH;
   camera.updateProjectionMatrix();
 
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize( webglW, webglH );
 
 }
 
