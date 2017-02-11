@@ -5,7 +5,7 @@
   "main": "entry.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "dev": "webpack-dev-server --inline  --history-api-fallback && webpack",
+    "dev": "webpack-dev-server --inline  --history-api-fallback",
     "prod": "npm run build && node server.bundle.js",
     "build:client": "webpack",
     "build:server": "webpack --config webpack.server.config.js",
