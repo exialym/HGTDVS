@@ -3,13 +3,14 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
+  font-family: 'Monaco', Georgia, Serif;
 }
 header {
   flex: none;
   color:white;
   padding: 1em;
-  text-align: center;
-  background-color: #1f7e9a;
+  text-align: left;
+  background-color: #19a1f2;
 }
 main {
   display: flex;
@@ -32,15 +33,15 @@ main {
     }
     .parallel {
       flex:none;
-      background-color: #1f7e9a;
       flex: 0 0 5em;
     }
 
   }
   nav {
-    /* two aside fix to 12em */
-    flex: 0 0 12em;
-    padding: 1em;
+    font-size:13px;
+    font-weight: 100;
+    flex: 0 0 18.7em;
+    padding: 0.3em;
     border-radius: 3px;
     background: rgba(147, 128, 108, 0.1);
   }
