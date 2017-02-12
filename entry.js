@@ -9,16 +9,21 @@ require('./lib/three/TypedArrayUtils');
 var threeDFigure = require('./modules/threeDimensionalFigure');
 
 
+
+
 //if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 
 
-window.particleNum = 10000;
+
 window.relatedPointsNum = 100;
+window.threepositions = new Float32Array([]);
+window.beginTSNE = false;
 
 
 var $relatedNumSlider = $('#relatedNum');
 var $relatedNumLable = $relatedNumSlider.next();
+var $beginTSNE = $('#beginTSNE');
 
 
 $(document).ready(function () {
@@ -33,7 +38,14 @@ $(document).ready(function () {
     $relatedNumLable.html(window.relatedPointsNum);
     threeDFigure.displayNearest();
   });
+  $beginTSNE.bind('click',function () {
+    window.beginTSNE = !window.beginTSNE;
+  })
 });
+
+
+
+
 
 
 

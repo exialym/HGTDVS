@@ -2,6 +2,8 @@
  * Created by exialym on 2017/2/11.
  */
 var THREE = require('../lib/three/three');
+var tsnejs = require('../lib/tsne');
+var exampleRaw = require('./example_data');
 module.exports = {
   init : init,
   animate : animate,
@@ -27,7 +29,25 @@ var relatedPointIndex = [];
 
 var webglW, webglH;
 
-function init() {
+var positions;
+
+var opt = {}
+opt.epsilon = 10; // epsilon is learning rate (10 = default)
+opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
+opt.dim = 3; // dimensionality of the embedding (2 = default)
+
+var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+
+// initialize data. Here we have 3 points and some example pairwise dissimilarities
+
+
+
+
+function init(rawData) {
+  if (!rawData)
+    rawData = exampleRaw;
+  tsne.initDataRaw(rawData);
+  window.particleNum = rawData.length;
   var container = document.getElementById( 'webgl' );
 
   webglW = container.offsetWidth;
@@ -55,10 +75,8 @@ function init() {
 
   var geometry = new THREE.BufferGeometry();
 
-  var positions = new Float32Array( particleNum * 3 );
-  var colors = new Float32Array( particleNum * 3 );
-
-
+  var positions = new Float32Array( window.particleNum * 3 );
+  var colors = new Float32Array( window.particleNum * 3 );
 
   var n = 100, n2 = n / 2; // particles spread in the cube
 
@@ -79,6 +97,7 @@ function init() {
     colors[ i + 2 ] = colorNormal.b;
   }
   geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+  //geometry.addAttribute( 'position', new THREE.BufferAttribute( window.threepositions, 3 ) );
   geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
   geometry.computeBoundingSphere();
@@ -275,7 +294,14 @@ function render() {
   }
   controls.update();
   renderer.render( scene, camera );
-
+  if (window.beginTSNE) {
+    tsne.step();
+    var flattened = tsne.getSolution().reduce(function(a, b){
+      return a.concat(b)
+    });
+    geometry.addAttribute( 'position', new THREE.BufferAttribute( Float32Array.from(flattened), 3 ) );
+    attributes.position.needsUpdate = true;
+  }
 }
 function changeColor(index,color) {
   attributes.color.array[index * 3] = color.r;
