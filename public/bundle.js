@@ -55069,7 +55069,8 @@ function render() {
   controls.update();
   renderer.render( scene, camera );
   if (window.beginTSNE) {
-    tsne.step();
+    var cost = tsne.step();
+    document.getElementById( 'tSNEState' ).innerHTML = 'cost:' + cost + '  ' + 'iteration:' + tsne.iter;
     positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
       return a.concat(b)
     }));
@@ -55914,7 +55915,13 @@ $(document).ready(function () {
     threeDFigure.displayNearest();
   });
   $beginTSNE.bind('click',function () {
-    window.beginTSNE = !window.beginTSNE;
+    if (window.beginTSNE) {
+      window.beginTSNE = false;
+      $beginTSNE.val('continue');
+    } else {
+      window.beginTSNE = true;
+      $beginTSNE.val('stop');
+    }
   })
 });
 

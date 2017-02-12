@@ -39,7 +39,13 @@ $(document).ready(function () {
     threeDFigure.displayNearest();
   });
   $beginTSNE.bind('click',function () {
-    window.beginTSNE = !window.beginTSNE;
+    if (window.beginTSNE) {
+      window.beginTSNE = false;
+      $beginTSNE.val('continue');
+    } else {
+      window.beginTSNE = true;
+      $beginTSNE.val('stop');
+    }
   })
 });
 
