@@ -20,16 +20,16 @@ var colorFade = new THREE.Color(0x3B51A6);
 
 var renderer, scene, camera, controls, attributes;
 
-var particles, kdtree;
+var particles, kdtree, positions;
 
 var raycaster, intersects;
-var mouse, INTERSECTED, chosenPoint;
+var mouse, intersectedPoint, chosenPoint;
 var mouseFlag = [];
 var relatedPointIndex = [];
 
 var webglW, webglH;
 
-var positions;
+var isKdTreeUpdated = false;
 
 var opt = {}
 opt.epsilon = 10; // epsilon is learning rate (10 = default)
@@ -75,7 +75,7 @@ function init(rawData) {
 
   var geometry = new THREE.BufferGeometry();
 
-  var positions = new Float32Array( window.particleNum * 3 );
+  positions = new Float32Array( window.particleNum * 3 );
   var colors = new Float32Array( window.particleNum * 3 );
 
   var n = 100, n2 = n / 2; // particles spread in the cube
@@ -114,10 +114,9 @@ function init(rawData) {
   });
   particles = new THREE.Points( geometry, material );
   //create particles with buffer geometry
-  var distanceFunction = function(a, b){
-    return Math.pow(a[0] - b[0], 2) +  Math.pow(a[1] - b[1], 2) +  Math.pow(a[2] - b[2], 2);
-  };
+
   kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
+  isKdTreeUpdated = true;
   scene.add( particles );
 
   //
@@ -155,14 +154,14 @@ function onContainerMouseUp(event) {
   //如果鼠标抬起时和落下时位置一样
   if (mouseFlag[0] === mouse.x && mouseFlag[1] === mouse.y) {
     //如果鼠标下有点
-    if (INTERSECTED) {
+    if (intersectedPoint) {
       //如果有选中的点，取消
       if (chosenPoint) {
         changeColor(chosenPoint.index,colorFade);
       }
-      displayNearest(INTERSECTED);
+      displayNearest(intersectedPoint);
       attributes.color.needsUpdate = true;
-      chosenPoint = INTERSECTED;
+      chosenPoint = intersectedPoint;
     } else {
       chosenPoint = undefined;
       for (var i = 0;i < particleNum;i++) {
@@ -194,6 +193,10 @@ function animate() {
   requestAnimationFrame( animate );
   render();
 }
+
+function distanceFunction (a, b){
+  return Math.pow(a[0] - b[0], 2) +  Math.pow(a[1] - b[1], 2) +  Math.pow(a[2] - b[2], 2);
+};
 
 function displayNearest(point) {
   if (!point&&chosenPoint)
@@ -240,67 +243,81 @@ function render() {
   //如果鼠标下有点
   if ( intersects.length > 0 ) {
     //如果鼠标下点有变化
-    if ( INTERSECTED != intersects[ 0 ] ) {
+    if ( intersectedPoint != intersects[ 0 ] ) {
       //检查刚才鼠标下是否有点
-      if (INTERSECTED) {
+      if (intersectedPoint) {
         //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
-        if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
-          changeColor(INTERSECTED.index,colorChosen);
+        if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
+          changeColor(intersectedPoint.index,colorChosen);
         } else if  (chosenPoint) {
           var flag = false;
           for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
-            if (INTERSECTED.index===relatedPointIndex[i]) {
-              changeColor(INTERSECTED.index,colorRelated);
+            if (intersectedPoint.index===relatedPointIndex[i]) {
+              changeColor(intersectedPoint.index,colorRelated);
               flag = true;
               break;
             }
           }
           if (!flag) {
-            changeColor(INTERSECTED.index,colorFade);
+            changeColor(intersectedPoint.index,colorFade);
           }
         } else {
-          changeColor(INTERSECTED.index,colorNormal);
+          changeColor(intersectedPoint.index,colorNormal);
         }
       }
 
       //指向当前点，变为浮动色
-      INTERSECTED = intersects[ 0 ];
-      changeColor(INTERSECTED.index,colorFloated);
+      intersectedPoint = intersects[ 0 ];
+      changeColor(intersectedPoint.index,colorFloated);
       attributes.color.needsUpdate = true;
     }
     //当前鼠标下没有点，但刚才有
-  } else if (INTERSECTED) {
+  } else if (intersectedPoint) {
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
-    if (chosenPoint && chosenPoint.index === INTERSECTED.index) {
-      changeColor(INTERSECTED.index,colorChosen);
+    if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
+      changeColor(intersectedPoint.index,colorChosen);
     } else if  (chosenPoint) {
       var flag = false;
       for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
-        if (INTERSECTED.index===relatedPointIndex[i]) {
-          changeColor(INTERSECTED.index,colorRelated);
+        if (intersectedPoint.index===relatedPointIndex[i]) {
+          changeColor(intersectedPoint.index,colorRelated);
           flag = true;
           break;
         }
       }
       if (!flag) {
-        changeColor(INTERSECTED.index,colorFade);
+        changeColor(intersectedPoint.index,colorFade);
       }
     } else {
-      changeColor(INTERSECTED.index,colorNormal);
+      changeColor(intersectedPoint.index,colorNormal);
     }
     attributes.color.needsUpdate = true;
-    INTERSECTED = undefined;
+    intersectedPoint = undefined;
 
   }
   controls.update();
   renderer.render( scene, camera );
   if (window.beginTSNE) {
     tsne.step();
-    var flattened = tsne.getSolution().reduce(function(a, b){
+    positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
       return a.concat(b)
-    });
-    geometry.addAttribute( 'position', new THREE.BufferAttribute( Float32Array.from(flattened), 3 ) );
+    }));
+    geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
     attributes.position.needsUpdate = true;
+    //kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
+    isKdTreeUpdated = false;
+    console.log('update')
+    console.log(attributes.position.array);
+  } else {
+    if (!isKdTreeUpdated) {
+      isKdTreeUpdated = true;
+      console.log('kdtree before')
+      console.log(attributes.position.array);
+      kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
+      attributes.position.needsUpdate = true;
+      console.log('kdtree after')
+      console.log(attributes.position.array);
+    }
   }
 }
 function changeColor(index,color) {
