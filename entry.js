@@ -21,8 +21,8 @@ window.threepositions = new Float32Array([]);
 window.beginTSNE = false;
 
 
-var $relatedNumSlider = $('#relatedNum');
-var $relatedNumLable = $relatedNumSlider.next();
+var $relatedNumSlider = $('#relatedNumSlider');
+var $relatedNumLabel = $('#relatedNum');
 var $beginTSNE = $('#beginTSNE');
 
 
@@ -32,10 +32,20 @@ $(document).ready(function () {
   $relatedNumSlider.val(window.relatedPointsNum);
   $relatedNumSlider.attr('min','5');
   $relatedNumSlider.attr('max',window.particleNum+'');
-  $relatedNumLable.html(window.relatedPointsNum);
+  $relatedNumLabel.val(window.relatedPointsNum);
   $relatedNumSlider.bind('change', function () {
-    window.relatedPointsNum = $('#relatedNum').val();
-    $relatedNumLable.html(window.relatedPointsNum);
+    window.relatedPointsNum = $relatedNumSlider.val();
+    $relatedNumLabel.val(window.relatedPointsNum);
+    threeDFigure.displayNearest();
+  });
+  $relatedNumLabel.bind('change', function () {
+    var number = Number($relatedNumLabel.val());
+    if (isNaN(number))
+      return;
+    number = number > Number(window.particleNum) ? Number(window.particleNum) : number;
+    window.relatedPointsNum = number;
+    $relatedNumSlider.val(window.relatedPointsNum);
+    $relatedNumLabel.val(window.relatedPointsNum);
     threeDFigure.displayNearest();
   });
   $beginTSNE.bind('click',function () {
