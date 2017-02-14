@@ -7,14 +7,9 @@ var $ = require('./lib/jquery-3.1.1');
 require('./lib/three/TrackballControls');
 require('./lib/three/TypedArrayUtils');
 var threeDFigure = require('./modules/threeDimensionalFigure');
+var Detector = require('./lib/three/Detector');
 
-
-
-
-//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-
-
+if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
