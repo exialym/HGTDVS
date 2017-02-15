@@ -19,6 +19,7 @@ window.beginTSNE = false;
 var $relatedNumSlider = $('#relatedNumSlider');
 var $relatedNumLabel = $('#relatedNum');
 var $beginTSNE = $('#beginTSNE');
+var $rawData = $('#rawData');
 
 
 $(document).ready(function () {
@@ -51,7 +52,19 @@ $(document).ready(function () {
       window.beginTSNE = true;
       $beginTSNE.val('stop');
     }
-  })
+  });
+  $rawData.bind('change', function (e) {
+    var files = e.target.files;
+    if (files.length) {
+      var file = files[0];
+      var reader = new FileReader();//new一个FileReader实例
+      reader.onload = function() {
+        $('body').append('<pre>' + this.result + '</pre>');
+      }
+      reader.readAsText(file);
+    }
+  });
+
 });
 
 
