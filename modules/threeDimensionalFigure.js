@@ -1,42 +1,42 @@
 /**
  * Created by exialym on 2017/2/11.
  */
-var THREE = require('../lib/three/three');
-var tsnejs = require('../lib/tsne');
-var exampleRaw = require('./example_data');
+import * as THREE from '../lib/three/three'
+import tsnejs from '../lib/tsne'
+import exampleRaw from './example_data'
 module.exports = {
   init : init,
   animate : animate,
   displayNearest : displayNearest,
-}
+};
 
-var PARTICLE_SIZE = 5;
-var relatedPointsDistance = Infinity;
-var colorNormal = new THREE.Color(0x19A1F2);
-var colorFloated = new THREE.Color(0x8800ff);
-var colorChosen = new THREE.Color(0xFC021E);
-var colorRelated = new THREE.Color(0xFFFF3A);
-var colorFade = new THREE.Color(0x3B51A6);
+let PARTICLE_SIZE = 5;
+let relatedPointsDistance = Infinity;
+const colorNormal = new THREE.Color(0x19A1F2);
+const colorFloated = new THREE.Color(0x8800ff);
+const colorChosen = new THREE.Color(0xFC021E);
+const colorRelated = new THREE.Color(0xFFFF3A);
+const colorFade = new THREE.Color(0x3B51A6);
 
-var renderer, scene, camera, controls, attributes;
+let renderer, scene, camera, controls, attributes;
 
-var particles, kdtree, positions;
+let particles, kdtree, positions;
 
-var raycaster, intersects;
-var mouse, intersectedPoint, chosenPoint;
-var mouseFlag = [];
-var relatedPointIndex = [];
+let raycaster, intersects;
+let mouse, intersectedPoint, chosenPoint;
+let mouseFlag = [];
+let relatedPointIndex = [];
 
-var webglW, webglH;
+let webglW, webglH;
 
-var isKdTreeUpdated = false;
+let isKdTreeUpdated = false;
 
-var opt = {}
+let opt = {};
 opt.epsilon = 10; // epsilon is learning rate (10 = default)
 opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
 opt.dim = 3; // dimensionality of the embedding (2 = default)
 
-var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+let tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
 // initialize data. Here we have 3 points and some example pairwise dissimilarities
 
@@ -44,11 +44,11 @@ var tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
 
 function init(rawData) {
-  if (!rawData)
+  if (rawData.length===0)
     rawData = exampleRaw;
   tsne.initDataRaw(rawData);
   window.particleNum = rawData.length;
-  var container = document.getElementById( 'webgl' );
+  let container = document.getElementById( 'webgl' );
 
   webglW = container.offsetWidth;
   webglH = container.offsetHeight;
@@ -73,20 +73,20 @@ function init(rawData) {
 
 
 
-  var geometry = new THREE.BufferGeometry();
+  let geometry = new THREE.BufferGeometry();
 
   positions = new Float32Array( window.particleNum * 3 );
-  var colors = new Float32Array( window.particleNum * 3 );
+  let colors = new Float32Array( window.particleNum * 3 );
 
-  var n = 100, n2 = n / 2; // particles spread in the cube
+  let n = 100, n2 = n / 2; // particles spread in the cube
 
-  for ( var i = 0; i < positions.length; i += 3 ) {
+  for ( let i = 0; i < positions.length; i += 3 ) {
 
     // positions
 
-    var x = Math.random() * n - n2;
-    var y = Math.random() * n - n2;
-    var z = Math.random() * n - n2;
+    let x = Math.random() * n - n2;
+    let y = Math.random() * n - n2;
+    let z = Math.random() * n - n2;
 
     positions[ i ]     = x;
     positions[ i + 1 ] = y;
@@ -102,8 +102,8 @@ function init(rawData) {
 
   geometry.computeBoundingSphere();
 
-  var sprite = new THREE.TextureLoader().load( require("../public/img/disc.png") );
-  var material = new THREE.PointsMaterial({
+  let sprite = new THREE.TextureLoader().load( require("../public/img/disc.png") );
+  let material = new THREE.PointsMaterial({
     size:PARTICLE_SIZE,
     vertexColors: THREE.VertexColors,
     sizeAttenuation: true,
@@ -164,7 +164,7 @@ function onContainerMouseUp(event) {
       chosenPoint = intersectedPoint;
     } else {
       chosenPoint = undefined;
-      for (var i = 0;i < particleNum;i++) {
+      for (let i = 0;i < particleNum;i++) {
         changeColor(i,colorNormal);
       }
       attributes.color.needsUpdate = true;
@@ -196,35 +196,35 @@ function animate() {
 
 function distanceFunction (a, b){
   return Math.pow(a[0] - b[0], 2) +  Math.pow(a[1] - b[1], 2) +  Math.pow(a[2] - b[2], 2);
-};
+}
 
 function displayNearest(point) {
   if (!point&&chosenPoint)
     point = chosenPoint;
   else if (!point)
     return;
-  var pos = [
+  let pos = [
     attributes.position.array[ point.index*3 ],
     attributes.position.array[ point.index*3+1 ],
     attributes.position.array[ point.index*3+2 ]
   ];
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
-  var imagePositionsInRange = kdtree.nearest(pos, Number(relatedPointsNum)+1, relatedPointsDistance);
+  let imagePositionsInRange = kdtree.nearest(pos, Number(relatedPointsNum)+1, relatedPointsDistance);
   if (chosenPoint) {
-    for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+    for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
       changeColor(relatedPointIndex[i],colorFade);
     }
   } else {
-    for (i = 0;i < particleNum;i++) {
+    for (let i = 0;i < particleNum;i++) {
       changeColor(i,colorFade);
     }
   }
 
   relatedPointIndex = [];
 
-  for ( var j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
-    var object = imagePositionsInRange[j];
-    var objectIndex = object[0].pos;
+  for ( let j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
+    let object = imagePositionsInRange[j];
+    let objectIndex = object[0].pos;
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
@@ -234,7 +234,7 @@ function displayNearest(point) {
 
 function render() {
 
-  var geometry = particles.geometry;
+  let geometry = particles.geometry;
   attributes = geometry.attributes;
 
   raycaster.setFromCamera( mouse, camera );
@@ -250,8 +250,8 @@ function render() {
         if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
           changeColor(intersectedPoint.index,colorChosen);
         } else if  (chosenPoint) {
-          var flag = false;
-          for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+          let flag = false;
+          for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
             if (intersectedPoint.index===relatedPointIndex[i]) {
               changeColor(intersectedPoint.index,colorRelated);
               flag = true;
@@ -277,8 +277,8 @@ function render() {
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index,colorChosen);
     } else if  (chosenPoint) {
-      var flag = false;
-      for (var i = relatedPointIndex.length - 1;i >= 0;i--) {
+      let flag = false;
+      for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
         if (intersectedPoint.index===relatedPointIndex[i]) {
           changeColor(intersectedPoint.index,colorRelated);
           flag = true;
@@ -298,7 +298,7 @@ function render() {
   controls.update();
   renderer.render( scene, camera );
   if (window.beginTSNE) {
-    var cost = tsne.step();
+    let cost = tsne.step();
     document.getElementById( 'tSNEState' ).innerHTML = 'cost:' + cost + '  ' + 'iteration:' + tsne.iter;
     positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
       return a.concat(b)
@@ -307,16 +307,16 @@ function render() {
     attributes.position.needsUpdate = true;
     //kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
     isKdTreeUpdated = false;
-    console.log('update')
+    console.log('update');
     console.log(attributes.position.array);
   } else {
     if (!isKdTreeUpdated) {
       isKdTreeUpdated = true;
-      console.log('kdtree before')
+      console.log('kdtree before');
       console.log(attributes.position.array);
       kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
       attributes.position.needsUpdate = true;
-      console.log('kdtree after')
+      console.log('kdtree after');
       console.log(attributes.position.array);
     }
   }

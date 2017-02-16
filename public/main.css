@@ -39,5 +39,12 @@ main {
     padding: 0.3em;
     border-radius: 3px;
     background: rgba(147, 128, 108, 0.1); }
+    main nav #relatedNum {
+      width: 3em; }
+    main nav #relatedNumSlider {
+      width: 10em; }
+    main nav #rawData {
+      display: inline;
+      width: 16em; }
 
 /*# sourceMappingURL=main.css.map */

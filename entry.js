@@ -1,13 +1,14 @@
 /**
  * Created by exialym on 2017/2/6.
  */
-require('./public/main.css');
-var $ = require('./lib/jquery-3.1.1');
+import './public/main.css'
+import $ from './lib/jquery-3.1.1'
 
-require('./lib/three/TrackballControls');
-require('./lib/three/TypedArrayUtils');
-var threeDFigure = require('./modules/threeDimensionalFigure');
-var Detector = require('./lib/three/Detector');
+import './lib/three/TrackballControls'
+import './lib/three/TypedArrayUtils'
+import threeDFigure from './modules/threeDimensionalFigure'
+import Detector from './lib/three/Detector'
+//import fileReader from './modules/file2data'
 
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -16,14 +17,16 @@ window.threepositions = new Float32Array([]);
 window.beginTSNE = false;
 
 
-var $relatedNumSlider = $('#relatedNumSlider');
-var $relatedNumLabel = $('#relatedNum');
-var $beginTSNE = $('#beginTSNE');
-var $rawData = $('#rawData');
+let $relatedNumSlider = $('#relatedNumSlider');
+let $relatedNumLabel = $('#relatedNum');
+let $beginTSNE = $('#beginTSNE');
+let $rawData = $('#rawData');
+let $clearFile = $('#clearFile');
+var rawData = [];
 
 
 $(document).ready(function () {
-  threeDFigure.init();
+  threeDFigure.init(rawData);
   threeDFigure.animate();
   $relatedNumSlider.val(window.relatedPointsNum);
   $relatedNumSlider.attr('min','5');
@@ -35,7 +38,7 @@ $(document).ready(function () {
     threeDFigure.displayNearest();
   });
   $relatedNumLabel.bind('change', function () {
-    var number = Number($relatedNumLabel.val());
+    let number = Number($relatedNumLabel.val());
     if (isNaN(number))
       return;
     number = number > Number(window.particleNum) ? Number(window.particleNum) : number;
@@ -54,17 +57,15 @@ $(document).ready(function () {
     }
   });
   $rawData.bind('change', function (e) {
-    var files = e.target.files;
+    let files = e.target.files;
     if (files.length) {
-      var file = files[0];
-      var reader = new FileReader();//new一个FileReader实例
-      reader.onload = function() {
-        $('body').append('<pre>' + this.result + '</pre>');
-      }
-      reader.readAsText(file);
+      let file = files[0];
+
     }
   });
-
+  $clearFile.bind('click',function () {
+    $rawData.val('');
+  })
 });
 
 
