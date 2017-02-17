@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7844955e-313e-41ca-aab2-0205246c743d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entry.js" afterPath="$PROJECT_DIR$/entry.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/threeDimensionalFigure.js" afterPath="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,33 +22,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-              <folding>
-                <marker date="1487254404000" expanded="true" signature="31:837" ph="..." />
-                <marker date="1487254404000" expanded="true" signature="102:829" ph="..." />
-                <marker date="1487254404000" expanded="true" signature="195:776" ph="..." />
-                <marker date="1487254404000" expanded="true" signature="432:766" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/main.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="985">
-              <caret line="54" column="14" lean-forward="false" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
+            <state relative-caret-position="440">
+              <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entry.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="entry.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1254">
-              <caret line="59" column="31" lean-forward="true" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+            <state relative-caret-position="1958">
+              <caret line="91" column="42" lean-forward="true" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
               <folding>
                 <element signature="e#43#69#0" expanded="true" />
               </folding>
@@ -55,11 +41,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file2data.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Detector.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/three/Detector.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+              <folding>
+                <marker date="1487067096000" expanded="true" signature="1192:1202" ph="..." />
+                <marker date="1487067096000" expanded="true" signature="1290:1300" ph="..." />
+                <marker date="1487067096000" expanded="true" signature="1456:1466" ph="..." />
+                <marker date="1487067096000" expanded="true" signature="1553:1563" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="file2data.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/file2data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+            <state relative-caret-position="594">
+              <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -88,8 +89,8 @@
       <file leaf-file-name="threeDimensionalFigure.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="371">
+              <caret line="279" column="54" lean-forward="true" selection-start-line="279" selection-start-column="4" selection-end-line="279" selection-end-column="54" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#44#87#0" expanded="true" />
@@ -144,6 +145,13 @@
       <find>data</find>
       <find>Color</find>
       <find>threepositions</find>
+      <find>attributes</find>
+      <find>particles</find>
+      <find>kdtree</find>
+      <find>positions</find>
+      <find>intersects</find>
+      <find>mouseFlag</find>
+      <find>relatedPointIndex</find>
     </findStrings>
     <replaceStrings>
       <replace>intersectedPoint</replace>
@@ -161,12 +169,12 @@
         <option value="$PROJECT_DIR$/lib/tsne1.js" />
         <option value="$PROJECT_DIR$/modules/example_data.js" />
         <option value="$PROJECT_DIR$/lib/three/Detector.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/public/main.scss" />
-        <option value="$PROJECT_DIR$/modules/file2data.js" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
-        <option value="$PROJECT_DIR$/entry.js" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
+        <option value="$PROJECT_DIR$/modules/file2data.js" />
+        <option value="$PROJECT_DIR$/entry.js" />
       </list>
     </option>
   </component>
@@ -436,12 +444,13 @@
       <workItem from="1486978644600" duration="1359000" />
       <workItem from="1487066014678" duration="1147000" />
       <workItem from="1487155416987" duration="1711000" />
-      <workItem from="1487251611566" duration="5526000" />
+      <workItem from="1487251611566" duration="5585000" />
+      <workItem from="1487312234768" duration="11346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31149000" />
+    <option name="totallyTimeSpent" value="42554000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -511,7 +520,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -535,7 +543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="43186">
           <caret line="1963" column="21" lean-forward="false" selection-start-line="1963" selection-start-column="9" selection-end-line="1963" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -550,12 +557,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="18" column="26" lean-forward="false" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-          <folding>
-            <marker date="1487254404000" expanded="true" signature="31:837" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="102:829" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="195:776" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="432:766" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -592,7 +594,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="43186">
           <caret line="1963" column="21" lean-forward="false" selection-start-line="1963" selection-start-column="9" selection-end-line="1963" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -673,7 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="43186">
           <caret line="1963" column="21" lean-forward="false" selection-start-line="1963" selection-start-column="9" selection-end-line="1963" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -688,7 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -697,39 +696,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4312">
           <caret line="196" column="28" lean-forward="false" selection-start-line="196" selection-start-column="22" selection-end-line="196" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/three/Detector.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-          <folding>
-            <marker date="1487067096000" expanded="true" signature="1192:1202" ph="..." />
-            <marker date="1487067096000" expanded="true" signature="1290:1300" ph="..." />
-            <marker date="1487067096000" expanded="true" signature="1456:1466" ph="..." />
-            <marker date="1487067096000" expanded="true" signature="1553:1563" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-          <folding>
-            <marker date="1487254404000" expanded="true" signature="31:837" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="102:829" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="195:776" ph="..." />
-            <marker date="1487254404000" expanded="true" signature="432:766" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/main.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="985">
+        <state relative-caret-position="1188">
           <caret line="54" column="14" lean-forward="false" selection-start-line="54" selection-start-column="14" selection-end-line="54" selection-end-column="14" />
           <folding />
         </state>
@@ -767,27 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1254">
-          <caret line="59" column="31" lean-forward="true" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
-          <folding>
-            <element signature="e#43#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#44#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/example_data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -796,11 +747,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/three/Detector.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="24" lean-forward="false" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+          <folding>
+            <marker date="1487067096000" expanded="true" signature="1192:1202" ph="..." />
+            <marker date="1487067096000" expanded="true" signature="1290:1300" ph="..." />
+            <marker date="1487067096000" expanded="true" signature="1456:1466" ph="..." />
+            <marker date="1487067096000" expanded="true" signature="1553:1563" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/file2data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+        <state relative-caret-position="594">
+          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="25" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="279" column="54" lean-forward="true" selection-start-line="279" selection-start-column="4" selection-end-line="279" selection-end-column="54" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#44#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1958">
+          <caret line="91" column="42" lean-forward="true" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+          <folding>
+            <element signature="e#43#69#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
