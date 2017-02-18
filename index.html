@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>HGTDVS</title>
+  <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/flat-ui/flat-ui.css">
 </head>
 <body>
   <header>High-dimensional Geographical & Timing Data Visualization System</header>
@@ -19,6 +21,7 @@
       <span>neighbors</span><input id="relatedNumSlider" type="range"/><input id="relatedNum" type="text"/><br>
       <label id="DataSourceLabel">Using example data:</label><input id="beginTSNE" type="button" value="begin"/><br>
       <span id="tSNEState"></span>
+      <div id="slider"></div>
     </nav>
   </main>
   <script src="./public/bundle.js"></script>

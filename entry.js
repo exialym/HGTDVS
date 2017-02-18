@@ -2,13 +2,14 @@
  * Created by exialym on 2017/2/6.
  */
 import './public/main.css'
-import $ from './lib/jquery-3.1.1'
 
+import $ from './lib/jquery-3.1.1'
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import Detector from './lib/three/Detector'
 import * as fileReader from './modules/file2data'
+import './lib/jqueryUI/jquery-ui'
 
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -101,7 +102,17 @@ $(document).ready(function () {
     $beginTSNE.val('begin');
     $beginTSNE.removeAttr('disabled');
     document.getElementById( 'tSNEState' ).innerHTML = '';
-  })
+  });
+  var $slider = $('#slider');
+  if ($slider.length > 0) {
+    $slider.slider({
+      max: 15,
+      step: 1,
+      value: 3,
+      orientation: 'horizontal',
+      range: 'min'
+    });
+  }
 });
 
 
