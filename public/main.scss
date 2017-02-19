@@ -1,16 +1,45 @@
+@mixin change-button($backgroundBefore, $borderBefore, $colorBefore, $backgroundAfter, $borderAfter, $colorAfter) {
+  border:1px solid $borderBefore;
+  background-color: $backgroundBefore;
+  color:$colorBefore;
+  &:hover {
+    border-color: $borderAfter;
+    background-color: $backgroundAfter;
+    color:$colorAfter;
+  }
+}
+.btn-xs {
+  padding: 4px 4px;
+  font-size: 12px;
+  line-height: 1.083;
+  border-radius: 4px;
+}
 body {
   display: flex;
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  font-family: 'Monaco', Georgia, Serif;
+  font-family: 'Monaco', Helvetica, Arial, sans-serif;
+  min-width:1280px;
 }
 header {
   flex: none;
   color:white;
-  padding: 1em;
+  padding: 0.5em 1em;
   text-align: left;
   background-color: #19a1f2;
+  overflow: hidden;
+  .btn {
+    float:right;
+    margin:0;
+    font-size: 15px;
+    line-height: 1.1;
+    padding:6px 12px;
+    @include change-button(transparent,white,white,#15BF63,#15BF63,white);
+  }
+  #rawData {
+    display: none;
+  }
 }
 main {
   display: flex;
@@ -38,22 +67,81 @@ main {
 
   }
   nav {
-    font-size:13px;
+    font-size:12px;
     font-weight: 100;
-    flex: 0 0 18.7em;
+    flex: 0 0 20em;
     padding: 0.3em;
     border-radius: 3px;
-    background: rgba(147, 128, 108, 0.1);
-    #relatedNum {
-      width: 3em;
+    background: #E6F3F8;
+    .file-op{
+      overflow: hidden;
+      #DataSourceLabel {
+        float:left;
+        font-size:12px;
+        margin:0;
+        margin-top:2px;
+        max-width: 15em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      #clearFile {
+        float:right;
+        @include change-button(transparent,red,red,red,red,white);
+      }
     }
-    #relatedNumSlider {
-      width:10em;
+    .neighbors-op {
+      margin-top:5px;
+      overflow: hidden;
+      p {
+        float:left;
+        font-size:12px;
+        margin:0;
+        margin-top:2px;
+      }
+      .ui-slider {
+        background: #bdbdbd;
+        height: 2px;
+        margin: 11px 0px 11px 6px;
+      }
+      .ui-slider-range {
+        background-color: #19a1f2;
+      }
+      .ui-slider-handle {
+        background-color: #19a1f2;
+        height: 10px;
+        width: 10px;
+        margin-left:-5px;
+        top:-3.5px;
+      }
+      .ui-slider-horizontal .ui-slider-handle[style*="100"] {
+        margin-left:-5px;
+      }
+      #relatedNumSlider {
+        float:left;
+        width:9em;
+      }
+      #relatedNum {
+        float:right;
+        width: 4em;
+        padding:0;
+        border:1px solid #A4D9F9;
+        border-radius: 4px;
+        font-family: "Lato", Helvetica, Arial, sans-serif;
+      }
     }
-    #rawData {
-      display: inline;
-      width:16em;
+    .begin-op {
+      overflow: hidden;
+      #beginTSNE{
+        float:left;
+        margin-right:5px;
+        @include change-button(transparent,#19a1f2,#19a1f2,#19a1f2,#19a1f2,white);
+      }
     }
+
+
+
+
   }
 
 }

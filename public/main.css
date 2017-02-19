@@ -1,16 +1,39 @@
+.btn-xs {
+  padding: 4px 4px;
+  font-size: 12px;
+  line-height: 1.083;
+  border-radius: 4px; }
+
 body {
   display: flex;
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  font-family: 'Monaco', Georgia, Serif; }
+  font-family: 'Monaco', Helvetica, Arial, sans-serif;
+  min-width: 1280px; }
 
 header {
   flex: none;
   color: white;
-  padding: 1em;
+  padding: 0.5em 1em;
   text-align: left;
-  background-color: #19a1f2; }
+  background-color: #19a1f2;
+  overflow: hidden; }
+  header .btn {
+    float: right;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.1;
+    padding: 6px 12px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white; }
+    header .btn:hover {
+      border-color: #15BF63;
+      background-color: #15BF63;
+      color: white; }
+  header #rawData {
+    display: none; }
 
 main {
   display: flex;
@@ -33,18 +56,75 @@ main {
       flex: none;
       flex: 0 0 5em; }
   main nav {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 100;
-    flex: 0 0 18.7em;
+    flex: 0 0 20em;
     padding: 0.3em;
     border-radius: 3px;
-    background: rgba(147, 128, 108, 0.1); }
-    main nav #relatedNum {
-      width: 3em; }
-    main nav #relatedNumSlider {
-      width: 10em; }
-    main nav #rawData {
-      display: inline;
-      width: 16em; }
+    background: #E6F3F8; }
+    main nav .file-op {
+      overflow: hidden; }
+      main nav .file-op #DataSourceLabel {
+        float: left;
+        font-size: 12px;
+        margin: 0;
+        margin-top: 2px;
+        max-width: 15em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; }
+      main nav .file-op #clearFile {
+        float: right;
+        border: 1px solid red;
+        background-color: transparent;
+        color: red; }
+        main nav .file-op #clearFile:hover {
+          border-color: red;
+          background-color: red;
+          color: white; }
+    main nav .neighbors-op {
+      margin-top: 5px;
+      overflow: hidden; }
+      main nav .neighbors-op p {
+        float: left;
+        font-size: 12px;
+        margin: 0;
+        margin-top: 2px; }
+      main nav .neighbors-op .ui-slider {
+        background: #bdbdbd;
+        height: 2px;
+        margin: 11px 0px 11px 6px; }
+      main nav .neighbors-op .ui-slider-range {
+        background-color: #19a1f2; }
+      main nav .neighbors-op .ui-slider-handle {
+        background-color: #19a1f2;
+        height: 10px;
+        width: 10px;
+        margin-left: -5px;
+        top: -3.5px; }
+      main nav .neighbors-op .ui-slider-horizontal .ui-slider-handle[style*="100"] {
+        margin-left: -5px; }
+      main nav .neighbors-op #relatedNumSlider {
+        float: left;
+        width: 9em; }
+      main nav .neighbors-op #relatedNum {
+        float: right;
+        width: 4em;
+        padding: 0;
+        border: 1px solid #A4D9F9;
+        border-radius: 4px;
+        font-family: "Lato", Helvetica, Arial, sans-serif; }
+    main nav .begin-op {
+      overflow: hidden; }
+      main nav .begin-op #beginTSNE {
+        float: left;
+        margin-right: 5px;
+        border: 1px solid #19a1f2;
+        background-color: transparent;
+        color: #19a1f2; }
+        main nav .begin-op #beginTSNE:hover {
+          border-color: #19a1f2;
+          background-color: #19a1f2;
+          color: white; }
 
 /*# sourceMappingURL=main.css.map */

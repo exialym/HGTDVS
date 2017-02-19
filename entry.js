@@ -21,6 +21,7 @@ window.beginTSNE = 0;//0:停止；1：进行；2：暂停
 let $relatedNumSlider = $('#relatedNumSlider');
 let $relatedNumLabel = $('#relatedNum');
 let $beginTSNE = $('#beginTSNE');
+let $chooseFile = $('#chooseFile');
 let $rawData = $('#rawData');
 let $clearFile = $('#clearFile');
 let $DataSourceLabel = $('#DataSourceLabel');
@@ -28,24 +29,40 @@ let rawData = [];
 
 
 $(document).ready(function () {
+  $relatedNumSlider.slider({
+    min: 5,
+    max: 100,
+    step: 1,
+    value: 100,
+    orientation: 'horizontal',
+    range: 'min'
+  });
   threeDFigure.init(rawData);
   threeDFigure.animate();
-  $relatedNumSlider.val(window.relatedPointsNum);
-  $relatedNumSlider.attr('min','5');
-  $relatedNumSlider.attr('max',window.particleNum+'');
-  $relatedNumLabel.val(window.relatedPointsNum);
-  $relatedNumSlider.bind('change', function () {
-    window.relatedPointsNum = $relatedNumSlider.val();
-    $relatedNumLabel.val(window.relatedPointsNum);
-    threeDFigure.displayNearest();
+  $relatedNumSlider.slider({
+    min: 5,
+    max: window.particleNum,
+    step: 1,
+    value: window.relatedPointsNum,
+    orientation: 'horizontal',
+    range: 'min',
+    change:function () {
+      window.relatedPointsNum = $relatedNumSlider.slider( "value" );
+      $relatedNumLabel.val(window.relatedPointsNum);
+      threeDFigure.displayNearest();
+    }
   });
+  $relatedNumLabel.val(window.relatedPointsNum);
+  // $relatedNumSlider.bind('change', function () {
+  //
+  // });
   $relatedNumLabel.bind('change', function () {
     let number = Number($relatedNumLabel.val());
     if (isNaN(number))
       return;
     number = number > Number(window.particleNum) ? Number(window.particleNum) : number;
     window.relatedPointsNum = number;
-    $relatedNumSlider.val(window.relatedPointsNum);
+    $relatedNumSlider.slider( "value" , window.relatedPointsNum);
     $relatedNumLabel.val(window.relatedPointsNum);
     threeDFigure.displayNearest();
   });
@@ -57,14 +74,17 @@ $(document).ready(function () {
       $relatedNumSlider.attr('min','5');
       $relatedNumSlider.attr('max',window.particleNum+'');
       $relatedNumLabel.val(window.relatedPointsNum);
-      $beginTSNE.val('pause');
+      $beginTSNE.html('pause');
     } else if (window.beginTSNE==1){
       window.beginTSNE = 2;
-      $beginTSNE.val('continue');
+      $beginTSNE.html('continue');
     } else {
       window.beginTSNE = 1;
-      $beginTSNE.val('pause');
+      $beginTSNE.html('pause');
     }
+  });
+  $chooseFile.bind('click',function () {
+    $rawData.click();
   });
   $rawData.bind('change', function (e) {
     let files = e.target.files;
@@ -77,19 +97,15 @@ $(document).ready(function () {
         if (res.isValid) {
           rawData = res.data;
           window.beginTSNE = 0;
-          $DataSourceLabel.html('Using ' + file.name + ':');
-          $beginTSNE.val('begin');
+          $DataSourceLabel.html('Source:' + file.name);
+          $beginTSNE.html('begin');
           document.getElementById( 'tSNEState' ).innerHTML = '';
           $beginTSNE.removeAttr('disabled');
         } else {
-          // rawData = [];
-          // $DataSourceLabel.html('Using example data:');
           $beginTSNE.removeAttr('disabled');
         }
       };
       reader.onerror = function() {
-        // rawData = [];
-        // $DataSourceLabel.html('Using example data:');
         $beginTSNE.removeAttr('disabled');
       }
       reader.readAsText(file);
@@ -98,21 +114,14 @@ $(document).ready(function () {
   $clearFile.bind('click',function () {
     $rawData.val('');
     window.beginTSNE = 0;
-    $DataSourceLabel.html('Using example data:');
-    $beginTSNE.val('begin');
+    $DataSourceLabel.html('Source:example data');
+    $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');
     document.getElementById( 'tSNEState' ).innerHTML = '';
   });
-  var $slider = $('#slider');
-  if ($slider.length > 0) {
-    $slider.slider({
-      max: 15,
-      step: 1,
-      value: 3,
-      orientation: 'horizontal',
-      range: 'min'
-    });
-  }
+
+
+
 });
 
 

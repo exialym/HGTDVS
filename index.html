@@ -7,7 +7,11 @@
   <link rel="stylesheet" href="lib/flat-ui/flat-ui.css">
 </head>
 <body>
-  <header>High-dimensional Geographical & Timing Data Visualization System</header>
+  <header>
+    High-dimensional Geographical & Timing Data Visualization System
+    <button id="chooseFile" class="btn">choose file</button>
+    <input type="file" id="rawData">
+  </header>
   <main>
     <div class="figures">
       <div class="figurs-top">
@@ -17,11 +21,22 @@
       <div id="parallel" class="parallel">parallel</div>
     </div>
     <nav>
-      <input type="file" id="rawData"><button id="clearFile">clear</button><br>
-      <span>neighbors</span><input id="relatedNumSlider" type="range"/><input id="relatedNum" type="text"/><br>
-      <label id="DataSourceLabel">Using example data:</label><input id="beginTSNE" type="button" value="begin"/><br>
-      <span id="tSNEState"></span>
-      <div id="slider"></div>
+      <div class="file-op">
+        <p id="DataSourceLabel">Source:example data</p>
+        <button id="clearFile" class="btn btn-xs">clear</button>
+      </div>
+      <div class="neighbors-op">
+        <p>neighbors</p>
+        <div id="relatedNumSlider"></div>
+        <input id="relatedNum" type="text"/>
+      </div>
+      <div class="begin-op">
+        <button id="beginTSNE" class="btn btn-sm">begin</button>
+        <div id="tSNEState"></div>
+      </div>
+
+
+
     </nav>
   </main>
   <script src="./public/bundle.js"></script>
