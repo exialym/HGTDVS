@@ -80,6 +80,7 @@ renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( webglW, webglH );
 
 container.appendChild( renderer.domElement );
+container.style.height = webglH + 'px';
 
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
