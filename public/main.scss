@@ -25,7 +25,7 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  font-family: 'Monaco', 'Microsoft Yahei', Helvetica, Arial, sans-serif;
+  font-family: 'Monaco', Helvetica, Georgia, Arial, sans-serif;
   min-width:1280px;
 }
 header {
@@ -132,8 +132,8 @@ main {
         width: 4em;
         padding:0;
         border:1px solid #A4D9F9;
+        height:22px;
         border-radius: 4px;
-        font-family: "Lato", Helvetica, Arial, sans-serif;
         text-align: center;
       }
     }
