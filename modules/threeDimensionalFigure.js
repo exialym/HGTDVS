@@ -277,7 +277,7 @@ function render() {
   renderer.render( scene, camera );
   if (window.beginTSNE===1) {
     let cost = tsne.step();
-    document.getElementById( 'tSNEState' ).innerHTML = 'cost:' + cost.toFixed(4) + '\n' + 'iteration:' + tsne.iter;
+    document.getElementById( 'tSNEState' ).innerHTML = 'Cost:' + cost.toFixed(10) + '<br>' + 'Iteration:' + tsne.iter;
     positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
       return a.concat(b)
     }));

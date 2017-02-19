@@ -14,6 +14,12 @@
   line-height: 1.083;
   border-radius: 4px;
 }
+.btn-sm{
+  padding: 4px 9px;
+  font-size: 13px;
+  line-height: 1.385;
+  border-radius: 4px;
+}
 body {
   display: flex;
   flex-direction: column;
@@ -128,14 +134,21 @@ main {
         border:1px solid #A4D9F9;
         border-radius: 4px;
         font-family: "Lato", Helvetica, Arial, sans-serif;
+        text-align: center;
       }
     }
     .begin-op {
+      margin-top:5px;
       overflow: hidden;
       #beginTSNE{
         float:left;
         margin-right:5px;
+        width: 90px;
         @include change-button(transparent,#19a1f2,#19a1f2,#19a1f2,#19a1f2,white);
+      }
+      #tSNEState{
+        float:left;
+        line-height:14px;
       }
     }
 

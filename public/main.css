@@ -4,6 +4,12 @@
   line-height: 1.083;
   border-radius: 4px; }
 
+.btn-sm {
+  padding: 4px 9px;
+  font-size: 13px;
+  line-height: 1.385;
+  border-radius: 4px; }
+
 body {
   display: flex;
   flex-direction: column;
@@ -113,12 +119,15 @@ main {
         padding: 0;
         border: 1px solid #A4D9F9;
         border-radius: 4px;
-        font-family: "Lato", Helvetica, Arial, sans-serif; }
+        font-family: "Lato", Helvetica, Arial, sans-serif;
+        text-align: center; }
     main nav .begin-op {
+      margin-top: 5px;
       overflow: hidden; }
       main nav .begin-op #beginTSNE {
         float: left;
         margin-right: 5px;
+        width: 90px;
         border: 1px solid #19a1f2;
         background-color: transparent;
         color: #19a1f2; }
@@ -126,5 +135,8 @@ main {
           border-color: #19a1f2;
           background-color: #19a1f2;
           color: white; }
+      main nav .begin-op #tSNEState {
+        float: left;
+        line-height: 14px; }
 
 /*# sourceMappingURL=main.css.map */
