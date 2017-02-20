@@ -20,10 +20,16 @@ module.exports = {
         test: /\.(png|jpg)$/,
         loader: 'url-loader?limit=8192'
       },
-      { test: /\.js$/,
+      {
+        test: /\.js$/,
         exclude: /(node_modules|lib)/,
         loader: 'babel-loader?presets[]=es2015'
+      },
+      {
+        test: /\.(ttf|eot)$/,
+        loader: "file-loader"
       }
+
     ]
   }
 }

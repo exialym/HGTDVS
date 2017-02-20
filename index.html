@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>HGTDVS</title>
-  <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="lib/flat-ui/flat-ui.css">
+  <link rel="stylesheet" href="public/main.css">
+
+
 </head>
 <body>
   <header>
@@ -34,11 +37,24 @@
         <button id="beginTSNE" class="btn btn-sm">begin</button>
         <div id="tSNEState"></div>
       </div>
-
-
-
     </nav>
   </main>
+  <div class="modal fade" tabindex="-1" role="dialog" id="Warning">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <p class="modal-title">Oh no</p>
+        </div>
+        <div class="modal-body">
+          <span>Please Use <a href='http://www.google.cn/chrome/browser/'>Chrome</a> or <a href='http://www.firefox.com.cn/download/'>Firefox</a> to gain the full experience!</span>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+  <script src="lib/jquery-3.1.1.js"></script>
+  <script src="lib/jqueryUI/jquery-ui.js"></script>
+  <script src="lib/bootstrap/bootstrap.js"></script>
   <script src="./public/bundle.js"></script>
 </body>
 </html>

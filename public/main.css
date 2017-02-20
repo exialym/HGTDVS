@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Monacohackwin';
+  src: url("../lib/Monaco.ttf"); }
+@font-face {
+  font-family: 'Monacohackie';
+  src: url("../lib/Monaco.eot"); }
 .btn-xs {
   padding: 4px 4px;
   font-size: 12px;
@@ -13,9 +19,10 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  font-size: 14px;
+  height: 100vh;
   margin: 0;
-  font-family: 'Monaco', Helvetica, Georgia, Arial, sans-serif;
+  font-family: 'Monaco', 'Monacohackwin', 'Monacohackie',Helvetica, Georgia, Arial, sans-serif;
   min-width: 1280px; }
 
 header {
@@ -23,6 +30,7 @@ header {
   color: white;
   padding: 0.5em 1em;
   text-align: left;
+  font-size: 18px;
   background-color: #19a1f2;
   overflow: hidden; }
   header .btn {

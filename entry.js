@@ -1,42 +1,35 @@
 /**
  * Created by exialym on 2017/2/6.
  */
-import './public/main.css'
-
-import $ from './lib/jquery-3.1.1'
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import Detector from './lib/three/Detector'
 import * as fileReader from './modules/file2data'
-import './lib/jqueryUI/jquery-ui'
 
-if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0;//0:停止；1：进行；2：暂停
 
 
-let $relatedNumSlider = $('#relatedNumSlider');
-let $relatedNumLabel = $('#relatedNum');
-let $beginTSNE = $('#beginTSNE');
-let $chooseFile = $('#chooseFile');
-let $rawData = $('#rawData');
-let $clearFile = $('#clearFile');
-let $DataSourceLabel = $('#DataSourceLabel');
-let rawData = [];
+
 
 
 $(document).ready(function () {
-  $relatedNumSlider.slider({
-    min: 5,
-    max: 100,
-    step: 1,
-    value: 100,
-    orientation: 'horizontal',
-    range: 'min'
-  });
+  let $relatedNumSlider = $('#relatedNumSlider');
+  let $relatedNumLabel = $('#relatedNum');
+  let $beginTSNE = $('#beginTSNE');
+  let $chooseFile = $('#chooseFile');
+  let $rawData = $('#rawData');
+  let $clearFile = $('#clearFile');
+  let $DataSourceLabel = $('#DataSourceLabel');
+  let rawData = [];
+  if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
+    $('#Warning').modal();
+  }
+
+
   threeDFigure.init(rawData);
   threeDFigure.animate();
   $relatedNumSlider.slider({
@@ -53,9 +46,6 @@ $(document).ready(function () {
     }
   });
   $relatedNumLabel.val(window.relatedPointsNum);
-  // $relatedNumSlider.bind('change', function () {
-  //
-  // });
   $relatedNumLabel.bind('change', function () {
     let number = Number($relatedNumLabel.val());
     if (isNaN(number))
