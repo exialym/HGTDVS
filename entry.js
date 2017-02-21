@@ -1,10 +1,13 @@
 /**
  * Created by exialym on 2017/2/6.
  */
+import Detector from './lib/three/Detector'
+if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
+  $('#Warning').modal();
+}
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
-import Detector from './lib/three/Detector'
 import * as fileReader from './modules/file2data'
 
 
@@ -25,13 +28,10 @@ $(document).ready(function () {
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let rawData = [];
-  if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
-    $('#Warning').modal();
-  }
 
 
-  threeDFigure.init(rawData);
-  threeDFigure.animate();
+
+  //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
     min: 5,
     max: window.particleNum,

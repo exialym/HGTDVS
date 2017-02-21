@@ -33,11 +33,11 @@ let tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
 
 //init WebGL
-let kdtree, positions;
-let intersectedPoint, chosenPoint;
+
 let mouseFlag = [];
 let relatedPointIndex = [];
 let isKdTreeUpdated = false;
+let animationFlag;
 
 let container = document.getElementById( 'webgl' );
 
@@ -90,40 +90,73 @@ container.addEventListener( 'mousemove', onDocumentMouseMove, false );
 container.addEventListener('mousedown', onContainerMouseDown, false );
 container.addEventListener('mouseup', onContainerMouseUp, false );
 
+window.particleNum = exampleRaw.length;
+let intersectedPoint = undefined;
+let chosenPoint = undefined;
+let positions = new Float32Array( window.particleNum * 3 );
+let colors = new Float32Array( window.particleNum * 3 );
+
+let n = 100, n2 = n / 2; // particles spread in the cube
+for ( let i = 0; i < positions.length; i += 3 ) {
+  let x = Math.random() * n - n2;
+  let y = Math.random() * n - n2;
+  let z = Math.random() * n - n2;
+  positions[ i ]     = x;
+  positions[ i + 1 ] = y;
+  positions[ i + 2 ] = z;
+  colors[ i ]     = colorNormal.r;
+  colors[ i + 1 ] = colorNormal.g;
+  colors[ i + 2 ] = colorNormal.b;
+}
+
+//init points
+geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+geometry.computeBoundingSphere();
+
+//build kdtree
+let kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
+isKdTreeUpdated = true;
+animate();
+
 
 function init(rawData) {
-  if (rawData.length===0)
-    rawData = exampleRaw;
-
-  tsne.initDataRaw(rawData);
-
-  window.particleNum = rawData.length;
-  intersectedPoint = undefined;
-  chosenPoint = undefined;
-  positions = new Float32Array( window.particleNum * 3 );
-  let colors = new Float32Array( window.particleNum * 3 );
-
-  let n = 100, n2 = n / 2; // particles spread in the cube
-  for ( let i = 0; i < positions.length; i += 3 ) {
-    let x = Math.random() * n - n2;
-    let y = Math.random() * n - n2;
-    let z = Math.random() * n - n2;
-    positions[ i ]     = x;
-    positions[ i + 1 ] = y;
-    positions[ i + 2 ] = z;
-    colors[ i ]     = colorNormal.r;
-    colors[ i + 1 ] = colorNormal.g;
-    colors[ i + 2 ] = colorNormal.b;
+  if (animationFlag) {
+    cancelAnimationFrame(animationFlag);
+    animationFlag = undefined;
   }
+  $('#Warning').on('shown.bs.modal', function () {
+    if (rawData.length===0)
+      rawData = exampleRaw;
 
-  //init points
-  geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-  geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
-  geometry.computeBoundingSphere();
+    tsne.initDataRaw(rawData);
 
-  //build kdtree
-  kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
-  isKdTreeUpdated = true;
+    window.particleNum = rawData.length;
+    intersectedPoint = undefined;
+    chosenPoint = undefined;
+    positions = new Float32Array( window.particleNum * 3 );
+    colors = new Float32Array( window.particleNum * 3 );
+
+    for ( let i = 0; i < positions.length; i += 3 ) {
+      colors[ i ]     = colorNormal.r;
+      colors[ i + 1 ] = colorNormal.g;
+      colors[ i + 2 ] = colorNormal.b;
+    }
+
+    //init points
+    geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+    geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+    geometry.computeBoundingSphere();
+
+    //build kdtree
+    kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
+    isKdTreeUpdated = true;
+    $('#Warning').modal('hide');
+    if (!animationFlag)
+      animate();
+  });
+  $('#Warning').modal();
+
 }
 
 function onContainerMouseDown(event) {
@@ -172,7 +205,7 @@ function onWindowResize() {
 }
 
 function animate() {
-  requestAnimationFrame( animate );
+  animationFlag = requestAnimationFrame( animate );
   render();
 }
 
