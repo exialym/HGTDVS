@@ -44736,13 +44736,11 @@ var tsne = new _tsne2.default.tSNE(opt); // create a tSNE instance
 
 
 //init WebGL
-var kdtree = void 0,
-    positions = void 0;
-var intersectedPoint = void 0,
-    chosenPoint = void 0;
+
 var mouseFlag = [];
 var relatedPointIndex = [];
 var isKdTreeUpdated = false;
+var animationFlag = void 0;
 
 var container = document.getElementById('webgl');
 
@@ -44794,39 +44792,95 @@ container.addEventListener('mousemove', onDocumentMouseMove, false);
 container.addEventListener('mousedown', onContainerMouseDown, false);
 container.addEventListener('mouseup', onContainerMouseUp, false);
 
+window.particleNum = _example_data2.default.length;
+$('relatedNumSlider').slider("max", window.particleNum);
+var intersectedPoint = undefined;
+var chosenPoint = undefined;
+var positions = new Float32Array(window.particleNum * 3);
+var colors = new Float32Array(window.particleNum * 3);
+
+var n = 100,
+    n2 = n / 2; // particles spread in the cube
+for (var i = 0; i < positions.length; i += 3) {
+  var x = Math.random() * n - n2;
+  var y = Math.random() * n - n2;
+  var z = Math.random() * n - n2;
+  positions[i] = x;
+  positions[i + 1] = y;
+  positions[i + 2] = z;
+  colors[i] = colorNormal.r;
+  colors[i + 1] = colorNormal.g;
+  colors[i + 2] = colorNormal.b;
+}
+
+//init points
+geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+geometry.computeBoundingSphere();
+
+//build kdtree
+var kdtree = new THREE.TypedArrayUtils.Kdtree(positions, distanceFunction, 3);
+isKdTreeUpdated = true;
+animate();
+
 function init(rawData) {
-  if (rawData.length === 0) rawData = _example_data2.default;
-
-  tsne.initDataRaw(rawData);
-
-  window.particleNum = rawData.length;
-  intersectedPoint = undefined;
-  chosenPoint = undefined;
-  positions = new Float32Array(window.particleNum * 3);
-  var colors = new Float32Array(window.particleNum * 3);
-
-  var n = 100,
-      n2 = n / 2; // particles spread in the cube
-  for (var i = 0; i < positions.length; i += 3) {
-    var x = Math.random() * n - n2;
-    var y = Math.random() * n - n2;
-    var z = Math.random() * n - n2;
-    positions[i] = x;
-    positions[i + 1] = y;
-    positions[i + 2] = z;
-    colors[i] = colorNormal.r;
-    colors[i + 1] = colorNormal.g;
-    colors[i + 2] = colorNormal.b;
+  if (animationFlag) {
+    cancelAnimationFrame(animationFlag);
+    animationFlag = undefined;
   }
+  $('#Wait').on('shown.bs.modal', function () {
+    if (rawData.length === 0) rawData = _example_data2.default;
 
-  //init points
-  geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
-  geometry.computeBoundingSphere();
+    tsne.initDataRaw(rawData);
 
-  //build kdtree
-  kdtree = new THREE.TypedArrayUtils.Kdtree(positions, distanceFunction, 3);
-  isKdTreeUpdated = true;
+    window.particleNum = rawData.length;
+    $('#relatedNumSlider').slider({
+      min: 5,
+      max: window.particleNum,
+      step: 1,
+      value: window.relatedPointsNum,
+      orientation: 'horizontal',
+      range: 'min',
+      change: function change() {
+        window.relatedPointsNum = $('#relatedNumSlider').slider("value");
+        $('#relatedNumLabel').val(window.relatedPointsNum);
+        displayNearest();
+      }
+    });
+    intersectedPoint = undefined;
+    chosenPoint = undefined;
+    positions = new Float32Array(window.particleNum * 3);
+    colors = new Float32Array(window.particleNum * 3);
+
+    for (var _i = 0; _i < positions.length; _i += 3) {
+      var _x = Math.random() * n - n2;
+      var _y = Math.random() * n - n2;
+      var _z = Math.random() * n - n2;
+      positions[_i] = _x;
+      positions[_i + 1] = _y;
+      positions[_i + 2] = _z;
+      colors[_i] = colorNormal.r;
+      colors[_i + 1] = colorNormal.g;
+      colors[_i + 2] = colorNormal.b;
+    }
+    //Todo
+    // 不想开始tsne前都先random位置，但是使用tsne的第一步来初始化位置会使得鼠标交互识别不到鼠标下的点，原因未知
+    // positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
+    //   return a.concat(b)
+    // }));
+
+    //init points
+    geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.computeBoundingSphere();
+
+    //build kdtree
+    kdtree = new THREE.TypedArrayUtils.Kdtree(positions, distanceFunction, 3);
+    isKdTreeUpdated = true;
+    $('#Wait').modal('hide');
+    if (!animationFlag) animate();
+  });
+  $('#Wait').modal();
 }
 
 function onContainerMouseDown(event) {
@@ -44849,8 +44903,8 @@ function onContainerMouseUp(event) {
       chosenPoint = intersectedPoint;
     } else {
       chosenPoint = undefined;
-      for (var i = 0; i < particleNum; i++) {
-        changeColor(i, colorNormal);
+      for (var _i2 = 0; _i2 < particleNum; _i2++) {
+        changeColor(_i2, colorNormal);
       }
       attributes.color.needsUpdate = true;
     }
@@ -44873,7 +44927,7 @@ function onWindowResize() {
 }
 
 function animate() {
-  requestAnimationFrame(animate);
+  animationFlag = requestAnimationFrame(animate);
   render();
 }
 
@@ -44887,12 +44941,12 @@ function displayNearest(point) {
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
   var imagePositionsInRange = kdtree.nearest(pos, Number(relatedPointsNum) + 1, relatedPointsDistance);
   if (chosenPoint) {
-    for (var i = relatedPointIndex.length - 1; i >= 0; i--) {
-      changeColor(relatedPointIndex[i], colorFade);
+    for (var _i3 = relatedPointIndex.length - 1; _i3 >= 0; _i3--) {
+      changeColor(relatedPointIndex[_i3], colorFade);
     }
   } else {
-    for (var _i = 0; _i < particleNum; _i++) {
-      changeColor(_i, colorFade);
+    for (var _i4 = 0; _i4 < particleNum; _i4++) {
+      changeColor(_i4, colorFade);
     }
   }
 
@@ -44924,8 +44978,8 @@ function render() {
           changeColor(intersectedPoint.index, colorChosen);
         } else if (chosenPoint) {
           var flag = false;
-          for (var i = relatedPointIndex.length - 1; i >= 0; i--) {
-            if (intersectedPoint.index === relatedPointIndex[i]) {
+          for (var _i5 = relatedPointIndex.length - 1; _i5 >= 0; _i5--) {
+            if (intersectedPoint.index === relatedPointIndex[_i5]) {
               changeColor(intersectedPoint.index, colorRelated);
               flag = true;
               break;
@@ -44951,8 +45005,8 @@ function render() {
       changeColor(intersectedPoint.index, colorChosen);
     } else if (chosenPoint) {
       var _flag = false;
-      for (var _i2 = relatedPointIndex.length - 1; _i2 >= 0; _i2--) {
-        if (intersectedPoint.index === relatedPointIndex[_i2]) {
+      for (var _i6 = relatedPointIndex.length - 1; _i6 >= 0; _i6--) {
+        if (intersectedPoint.index === relatedPointIndex[_i6]) {
           changeColor(intersectedPoint.index, colorRelated);
           _flag = true;
           break;
@@ -45402,6 +45456,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABz
 "use strict";
 
 
+var _Detector = __webpack_require__(1);
+
+var _Detector2 = _interopRequireDefault(_Detector);
+
 __webpack_require__(2);
 
 __webpack_require__(3);
@@ -45410,44 +45468,40 @@ var _threeDimensionalFigure = __webpack_require__(5);
 
 var threeDFigure = _interopRequireWildcard(_threeDimensionalFigure);
 
-var _Detector = __webpack_require__(1);
-
-var _Detector2 = _interopRequireDefault(_Detector);
-
 var _file2data = __webpack_require__(4);
 
 var fileReader = _interopRequireWildcard(_file2data);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-window.relatedPointsNum = 100; /**
-                                * Created by exialym on 2017/2/6.
-                                */
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /webkit/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
+  $('#Warning').modal();
+} /**
+   * Created by exialym on 2017/2/6.
+   */
+
+
+window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0; //0:停止；1：进行；2：暂停
 
 
 $(document).ready(function () {
   var $relatedNumSlider = $('#relatedNumSlider');
-  var $relatedNumLabel = $('#relatedNum');
+  var $relatedNumLabel = $('#relatedNumLabel');
   var $beginTSNE = $('#beginTSNE');
   var $chooseFile = $('#chooseFile');
   var $rawData = $('#rawData');
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
   var rawData = [];
-  if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /webkit/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
-    $('#Warning').modal();
-  }
 
-  threeDFigure.init(rawData);
-  threeDFigure.animate();
+  //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
     min: 5,
-    max: window.particleNum,
+    max: 10,
     step: 1,
     value: window.relatedPointsNum,
     orientation: 'horizontal',
@@ -45472,9 +45526,7 @@ $(document).ready(function () {
     if (window.beginTSNE == 0) {
       window.beginTSNE = 1;
       threeDFigure.init(rawData);
-      $relatedNumSlider.val(window.relatedPointsNum);
-      $relatedNumSlider.attr('min', '5');
-      $relatedNumSlider.attr('max', window.particleNum + '');
+      $relatedNumSlider.slider("value", window.relatedPointsNum);
       $relatedNumLabel.val(window.relatedPointsNum);
       $beginTSNE.html('pause');
     } else if (window.beginTSNE == 1) {

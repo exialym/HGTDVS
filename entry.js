@@ -21,7 +21,7 @@ window.beginTSNE = 0;//0:停止；1：进行；2：暂停
 
 $(document).ready(function () {
   let $relatedNumSlider = $('#relatedNumSlider');
-  let $relatedNumLabel = $('#relatedNum');
+  let $relatedNumLabel = $('#relatedNumLabel');
   let $beginTSNE = $('#beginTSNE');
   let $chooseFile = $('#chooseFile');
   let $rawData = $('#rawData');
@@ -34,7 +34,7 @@ $(document).ready(function () {
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
     min: 5,
-    max: window.particleNum,
+    max: 10,
     step: 1,
     value: window.relatedPointsNum,
     orientation: 'horizontal',
@@ -60,9 +60,7 @@ $(document).ready(function () {
     if (window.beginTSNE==0) {
       window.beginTSNE = 1;
       threeDFigure.init(rawData);
-      $relatedNumSlider.val(window.relatedPointsNum);
-      $relatedNumSlider.attr('min','5');
-      $relatedNumSlider.attr('max',window.particleNum+'');
+      $relatedNumSlider.slider( "value" , window.relatedPointsNum);
       $relatedNumLabel.val(window.relatedPointsNum);
       $beginTSNE.html('pause');
     } else if (window.beginTSNE==1){

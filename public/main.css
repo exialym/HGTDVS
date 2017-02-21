@@ -121,7 +121,7 @@ main {
       main nav .neighbors-op #relatedNumSlider {
         float: left;
         width: 9em; }
-      main nav .neighbors-op #relatedNum {
+      main nav .neighbors-op #relatedNumLabel {
         float: right;
         width: 4em;
         padding: 0;

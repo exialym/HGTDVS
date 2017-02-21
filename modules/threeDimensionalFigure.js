@@ -133,7 +133,19 @@ function init(rawData) {
     tsne.initDataRaw(rawData);
 
     window.particleNum = rawData.length;
-    $('relatedNumSlider').slider( "max" , window.particleNum);
+    $('#relatedNumSlider').slider({
+      min: 5,
+      max: window.particleNum,
+      step: 1,
+      value: window.relatedPointsNum,
+      orientation: 'horizontal',
+      range: 'min',
+      change:function () {
+        window.relatedPointsNum = $('#relatedNumSlider').slider( "value" );
+        $('#relatedNumLabel').val(window.relatedPointsNum);
+        displayNearest();
+      }
+    });
     intersectedPoint = undefined;
     chosenPoint = undefined;
     positions = new Float32Array( window.particleNum * 3 );
