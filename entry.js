@@ -28,7 +28,7 @@ $(document).ready(function () {
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let rawData = [];
-  $('#wait').modal();
+  //$('#wait').modal();
 
 
 

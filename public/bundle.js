@@ -45497,7 +45497,8 @@ $(document).ready(function () {
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
   var rawData = [];
-  $('#wait').modal();
+  //$('#wait').modal();
+
 
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
