@@ -45501,7 +45501,7 @@ $(document).ready(function () {
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
     min: 5,
-    max: 10,
+    max: window.particleNum,
     step: 1,
     value: window.relatedPointsNum,
     orientation: 'horizontal',
