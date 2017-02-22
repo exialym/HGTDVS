@@ -126,7 +126,7 @@ function init(rawData) {
     cancelAnimationFrame(animationFlag);
     animationFlag = undefined;
   }
-  $('#Wait').on('shown.bs.modal', function () {
+  $('#wait').on('shown.bs.modal', function () {
     if (rawData.length===0)
       rawData = exampleRaw;
 
@@ -176,11 +176,11 @@ function init(rawData) {
     //build kdtree
     kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
     isKdTreeUpdated = true;
-    $('#Wait').modal('hide');
+    $('#wait').modal('hide');
     if (!animationFlag)
       animate();
   });
-  $('#Wait').modal();
+  $('#wait').modal();
 
 }
 

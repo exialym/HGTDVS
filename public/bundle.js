@@ -44828,7 +44828,7 @@ function init(rawData) {
     cancelAnimationFrame(animationFlag);
     animationFlag = undefined;
   }
-  $('#Wait').on('shown.bs.modal', function () {
+  $('#wait').on('shown.bs.modal', function () {
     if (rawData.length === 0) rawData = _example_data2.default;
 
     tsne.initDataRaw(rawData);
@@ -44877,10 +44877,10 @@ function init(rawData) {
     //build kdtree
     kdtree = new THREE.TypedArrayUtils.Kdtree(positions, distanceFunction, 3);
     isKdTreeUpdated = true;
-    $('#Wait').modal('hide');
+    $('#wait').modal('hide');
     if (!animationFlag) animate();
   });
-  $('#Wait').modal();
+  $('#wait').modal();
 }
 
 function onContainerMouseDown(event) {
@@ -45477,7 +45477,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /webkit/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
-  $('#Warning').modal();
+  $('#warning').modal();
 } /**
    * Created by exialym on 2017/2/6.
    */
@@ -45497,6 +45497,7 @@ $(document).ready(function () {
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
   var rawData = [];
+  $('#wait').modal();
 
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({

@@ -39,7 +39,7 @@
       </div>
     </nav>
   </main>
-  <div class="modal fade" tabindex="-1" role="dialog" id="Warning">
+  <div class="modal fade" tabindex="-1" role="dialog" id="warning">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -52,11 +52,16 @@
       </div><!-- /.modal-content -->
     </div>
   </div>
-  <div class="modal fade" tabindex="-1" role="dialog" id="Wait">
+  <div class="modal fade" tabindex="-1" role="dialog" id="wait">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <span>Please Wait</span>
+          <div class="loading">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="waitTips">Initializing t-SNE, Won't be long.</div>
         </div>
       </div><!-- /.modal-content -->
     </div>

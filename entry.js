@@ -3,7 +3,7 @@
  */
 import Detector from './lib/three/Detector'
 if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
-  $('#Warning').modal();
+  $('#warning').modal();
 }
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
@@ -28,6 +28,7 @@ $(document).ready(function () {
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let rawData = [];
+  $('#wait').modal();
 
 
 
@@ -95,7 +96,7 @@ $(document).ready(function () {
       };
       reader.onerror = function() {
         $beginTSNE.removeAttr('disabled');
-      }
+      };
       reader.readAsText(file);
     }
   });
