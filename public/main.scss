@@ -16,6 +16,9 @@
     color:$colorAfter;
   }
 }
+.btn {
+  @include change-button(transparent,#15BF63,#15BF63,#15BF63,#15BF63,white);
+}
 .btn-xs {
   padding: 4px 4px;
   font-size: 12px;
@@ -82,9 +85,10 @@ body {
   min-width:1280px;
 }
 #wait {
-  .modal-dialog {
-    top:40%;
-  }
+  //.modal-dialog {
+  //  position: relative;
+  //  top:40%;
+  //}
   .modal-body{
     overflow: hidden;
     .loading {
@@ -95,6 +99,11 @@ body {
       margin-left: 2rem;
       font-size:20px;
       line-height:50px;
+    }
+    .waitButton{
+      float: right;
+      margin-top:3.5px;
+      display: none;
     }
   }
 }

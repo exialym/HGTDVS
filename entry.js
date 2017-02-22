@@ -7,6 +7,7 @@ if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator
 }
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
+import utils from './modules/utils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 
@@ -28,7 +29,10 @@ $(document).ready(function () {
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let rawData = [];
-  //$('#wait').modal();
+  $('#wait').on('shown.bs.modal', function () {
+    console.log('test modal');
+  });
+  //$('#wait').modal({backdrop: 'static', keyboard: false});
 
 
 
@@ -76,29 +80,38 @@ $(document).ready(function () {
     $rawData.click();
   });
   $rawData.bind('change', function (e) {
-    let files = e.target.files;
-    if (files.length) {
-      $beginTSNE.attr('disabled','disabled');
-      let file = files[0];
-      let reader = new FileReader();//new一个FileReader实例
-      reader.onload = function() {
-        let res = fileReader.readRawFile(this.result);
-        if (res.isValid) {
-          rawData = res.data;
-          window.beginTSNE = 0;
-          $DataSourceLabel.html('Source:' + file.name);
-          $beginTSNE.html('begin');
-          document.getElementById( 'tSNEState' ).innerHTML = '';
+    utils.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', function () {
+      console.log('readfile modal');
+      let files = e.target.files;
+      if (files.length) {
+        $beginTSNE.attr('disabled','disabled');
+        let file = files[0];
+        let reader = new FileReader();//new一个FileReader实例
+        reader.onload = function() {
+          let res = fileReader.readRawFile(this.result);
+          if (res.isValid) {
+            rawData = res.data;
+            window.beginTSNE = 0;
+            $DataSourceLabel.html('Source:' + file.name);
+            $beginTSNE.html('begin');
+            document.getElementById( 'tSNEState' ).innerHTML = '';
+            $beginTSNE.removeAttr('disabled');
+            utils.toggleWaitingButtons(true);
+            utils.changeWaitingTips('Success, You Can Use Your File Now.');
+          } else {
+            utils.toggleWaitingButtons(true);
+            utils.changeWaitingTips(res.error);
+            $beginTSNE.removeAttr('disabled');
+          }
+        };
+        reader.onerror = function() {
+          utils.toggleWaitingButtons(true);
+          utils.changeWaitingTips('Something Wrong with Your File.');
           $beginTSNE.removeAttr('disabled');
-        } else {
-          $beginTSNE.removeAttr('disabled');
-        }
-      };
-      reader.onerror = function() {
-        $beginTSNE.removeAttr('disabled');
-      };
-      reader.readAsText(file);
-    }
+        };
+        reader.readAsText(file);
+      }
+    });
   });
   $clearFile.bind('click',function () {
     $rawData.val('');

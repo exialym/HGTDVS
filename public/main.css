@@ -4,6 +4,15 @@
 @font-face {
   font-family: 'Monacohackie';
   src: url("../lib/Monaco.eot"); }
+.btn {
+  border: 1px solid #15BF63;
+  background-color: transparent;
+  color: #15BF63; }
+  .btn:hover {
+    border-color: #15BF63;
+    background-color: #15BF63;
+    color: white; }
+
 .btn-xs {
   padding: 4px 4px;
   font-size: 12px;
@@ -60,8 +69,6 @@ body {
   font-family: 'Monaco', 'Monacohackwin', 'Monacohackie',Helvetica, Georgia, Arial, sans-serif;
   min-width: 1280px; }
 
-#wait .modal-dialog {
-  top: 40%; }
 #wait .modal-body {
   overflow: hidden; }
   #wait .modal-body .loading {
@@ -71,6 +78,10 @@ body {
     margin-left: 2rem;
     font-size: 20px;
     line-height: 50px; }
+  #wait .modal-body .waitButton {
+    float: right;
+    margin-top: 3.5px;
+    display: none; }
 
 header {
   flex: none;

@@ -7,6 +7,7 @@ module.exports.readRawFile = function (txt) {
   // });
   let res = {
     isValid:true,
+    error:'',
     data:[],
   };
   let lines = txt.split("\n");
@@ -29,9 +30,10 @@ module.exports.readRawFile = function (txt) {
     if(i === 0) { len = dl; }
     if(len !== dl) {
       // TROUBLE. Not all same length.
-      console.log('TROUBLE: row ' + i + ' has bad length ' + len);
+      res.error = 'TROUBLE: row ' + i + ' has bad length ' + len;
       len = dl; // hmmm...
       res.isValid = false;
+      return res;
     }
     data.push(point);
   }
