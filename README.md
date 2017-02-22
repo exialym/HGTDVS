@@ -3,6 +3,17 @@
 ### About
 High-dimensional Geographical & Timing Data Visualization System
 
+I'm not finish yet.
+
+You can check [Demo](https://exialym.github.io/HGTDVS/).
+
+##Development
+
+If you want to develop this project.
+
+You can connect me with exialym@icloud.com.
+
+
 ### About Permission
 
 The project is open-sourced under MIT license.
