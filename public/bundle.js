@@ -45597,7 +45597,8 @@ $(document).ready(function () {
   $('#wait').on('shown.bs.modal', function () {
     console.log('test modal');
   });
-  _utils2.default.showWaitingModel('shown.bs.modal', 'Test');
+  //utils.showWaitingModel('shown.bs.modal', 'Test');
+
 
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
