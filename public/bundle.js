@@ -43312,21 +43312,51 @@
  * Created by exialym on 2017/2/22.
  */
 var utils = {};
-utils.showWaitingModel = function (event, tips, callback) {
-  $('#wait').off(event);
-  $('#wait .waitTips').html(tips);
-  $('#wait .waitButton').hide();
-  $('#wait').on(event, callback);
-  $('#wait').modal({ backdrop: 'static', keyboard: false });
+var $wait = $('#wait');
+var $waitTips = $wait.find('.waitTips');
+var $waitButton = $wait.find('.waitButton');
+var $waitLoader = $wait.find('.loading');
+var $waitWarning = $wait.find('.waitWarning');
+var $waitOK = $wait.find('.waitOK');
+utils.showWaitingModel = function (event, tips, model, callback) {
+  $wait.off(event);
+  $waitTips.html(tips);
+  utils.switchMod(model);
+  $wait.on(event, callback);
+  $wait.modal({ backdrop: 'static', keyboard: false });
 };
 utils.changeWaitingTips = function (tips) {
-  $('#wait .waitTips').html(tips);
-};
-utils.toggleWaitingButtons = function (isShown) {
-  if (isShown) $('#wait .waitButton').show();else $('#wait .waitButton').hide();
+  $waitTips.html(tips);
 };
 utils.closeWaitingModel = function () {
-  $('#wait').modal('hide');
+  $wait.modal('hide');
+};
+utils.switchMod = function (model) {
+  switch (model) {
+    case 'Warning':
+      $waitButton.show();
+      $waitLoader.hide();
+      $waitWarning.show();
+      $waitOK.hide();
+      break;
+    case 'OK':
+      $waitButton.show();
+      $waitLoader.hide();
+      $waitWarning.hide();
+      $waitOK.show();
+      break;
+    case 'Processing':
+      $waitButton.hide();
+      $waitLoader.show();
+      $waitWarning.hide();
+      $waitOK.hide();
+      break;
+    default:
+      $waitButton.hide();
+      $waitLoader.show();
+      $waitWarning.hide();
+      $waitOK.hide();
+  }
 };
 module.exports = utils;
 
@@ -44863,7 +44893,7 @@ function init(rawData) {
     cancelAnimationFrame(animationFlag);
     animationFlag = undefined;
   }
-  _utils2.default.showWaitingModel('shown.bs.modal', 'Initializing t-SNE, Won\'t be long.', function () {
+  _utils2.default.showWaitingModel('shown.bs.modal', 'Initializing t-SNE, Won\'t be long.', 'Processing', function () {
     console.log('init Webgl modal');
     if (rawData.length === 0) rawData = _example_data2.default;
 
@@ -44916,64 +44946,6 @@ function init(rawData) {
     _utils2.default.closeWaitingModel();
     if (!animationFlag) animate();
   });
-  // $('#wait').off('shown.bs.modal');
-  // $('#wait .waitTips').html('Initializing t-SNE, Won\'t be long.');
-  // $('#wait').on('shown.bs.modal', function () {
-  //   console.log('init Webgl modal');
-  //   if (rawData.length===0)
-  //     rawData = exampleRaw;
-  //
-  //   tsne.initDataRaw(rawData);
-  //
-  //   window.particleNum = rawData.length;
-  //   $('#relatedNumSlider').slider({
-  //     min: 5,
-  //     max: window.particleNum,
-  //     step: 1,
-  //     value: window.relatedPointsNum,
-  //     orientation: 'horizontal',
-  //     range: 'min',
-  //     change:function () {
-  //       window.relatedPointsNum = $('#relatedNumSlider').slider( "value" );
-  //       $('#relatedNumLabel').val(window.relatedPointsNum);
-  //       displayNearest();
-  //     }
-  //   });
-  //   intersectedPoint = undefined;
-  //   chosenPoint = undefined;
-  //   positions = new Float32Array( window.particleNum * 3 );
-  //   colors = new Float32Array( window.particleNum * 3 );
-  //
-  //   for ( let i = 0; i < positions.length; i += 3 ) {
-  //     let x = Math.random() * n - n2;
-  //     let y = Math.random() * n - n2;
-  //     let z = Math.random() * n - n2;
-  //     positions[ i ]     = x;
-  //     positions[ i + 1 ] = y;
-  //     positions[ i + 2 ] = z;
-  //     colors[ i ]     = colorNormal.r;
-  //     colors[ i + 1 ] = colorNormal.g;
-  //     colors[ i + 2 ] = colorNormal.b;
-  //   }
-  //   //Todo
-  //   // 不想开始tsne前都先random位置，但是使用tsne的第一步来初始化位置会使得鼠标交互识别不到鼠标下的点，原因未知
-  //   // positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
-  //   //   return a.concat(b)
-  //   // }));
-  //
-  //   //init points
-  //   geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-  //   geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
-  //   geometry.computeBoundingSphere();
-  //
-  //   //build kdtree
-  //   kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
-  //   isKdTreeUpdated = true;
-  //   $('#wait').modal('hide');
-  //   if (!animationFlag)
-  //     animate();
-  // });
-  // $('#wait').modal({backdrop: 'static', keyboard: false});
 }
 
 function onContainerMouseDown(event) {
@@ -45553,13 +45525,13 @@ var _Detector = __webpack_require__(2);
 
 var _Detector2 = _interopRequireDefault(_Detector);
 
-__webpack_require__(3);
-
-__webpack_require__(4);
-
 var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
+
+__webpack_require__(3);
+
+__webpack_require__(4);
 
 var _threeDimensionalFigure = __webpack_require__(6);
 
@@ -45573,11 +45545,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Created by exialym on 2017/2/6.
+ */
 if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /webkit/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
-  $('#warning').modal();
-} /**
-   * Created by exialym on 2017/2/6.
-   */
+  _utils2.default.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
+}
 
 
 window.relatedPointsNum = 100;
@@ -45594,10 +45567,9 @@ $(document).ready(function () {
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
   var rawData = [];
-  $('#wait').on('shown.bs.modal', function () {
-    console.log('test modal');
-  });
-  //utils.showWaitingModel('shown.bs.modal', 'Test');
+  //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
+  //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
+  //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'OK');
 
 
   //threeDFigure.init(rawData);
@@ -45643,7 +45615,7 @@ $(document).ready(function () {
     $rawData.click();
   });
   $rawData.bind('change', function (e) {
-    _utils2.default.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', function () {
+    _utils2.default.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', 'Processing', function () {
       console.log('readfile modal');
       var files = e.target.files;
       if (files.length) {
@@ -45659,16 +45631,16 @@ $(document).ready(function () {
             $beginTSNE.html('begin');
             document.getElementById('tSNEState').innerHTML = '';
             $beginTSNE.removeAttr('disabled');
-            _utils2.default.toggleWaitingButtons(true);
+            _utils2.default.switchMod('OK');
             _utils2.default.changeWaitingTips('Success, You Can Use Your File Now.');
           } else {
-            _utils2.default.toggleWaitingButtons(true);
+            _utils2.default.switchMod('Warning');
             _utils2.default.changeWaitingTips(res.error);
             $beginTSNE.removeAttr('disabled');
           }
         };
         reader.onerror = function () {
-          _utils2.default.toggleWaitingButtons(true);
+          _utils2.default.switchMod('Warning');
           _utils2.default.changeWaitingTips('Something Wrong with Your File.');
           $beginTSNE.removeAttr('disabled');
         };

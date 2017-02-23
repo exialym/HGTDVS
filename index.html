@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>HGTDVS</title>
-  <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/flat-ui/flat-ui.css">
   <link rel="stylesheet" href="public/main.css">
 
@@ -39,19 +39,6 @@
       </div>
     </nav>
   </main>
-  <div class="modal fade" tabindex="-1" role="dialog" id="warning">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <p class="modal-title">Oh no</p>
-        </div>
-        <div class="modal-body">
-          <span>Please Use <a href='http://www.google.cn/chrome/browser/'>Chrome</a> or <a href='http://www.firefox.com.cn/download/'>Firefox</a> to gain the full experience!</span>
-        </div>
-      </div><!-- /.modal-content -->
-    </div>
-  </div>
   <div class="modal fade" tabindex="-1" role="dialog" id="wait">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -61,6 +48,8 @@
             <div></div>
             <div></div>
           </div>
+          <div class="waitOK"><span class="glyphicon glyphicon-ok"></span></div>
+          <div class="waitWarning"><span class="glyphicon glyphicon-remove"></span></div>
           <div class="waitTips"></div>
           <button type="button" class="btn waitButton" data-dismiss="modal" aria-label="Close">OK</button>
         </div>
@@ -69,7 +58,7 @@
   </div>
   <script src="lib/jquery-3.1.1.js"></script>
   <script src="lib/jqueryUI/jquery-ui.js"></script>
-  <script src="lib/bootstrap/bootstrap.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="./public/bundle.js"></script>
 </body>
 </html>

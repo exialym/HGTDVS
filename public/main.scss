@@ -91,18 +91,25 @@ body {
   //}
   .modal-body{
     overflow: hidden;
-    .loading {
+    div {
       float: left;
+      font-size:15px;
+      line-height:50px;
+    }
+    .waitOK {
+      color:#15BF63;
+    }
+    .waitWarning {
+      color:red;
+      font-size:20px;
     }
     .waitTips{
-      float: left;
-      margin-left: 2rem;
-      font-size:20px;
-      line-height:50px;
+      margin-left: 1em;
     }
     .waitButton{
       float: right;
-      margin-top:3.5px;
+      padding: 5px 15px;
+      margin-top:8.5px;
       display: none;
     }
   }

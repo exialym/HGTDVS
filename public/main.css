@@ -71,16 +71,21 @@ body {
 
 #wait .modal-body {
   overflow: hidden; }
-  #wait .modal-body .loading {
-    float: left; }
-  #wait .modal-body .waitTips {
+  #wait .modal-body div {
     float: left;
-    margin-left: 2rem;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 50px; }
+  #wait .modal-body .waitOK {
+    color: #15BF63; }
+  #wait .modal-body .waitWarning {
+    color: red;
+    font-size: 20px; }
+  #wait .modal-body .waitTips {
+    margin-left: 1em; }
   #wait .modal-body .waitButton {
     float: right;
-    margin-top: 3.5px;
+    padding: 5px 15px;
+    margin-top: 8.5px;
     display: none; }
 
 header {

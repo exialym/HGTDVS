@@ -2,12 +2,12 @@
  * Created by exialym on 2017/2/6.
  */
 import Detector from './lib/three/Detector'
+import utils from './modules/utils'
 if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
-  $('#warning').modal();
+  utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
 }
 import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
-import utils from './modules/utils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 
@@ -29,10 +29,9 @@ $(document).ready(function () {
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let rawData = [];
-  $('#wait').on('shown.bs.modal', function () {
-    console.log('test modal');
-  });
-  //utils.showWaitingModel('shown.bs.modal', 'Test');
+  //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
+  //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
+  //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'OK');
 
 
 
@@ -80,7 +79,7 @@ $(document).ready(function () {
     $rawData.click();
   });
   $rawData.bind('change', function (e) {
-    utils.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', function () {
+    utils.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', 'Processing', function () {
       console.log('readfile modal');
       let files = e.target.files;
       if (files.length) {
@@ -96,16 +95,16 @@ $(document).ready(function () {
             $beginTSNE.html('begin');
             document.getElementById( 'tSNEState' ).innerHTML = '';
             $beginTSNE.removeAttr('disabled');
-            utils.toggleWaitingButtons(true);
+            utils.switchMod('OK');
             utils.changeWaitingTips('Success, You Can Use Your File Now.');
           } else {
-            utils.toggleWaitingButtons(true);
+            utils.switchMod('Warning');
             utils.changeWaitingTips(res.error);
             $beginTSNE.removeAttr('disabled');
           }
         };
         reader.onerror = function() {
-          utils.toggleWaitingButtons(true);
+          utils.switchMod('Warning');
           utils.changeWaitingTips('Something Wrong with Your File.');
           $beginTSNE.removeAttr('disabled');
         };
