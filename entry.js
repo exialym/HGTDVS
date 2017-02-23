@@ -32,7 +32,7 @@ $(document).ready(function () {
   $('#wait').on('shown.bs.modal', function () {
     console.log('test modal');
   });
-  //$('#wait').modal({backdrop: 'static', keyboard: false});
+  //utils.showWaitingModel('shown.bs.modal', 'Test');
 
 
 
