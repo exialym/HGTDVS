@@ -45559,6 +45559,8 @@ window.beginTSNE = 0; //0:停止；1：进行；2：暂停
 
 
 $(document).ready(function () {
+  var $perplexitySlider = $('#perplexitySlider');
+  var $learnRateSlider = $('#learnRateSlider');
   var $relatedNumSlider = $('#relatedNumSlider');
   var $relatedNumLabel = $('#relatedNumLabel');
   var $beginTSNE = $('#beginTSNE');
@@ -45584,6 +45586,30 @@ $(document).ready(function () {
       window.relatedPointsNum = $relatedNumSlider.slider("value");
       $relatedNumLabel.val(window.relatedPointsNum);
       threeDFigure.displayNearest();
+    }
+  });
+  $perplexitySlider.next().html(25);
+  $perplexitySlider.slider({
+    min: 2,
+    max: 100,
+    step: 1,
+    value: 25,
+    orientation: 'horizontal',
+    range: 'min',
+    change: function change() {
+      $perplexitySlider.next().html($perplexitySlider.slider("value"));
+    }
+  });
+  $learnRateSlider.next().html(10);
+  $learnRateSlider.slider({
+    min: 0.001,
+    max: 100,
+    step: 0.001,
+    value: 10,
+    orientation: 'horizontal',
+    range: 'min',
+    change: function change() {
+      $learnRateSlider.next().html($learnRateSlider.slider("value"));
     }
   });
   $relatedNumLabel.val(window.relatedPointsNum);
