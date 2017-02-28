@@ -44792,20 +44792,13 @@ var colorChosen = new THREE.Color(0xFC021E);
 var colorRelated = new THREE.Color(0xFFFF3A);
 var colorFade = new THREE.Color(0x3B51A6);
 
-//init TSNE
-var opt = {};
-opt.epsilon = 10; // epsilon is learning rate (10 = default)
-opt.perplexity = 30; // roughly how many neighbors each point influences (30 = default)
-opt.dim = 3; // dimensionality of the embedding (2 = default)
-var tsne = new _tsne2.default.tSNE(opt); // create a tSNE instance
-
-
 //init WebGL
 
 var mouseFlag = [];
 var relatedPointIndex = [];
 var isKdTreeUpdated = false;
 var animationFlag = void 0;
+var tsne = void 0;
 
 var container = document.getElementById('webgl');
 
@@ -44897,6 +44890,12 @@ function init(rawData) {
     console.log('init Webgl modal');
     if (rawData.length === 0) rawData = _example_data2.default;
 
+    //init TSNE
+    var opt = {};
+    opt.epsilon = $('#learnRateSlider').slider("value");; // epsilon is learning rate (10 = default)
+    opt.perplexity = $('#perplexitySlider').slider("value");; // roughly how many neighbors each point influences (30 = default)
+    opt.dim = 3; // dimensionality of the embedding (2 = default)
+    tsne = new _tsne2.default.tSNE(opt); // create a tSNE instance
     tsne.initDataRaw(rawData);
 
     window.particleNum = rawData.length;
