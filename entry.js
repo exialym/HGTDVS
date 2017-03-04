@@ -37,6 +37,7 @@ $(document).ready(function () {
 
 
 
+
   //threeDFigure.init(rawData);
   $relatedNumSlider.slider({
     min: 5,
