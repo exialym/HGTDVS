@@ -10,12 +10,14 @@ import './lib/three/TrackballControls'
 import './lib/three/TypedArrayUtils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
+import exampleRaw from './modules/example_data'
+import parallelView from './modules/parallel'
 
 
 window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0;//0:停止；1：进行；2：暂停
-
+window.rawData = exampleRaw;
 
 
 
@@ -30,7 +32,7 @@ $(document).ready(function () {
   let $rawData = $('#rawData');
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
-  let rawData = [];
+
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
   //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'OK');
@@ -39,6 +41,7 @@ $(document).ready(function () {
 
 
   //threeDFigure.init(rawData);
+  parallelView.init();
   $relatedNumSlider.slider({
     min: 5,
     max: window.particleNum,
@@ -90,7 +93,7 @@ $(document).ready(function () {
   $beginTSNE.bind('click',function () {
     if (window.beginTSNE==0) {
       window.beginTSNE = 1;
-      threeDFigure.init(rawData);
+      threeDFigure.init();
       $relatedNumSlider.slider( "value" , window.relatedPointsNum);
       $relatedNumLabel.val(window.relatedPointsNum);
       $beginTSNE.html('pause');
@@ -116,7 +119,7 @@ $(document).ready(function () {
         reader.onload = function() {
           let res = fileReader.readRawFile(this.result);
           if (res.isValid) {
-            rawData = res.data;
+            window.rawData = res.data;
             window.beginTSNE = 0;
             $DataSourceLabel.html('Source:' + file.name);
             $beginTSNE.html('begin');
@@ -142,6 +145,7 @@ $(document).ready(function () {
   $clearFile.bind('click',function () {
     $rawData.val('');
     window.beginTSNE = 0;
+    window.rawData = exampleRaw;
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');

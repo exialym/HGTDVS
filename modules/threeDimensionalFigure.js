@@ -118,15 +118,15 @@ isKdTreeUpdated = true;
 animate();
 
 
-function init(rawData) {
+function init() {
   if (animationFlag) {
     cancelAnimationFrame(animationFlag);
     animationFlag = undefined;
   }
   utils.showWaitingModel('shown.bs.modal', 'Initializing t-SNE, Won\'t be long.', 'Processing', function () {
     console.log('init Webgl modal');
-    if (rawData.length===0)
-      rawData = exampleRaw;
+    if (window.rawData.length===0)
+      window.rawData = exampleRaw;
 
     //init TSNE
     let opt = {};
@@ -134,9 +134,9 @@ function init(rawData) {
     opt.perplexity = $('#perplexitySlider').slider( "value" );; // roughly how many neighbors each point influences (30 = default)
     opt.dim = 3; // dimensionality of the embedding (2 = default)
     tsne = new tsnejs.tSNE(opt); // create a tSNE instance
-    tsne.initDataRaw(rawData);
+    tsne.initDataRaw(window.rawData);
 
-    window.particleNum = rawData.length;
+    window.particleNum = window.rawData.length;
     $('#relatedNumSlider').slider({
       min: 5,
       max: window.particleNum,
