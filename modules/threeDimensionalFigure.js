@@ -11,6 +11,7 @@ module.exports = {
   init : init,
   animate : animate,
   displayNearest : displayNearest,
+  choosePoints : choosePoints
 };
 
 //init pram
@@ -364,4 +365,13 @@ function changeColor(index,color) {
   attributes.color.array[index * 3] = color.r;
   attributes.color.array[index * 3 + 1] = color.g;
   attributes.color.array[index * 3 + 2] = color.b;
+}
+function choosePoints(indexs) {
+  for (let i = 0;i < particleNum;i++) {
+    changeColor(i,colorFade);
+  }
+  for (let i = 0;i < indexs.length;i++) {
+    changeColor(indexs[i],colorRelated);
+  }
+  attributes.color.needsUpdate = true;
 }

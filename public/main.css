@@ -149,7 +149,7 @@ main {
         flex-basis: 50%; }
     main .figures .parallel {
       flex: none;
-      flex: 0 0 10em; }
+      flex: 0 0 20em; }
   main nav {
     font-size: 12px;
     font-weight: 100;

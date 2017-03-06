@@ -1,29 +1,38 @@
 /**
  * Created by exialym on 2017/3/5.
  */
-// Schema:
-// date,AQIindex,PM2.5,PM10,CO,NO2,SO2
+import * as threeDFigure from './threeDimensionalFigure'
 let init = function () {
-  var parallelAxis = [];
-  for (var i = 0;i < window.rawData[0].length;i++) {
+  let parallelAxis = [];
+  for (let i = 0;i < window.rawData[0].length;i++) {
     parallelAxis.push({dim: i, name: i});
   }
 
-  var lineStyle = {
-    normal: {
-      width: 1,
-      opacity: 0.5
-    }
-  };
 
-  var option = {
+  let option = {
     backgroundColor: '#333',
     parallelAxis: parallelAxis,
+    brush: {
+      geoIndex: 0,
+      brushLink: 'all',
+      inBrush: {
+        opacity: 1
+      },
+      outOfBrush: {
+        color: '#b99e2a',
+        symbolSize: 4,
+        opacity: 0.1
+      }
+    },
     parallel: {
       left: 0,
       right: 1,
       bottom: 20,
       top:20,
+      axisExpandable: true,
+      axisExpandCenter: 15,
+      axisExpandCount: 10,
+      axisExpandWidth: 100,
       parallelAxisDefault: {
         type: 'value',
         name: 'AQI指数',
@@ -57,15 +66,28 @@ let init = function () {
       {
         name: '北京',
         type: 'parallel',
-        lineStyle: lineStyle,
+        smooth: true,
+        lineStyle: {
+          normal: {
+            color: '#577ceb',
+            width: 0.5,
+            opacity: 0.6
+          }
+        },
+        blendMode: 'lighter',
         data: window.rawData
       }
     ]
   };
-  var myChart = echarts.init(document.getElementById('parallel'));
+  let myChart = echarts.init(document.getElementById('parallel'));
   myChart.setOption(option);
+  myChart.on('axisareaselected', function () {
+    var series = myChart.getModel().getSeries()[0];
+    var indices = series.getRawIndicesByActiveState('active');
+    threeDFigure.choosePoints(indices);
+  });
 };
 let parallelView = {
   init:init,
-}
+};
 module.exports = parallelView;
