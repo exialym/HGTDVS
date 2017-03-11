@@ -114,7 +114,7 @@ geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 geometry.computeBoundingSphere();
 
 //build kdtree
-let kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
+let kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
 isKdTreeUpdated = true;
 animate();
 
@@ -179,7 +179,7 @@ function init() {
     geometry.computeBoundingSphere();
 
     //build kdtree
-    kdtree = new THREE.TypedArrayUtils.Kdtree( positions, distanceFunction, 3 );
+    kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
     isKdTreeUpdated = true;
     utils.closeWaitingModel();
     if (!animationFlag)
@@ -354,7 +354,7 @@ function render() {
       isKdTreeUpdated = true;
       //console.log('kdtree before');
       //console.log(attributes.position.array);
-      kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
+      kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
       attributes.position.needsUpdate = true;
       //console.log('kdtree after');
       //console.log(attributes.position.array);
