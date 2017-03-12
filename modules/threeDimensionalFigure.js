@@ -5,6 +5,7 @@ import * as THREE from '../lib/three/three'
 import tsnejs from '../lib/tsne'
 import utils from './utils'
 import exampleRaw from './example_data'
+import KdTreeUtil from '../lib/three/kdTree'
 
 //export function
 module.exports = {
@@ -22,7 +23,6 @@ const colorFloated = new THREE.Color(0x8800ff);
 const colorChosen = new THREE.Color(0xFC021E);
 const colorRelated = new THREE.Color(0xFFFF3A);
 const colorFade = new THREE.Color(0x3B51A6);
-
 
 
 
@@ -114,7 +114,17 @@ geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 geometry.computeBoundingSphere();
 
 //build kdtree
-let kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
+function positionArr2Obj(positionArr) {
+  let temp = [];
+  let index = 0;
+  for ( let i = 0; i < positionArr.length; i += 3 ) {
+    temp[index] = {x:positionArr[ i ],y:positionArr[ i + 1 ],z:positionArr[ i + 2 ],i:index};
+    index++;
+  }
+  return temp;
+}
+
+let kdtree = new KdTreeUtil.KdTree( positionArr2Obj(positions), distanceFunction, ["x", "y", "z"]);
 isKdTreeUpdated = true;
 animate();
 
@@ -179,7 +189,7 @@ function init() {
     geometry.computeBoundingSphere();
 
     //build kdtree
-    kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
+    kdtree = new KdTreeUtil.KdTree( positionArr2Obj(positions), distanceFunction, ["x", "y", "z"]);
     isKdTreeUpdated = true;
     utils.closeWaitingModel();
     if (!animationFlag)
@@ -238,19 +248,19 @@ function animate() {
 }
 
 function distanceFunction (a, b){
-  return Math.pow(a[0] - b[0], 2) +  Math.pow(a[1] - b[1], 2) +  Math.pow(a[2] - b[2], 2);
-}
+  return Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2) +  Math.pow(a.z - b.z, 2);
+};
 
 function displayNearest(point) {
   if (!point&&chosenPoint)
     point = chosenPoint;
   else if (!point)
     return;
-  let pos = [
-    attributes.position.array[ point.index*3 ],
-    attributes.position.array[ point.index*3+1 ],
-    attributes.position.array[ point.index*3+2 ]
-  ];
+  let pos = {
+    x:attributes.position.array[ point.index*3 ],
+    y:attributes.position.array[ point.index*3+1 ],
+    z:attributes.position.array[ point.index*3+2 ]
+  };
   // take the nearest 200 around him. distance^2 'cause we use the manhattan distance and no square is applied in the distance function
   let imagePositionsInRange = kdtree.nearest(pos, Number(relatedPointsNum)+1, relatedPointsDistance);
   if (chosenPoint) {
@@ -267,7 +277,7 @@ function displayNearest(point) {
 
   for ( let j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
     let object = imagePositionsInRange[j];
-    let objectIndex = object[0].pos;
+    let objectIndex = object[0].i;
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
@@ -345,19 +355,11 @@ function render() {
     }));
     geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
     attributes.position.needsUpdate = true;
-    //kdtree = new THREE.TypedArrayUtils.Kdtree( attributes.position.array, distanceFunction, 3 );
     isKdTreeUpdated = false;
-    //console.log('update');
-    //console.log(attributes.position.array);
   } else if (window.beginTSNE===2) {
     if (!isKdTreeUpdated) {
       isKdTreeUpdated = true;
-      //console.log('kdtree before');
-      //console.log(attributes.position.array);
-      kdtree = new THREE.TypedArrayUtils.Kdtree( positions.slice(), distanceFunction, 3 );
-      attributes.position.needsUpdate = true;
-      //console.log('kdtree after');
-      //console.log(attributes.position.array);
+      kdtree = new KdTreeUtil.KdTree( positionArr2Obj(positions), distanceFunction, ["x", "y", "z"]);
     }
   }
 }

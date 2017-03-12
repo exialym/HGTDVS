@@ -7,7 +7,6 @@ if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator
   utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
 }
 import './lib/three/TrackballControls'
-import './lib/three/TypedArrayUtils'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 import exampleRaw from './modules/example_data'
