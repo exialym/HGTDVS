@@ -217,6 +217,7 @@ function onContainerMouseUp(event) {
       chosenPoint = intersectedPoint;
     } else {
       chosenPoint = undefined;
+      relatedPointIndex = [];
       for (let i = 0;i < particleNum;i++) {
         changeColor(i,colorNormal);
       }
@@ -326,7 +327,7 @@ function render() {
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index,colorChosen);
-    } else if  (chosenPoint) {
+    } else if  (relatedPointIndex.length!=0) {
       let flag = false;
       for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
         if (intersectedPoint.index===relatedPointIndex[i]) {
@@ -369,6 +370,7 @@ function changeColor(index,color) {
   attributes.color.array[index * 3 + 2] = color.b;
 }
 function choosePoints(indexs) {
+  relatedPointIndex = indexs;
   for (let i = 0;i < particleNum;i++) {
     changeColor(i,colorFade);
   }
