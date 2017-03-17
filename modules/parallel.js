@@ -2,13 +2,12 @@
  * Created by exialym on 2017/3/5.
  */
 import * as threeDFigure from './threeDimensionalFigure'
+let myChart = echarts.init(document.getElementById('parallel'));
 let init = function () {
   let parallelAxis = [];
   for (let i = 0;i < window.rawData[0].length;i++) {
     parallelAxis.push({dim: i, name: i});
   }
-
-
   let option = {
     backgroundColor: '#333',
     parallelAxis: parallelAxis,
@@ -64,7 +63,7 @@ let init = function () {
     },
     series: [
       {
-        name: '北京',
+        name: 'dataPoints',
         type: 'parallel',
         smooth: true,
         lineStyle: {
@@ -79,15 +78,31 @@ let init = function () {
       }
     ]
   };
-  let myChart = echarts.init(document.getElementById('parallel'));
   myChart.setOption(option);
   myChart.on('axisareaselected', function () {
-    var series = myChart.getModel().getSeries()[0];
-    var indices = series.getRawIndicesByActiveState('active');
+    let series = myChart.getModel().getSeries()[0];
+    let indices = series.getRawIndicesByActiveState('active');
     threeDFigure.choosePoints(indices);
+  });
+};
+let highLightData = function(indexes) {
+  console.log(indexes);
+  myChart.dispatchAction({
+    type: 'brush',
+    areas: [ // areas 表示选框的集合，可以指定多个选框。
+      { // 选框一：
+        //geoIndex: 0, // 指定此选框属于 index 为 0 的 geo 坐标系。
+                     // 也可以通过 xAxisIndex 或 yAxisIndex 来指定此选框属于直角坐标系。
+                     // 如果没有指定，则此选框属于『全局选框』。不属于任何坐标系。
+                     // 属于『坐标系选框』，可以随坐标系一起缩放平移。属于全局的选框不行。
+        brushType: 'lineY', // 指定选框的类型。还可以为 'rect', 'lineX', 'lineY'
+        range: [20,100]
+      },
+    ]
   });
 };
 let parallelView = {
   init:init,
+  highLightData:highLightData,
 };
 module.exports = parallelView;

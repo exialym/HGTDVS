@@ -10,7 +10,7 @@ import './lib/three/TrackballControls'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 import exampleRaw from './modules/example_data'
-import parallelView from './modules/parallel'
+import * as parallelView from './modules/parallel'
 
 
 window.relatedPointsNum = 100;

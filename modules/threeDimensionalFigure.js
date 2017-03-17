@@ -282,6 +282,8 @@ function displayNearest(point) {
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
+  let parallelView = require('./parallel');
+  parallelView.highLightData(relatedPointIndex);
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
@@ -300,7 +302,7 @@ function render() {
         //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
         if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
           changeColor(intersectedPoint.index,colorChosen);
-        } else if  (chosenPoint) {
+        } else if  (relatedPointIndex.length!=0) {
           let flag = false;
           for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
             if (intersectedPoint.index===relatedPointIndex[i]) {
@@ -369,13 +371,20 @@ function changeColor(index,color) {
   attributes.color.array[index * 3 + 1] = color.g;
   attributes.color.array[index * 3 + 2] = color.b;
 }
-function choosePoints(indexs) {
-  relatedPointIndex = indexs;
-  for (let i = 0;i < particleNum;i++) {
-    changeColor(i,colorFade);
+function choosePoints(indexes) {
+  relatedPointIndex = indexes;
+  chosenPoint = null;
+  if (relatedPointIndex.length===0) {
+    for (let i = 0;i < particleNum;i++) {
+      changeColor(i,colorNormal);
+    }
+  } else {
+    for (let i = 0;i < particleNum;i++) {
+      changeColor(i,colorFade);
+    }
   }
-  for (let i = 0;i < indexs.length;i++) {
-    changeColor(indexs[i],colorRelated);
+  for (let i = 0;i < indexes.length;i++) {
+    changeColor(indexes[i],colorRelated);
   }
   attributes.color.needsUpdate = true;
 }
