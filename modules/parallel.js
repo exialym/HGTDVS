@@ -2,10 +2,11 @@
  * Created by exialym on 2017/3/5.
  */
 import * as threeDFigure from './threeDimensionalFigure'
-let myChart = echarts.init(document.getElementById('parallel'));
-let init = function () {
+let myChart;
+let init = function (data) {
+  myChart = echarts.init(document.getElementById('parallel'));
   let parallelAxis = [];
-  for (let i = 0;i < window.rawData[0].length;i++) {
+  for (let i = 0;i < data[0].length;i++) {
     parallelAxis.push({dim: i, name: i});
   }
   let option = {
@@ -74,7 +75,7 @@ let init = function () {
           }
         },
         blendMode: 'lighter',
-        data: window.rawData
+        data: data
       }
     ]
   };

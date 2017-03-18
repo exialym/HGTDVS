@@ -40,7 +40,7 @@ $(document).ready(function () {
 
 
   //threeDFigure.init(rawData);
-  parallelView.init();
+  parallelView.init(window.rawData);
   $relatedNumSlider.slider({
     min: 5,
     max: window.particleNum,
@@ -119,6 +119,7 @@ $(document).ready(function () {
           let res = fileReader.readRawFile(this.result);
           if (res.isValid) {
             window.rawData = res.data;
+            parallelView.init(window.rawData);
             window.beginTSNE = 0;
             $DataSourceLabel.html('Source:' + file.name);
             $beginTSNE.html('begin');
@@ -145,6 +146,7 @@ $(document).ready(function () {
     $rawData.val('');
     window.beginTSNE = 0;
     window.rawData = exampleRaw;
+    parallelView.init(window.rawData);
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');
