@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+// Schema:
+// date,AQIindex,PM2.5,PM10,CO,NO2,SO2
+var dataBJ = [
+    [1,55,9,56,0.46,18,6,"良"],
+    [2,25,11,21,0.65,34,9,"优"],
+    [3,56,7,63,0.3,14,5,"良"],
+];
+
+var dataGZ = [
+    { // 数据项也可以是 Object，从而里面能含有对线条的特殊设置。
+        value: [1,26,37,27,1.163,27,13,"优"],
+        lineStyle: {
+            normal: {
+                width: 1,
+                opacity: 0,
+            }
+        },
+    },
+    { // 数据项也可以是 Object，从而里面能含有对线条的特殊设置。
+        value: [5,  42,  24,  44,  0.76,  40,  16, "严重污染"],
+        lineStyle: {
+            normal: {
+                width: 1,
+                opacity: 0,
+            }
+        },
+    }
+];
+
+var dataSH = [
+    [1,91,45,125,0.82,34,23,"良"],
+    [2,65,27,78,0.86,45,29,"良"],
+    [3,83,60,84,1.09,73,27,"良"],
+    [4,109,81,121,1.28,68,51,"轻度污染"],
+    [5,106,77,114,1.07,55,51,"轻度污染"],
+    [6,109,81,121,1.28,68,51,"轻度污染"],
+    [7,106,77,114,1.07,55,51,"轻度污染"],
+
+];
+
+var schema = [
+    {name: 'date', index: 0, text: '日期'},
+    {name: 'AQIindex', index: 1, text: 'AQI'},
+    {name: 'PM25', index: 2, text: 'PM2.5'},
+    {name: 'PM10', index: 3, text: 'PM10'},
+    {name: 'CO', index: 4, text: ' CO'},
+    {name: 'NO2', index: 5, text: 'NO2'},
+    {name: 'SO2', index: 6, text: 'SO2'},
+    {name: '等级', index: 7, text: '等级'}
+];
+
+var lineStyle = {
+    normal: {
+        width: 1,
+        color:"#fff"
+    }
+};
+
+var option = {
+    backgroundColor: '#333',
+    tooltip: {
+        padding: 10,
+        backgroundColor: '#222',
+        borderColor: '#777',
+        borderWidth: 1,
+        formatter: function (obj) {
+            var value = obj[0].value;
+            return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                + obj[0].seriesName + ' ' + value[0] + '日期：'
+                + value[7]
+                + '</div>'
+                + schema[1].text + '：' + value[1] + '<br>'
+                + schema[2].text + '：' + value[2] + '<br>'
+                + schema[3].text + '：' + value[3] + '<br>'
+                + schema[4].text + '：' + value[4] + '<br>'
+                + schema[5].text + '：' + value[5] + '<br>'
+                + schema[6].text + '：' + value[6] + '<br>';
+        }
+    },
+    // dataZoom: {
+    //     show: true,
+    //     orient: 'vertical',
+    //     parallelAxisIndex: [0]
+    // },
+    parallelAxis: [
+        {dim: 0, name: schema[0].text, inverse: true, max: 31, nameLocation: 'start'},
+        {dim: 1, name: schema[1].text},
+        {dim: 2, name: schema[2].text},
+        {dim: 3, name: schema[3].text},
+        {dim: 4, name: schema[4].text},
+        {dim: 5, name: schema[5].text},
+        {dim: 6, name: schema[6].text},
+        {dim: 7, name: schema[7].text,
+        type: 'category', data: ['优', '良', '轻度污染', '中度污染', '重度污染', '严重污染']}
+    ],
+    parallel: {
+        left: '5%',
+        right: '18%',
+        bottom: 100,
+        parallelAxisDefault: {
+            type: 'value',
+            name: 'AQI指数',
+            nameLocation: 'end',
+            nameGap: 20,
+            nameTextStyle: {
+                color: '#fff',
+                fontSize: 12
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#aaa'
+                }
+            },
+            axisTick: {
+                lineStyle: {
+                    color: '#777'
+                }
+            },
+            splitLine: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#fff'
+                }
+            }
+        }
+    },
+    series: [
+        {
+            name: '广州',
+            type: 'parallel',
+            lineStyle: lineStyle,
+            data: dataGZ
+        }
+    ]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+console.log(myChart);
+       </script>
+   </body>
+</html>
