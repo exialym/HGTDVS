@@ -17,40 +17,24 @@ var myChart = echarts.init(dom);
 // Schema:
 // date,AQIindex,PM2.5,PM10,CO,NO2,SO2
 var dataBJ = [
-    [1,55,9,56,0.46,18,6,"良"],
-    [2,25,11,21,0.65,34,9,"优"],
-    [3,56,7,63,0.3,14,5,"良"],
+    [1,55,9,56,0.46,18,6],
+    [2,25,11,21,0.65,34,9],
+    [3,56,7,63,0.3,14,5],
 ];
 
 var dataGZ = [
-    { // 数据项也可以是 Object，从而里面能含有对线条的特殊设置。
-        value: [1,26,37,27,1.163,27,13,"优"],
-        lineStyle: {
-            normal: {
-                width: 1,
-                opacity: 0,
-            }
-        },
-    },
-    { // 数据项也可以是 Object，从而里面能含有对线条的特殊设置。
-        value: [5,  42,  24,  44,  0.76,  40,  16, "严重污染"],
-        lineStyle: {
-            normal: {
-                width: 1,
-                opacity: 0,
-            }
-        },
-    }
+  [1,26,37,27,1.163,27,13,"优"],
+  [5,  42,  24,  44,  0.76,  40,  16, "严重污染"],
 ];
 
 var dataSH = [
-    [1,91,45,125,0.82,34,23,"良"],
-    [2,65,27,78,0.86,45,29,"良"],
-    [3,83,60,84,1.09,73,27,"良"],
-    [4,109,81,121,1.28,68,51,"轻度污染"],
-    [5,106,77,114,1.07,55,51,"轻度污染"],
-    [6,109,81,121,1.28,68,51,"轻度污染"],
-    [7,106,77,114,1.07,55,51,"轻度污染"],
+    [1,91,45,125,0.82,34,23,0],
+    [2,65,27,78,0.86,45,29,0],
+    [3,83,60,84,1.09,73,27,0],
+    [4,109,81,121,1.28,68,51,1],
+    [5,106,77,114,1.07,55,51,1],
+    [6,109,81,121,1.28,68,51,1],
+    [7,106,77,114,1.07,55,51,1],
 
 ];
 
@@ -67,9 +51,10 @@ var schema = [
 
 var lineStyle = {
     normal: {
-        width: 1,
-        color:"#fff"
-    }
+      width: 1,
+      color:'#fff',
+      opacity:1
+    },
 };
 
 var option = {
@@ -106,9 +91,36 @@ var option = {
         {dim: 4, name: schema[4].text},
         {dim: 5, name: schema[5].text},
         {dim: 6, name: schema[6].text},
-        {dim: 7, name: schema[7].text,
-        type: 'category', data: ['优', '良', '轻度污染', '中度污染', '重度污染', '严重污染']}
     ],
+  visualMap: [
+    {
+      show:false,
+      dimension: 7,
+      selected: {
+        0: false,
+      },
+      categories: [0,1],
+      inRange: {
+        color:"#fff"
+      },
+      outOfRange: {
+        color: '#000',
+      }
+    }
+  ],
+  brush: {
+    geoIndex: 0,
+    brushLink: 'all',
+    inBrush: {
+      color: '#577ceb',
+      width: 0.5,
+      opacity: 0.6
+    },
+    outOfBrush: {
+      color: '#b99e2a',
+      opacity: 0.1
+    }
+  },
     parallel: {
         left: '5%',
         right: '18%',
@@ -147,7 +159,7 @@ var option = {
             name: '广州',
             type: 'parallel',
             lineStyle: lineStyle,
-            data: dataGZ
+            data: dataSH
         }
     ]
 };

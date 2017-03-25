@@ -283,7 +283,7 @@ function displayNearest(point) {
     changeColor(objectIndex,colorRelated);
   }
   let parallelView = require('./parallel');
-  parallelView.highLightData(relatedPointIndex);
+  parallelView.highLightData(window.rawData,relatedPointIndex);
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
