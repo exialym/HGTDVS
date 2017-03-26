@@ -20,7 +20,6 @@ let init = function (data) {
       },
       outOfBrush: {
         color: '#b99e2a',
-        symbolSize: 4,
         opacity: 0.1
       }
     },
@@ -82,7 +81,24 @@ let init = function (data) {
   myChart.setOption(option);
   myChart.on('axisareaselected', function () {
     myChart.setOption({
-      visualMap: null,
+      visualMap: [
+        {
+          show:false,
+          dimension: data[0].length-1,
+          selected: {
+            0: false,
+          },
+          categories: [0,1],
+          inRange: {
+            color:"#577ceb",
+            opacity: 1
+          },
+          outOfRange: {
+            color: '#577ceb',
+            opacity: 1
+          }
+        }
+      ],
     });
     let series = myChart.getModel().getSeries()[0];
     let indices = series.getRawIndicesByActiveState('active');
@@ -91,12 +107,19 @@ let init = function (data) {
 };
 let highLightData = function(dataRow,indexes) {
   let data = dataRow.concat();
-  for (let i = 0; i < data.length;i++) {
-    data[i].push(0);
+  if (indexes.length===0) {
+    for (let i = 0; i < data.length;i++) {
+      data[i].push(1);
+    }
+  } else {
+    for (let i = 0; i < data.length;i++) {
+      data[i].push(0);
+    }
   }
+
   for (let i = 0; i < indexes.length;i++) {
-    data[i].pop();
-    data[i].push(1);
+    data[indexes[i]].pop();
+    data[indexes[i]].push(1);
   }
   myChart.setOption({
     visualMap: [
@@ -108,10 +131,12 @@ let highLightData = function(dataRow,indexes) {
         },
         categories: [0,1],
         inRange: {
-          color:"#fff"
+          color:"#577ceb",
+          opacity: 1
         },
         outOfRange: {
-          color: '#000',
+          color: '#b99e2a',
+          opacity: 0.1
         }
       }
     ],

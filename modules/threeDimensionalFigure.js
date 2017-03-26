@@ -6,6 +6,7 @@ import tsnejs from '../lib/tsne'
 import utils from './utils'
 import exampleRaw from './example_data'
 import KdTreeUtil from '../lib/three/kdTree'
+let parallelView;
 
 //export function
 module.exports = {
@@ -221,6 +222,8 @@ function onContainerMouseUp(event) {
       for (let i = 0;i < particleNum;i++) {
         changeColor(i,colorNormal);
       }
+      parallelView = require('./parallel');
+      parallelView.highLightData(window.rawData,[]);
       attributes.color.needsUpdate = true;
     }
   }
@@ -282,7 +285,7 @@ function displayNearest(point) {
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
-  let parallelView = require('./parallel');
+  parallelView = require('./parallel');
   parallelView.highLightData(window.rawData,relatedPointIndex);
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
