@@ -171,9 +171,17 @@ main {
         flex-basis: 50%;
       }
     }
-    .parallel {
-      flex:none;
+    .figurs-bottom {
+      display:flex;
       flex: 0 0 20em;
+      flex-direction: column;
+      .parallel {
+        flex-basis: 75%;
+      }
+      .timeLine {
+        flex-basis: 25%;
+      }
+
     }
 
   }
