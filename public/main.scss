@@ -175,6 +175,7 @@ main {
       display:flex;
       flex: 0 0 20em;
       flex-direction: column;
+      flex-wrap: nowrap;
       .parallel {
         flex-basis: 75%;
       }

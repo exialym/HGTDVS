@@ -3,7 +3,7 @@
  */
 import Detector from './lib/three/Detector'
 import utils from './modules/utils'
-if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/webkit/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
+if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/chrome/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
   utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
 }
 import './lib/three/TrackballControls'

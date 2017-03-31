@@ -150,7 +150,8 @@ main {
     main .figures .figurs-bottom {
       display: flex;
       flex: 0 0 20em;
-      flex-direction: column; }
+      flex-direction: column;
+      flex-wrap: nowrap; }
       main .figures .figurs-bottom .parallel {
         flex-basis: 75%; }
       main .figures .figurs-bottom .timeLine {

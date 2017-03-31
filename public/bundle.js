@@ -45626,7 +45626,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Created by exialym on 2017/2/6.
  */
-if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /webkit/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
+if (!(/firefox/.test(navigator.userAgent.toLowerCase()) || /chrome/.test(navigator.userAgent.toLowerCase())) || !_Detector2.default.webgl) {
   _utils2.default.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
 }
 
