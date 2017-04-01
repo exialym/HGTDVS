@@ -94,10 +94,12 @@ body {
     font-size: 15px;
     line-height: 50px; }
   #wait .modal-body .waitOK {
-    color: #15BF63; }
+    color: #15BF63;
+    display: none; }
   #wait .modal-body .waitWarning {
     color: red;
-    font-size: 20px; }
+    font-size: 20px;
+    display: none; }
   #wait .modal-body .waitTips {
     margin-left: 1em; }
   #wait .modal-body .waitButton {

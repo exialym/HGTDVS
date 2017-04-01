@@ -62,7 +62,7 @@
           </div>
           <div class="waitOK"><span class="glyphicon glyphicon-ok"></span></div>
           <div class="waitWarning"><span class="glyphicon glyphicon-remove"></span></div>
-          <div class="waitTips"></div>
+          <div class="waitTips">Loading...</div>
           <button type="button" class="btn waitButton" data-dismiss="modal" aria-label="Close">OK</button>
         </div>
       </div><!-- /.modal-content -->
@@ -71,7 +71,13 @@
   <script src="lib/jquery-3.1.1.js"></script>
   <script src="lib/jqueryUI/jquery-ui.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
+  <script type="application/javascript">
+    $('#wait').modal({backdrop: 'static', keyboard: false});
+  </script>
   <script src="lib/echarts/echarts.js"></script>
   <script src="./public/bundle.js"></script>
+  <script type="application/javascript">
+    $('#wait').modal('hide');
+  </script>
 </body>
 </html>
