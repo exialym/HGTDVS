@@ -152,6 +152,16 @@ $(document).ready(function () {
     $beginTSNE.removeAttr('disabled');
     document.getElementById( 'tSNEState' ).innerHTML = '';
   });
+  $(".datas").on('mouseenter','li',function(e){
+    if (e.target.dataset.index) {
+      threeDFigure.listHoverPoints(e.target.dataset.index,true);
+    }
+  });
+  $(".datas").on('mouseleave','li',function(e){
+    if (e.target.dataset.index) {
+      threeDFigure.listHoverPoints(e.target.dataset.index,false);
+    }
+  });
 
 
 

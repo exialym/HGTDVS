@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7844955e-313e-41ca-aab2-0205246c743d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/.idea/workspace.xml" afterPath="$PROJECT_DIR$/TSNE_test/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/misc.xml" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entry.js" afterPath="$PROJECT_DIR$/entry.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.css" afterPath="$PROJECT_DIR$/public/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.css.map" afterPath="$PROJECT_DIR$/public/main.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.scss" afterPath="$PROJECT_DIR$/public/main.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/threeDimensionalFigure.js" afterPath="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="79" column="4" lean-forward="false" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
+            <state relative-caret-position="562">
+              <caret line="51" column="23" lean-forward="false" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -37,7 +39,7 @@
       <file leaf-file-name="utils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
+            <state relative-caret-position="330">
               <caret line="15" column="51" lean-forward="false" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="51" />
               <folding />
             </state>
@@ -47,8 +49,8 @@
       <file leaf-file-name="main.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="581">
-              <caret line="119" column="5" lean-forward="true" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
+            <state relative-caret-position="2618">
+              <caret line="119" column="5" lean-forward="false" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -57,35 +59,9 @@
       <file leaf-file-name="parallel.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/parallel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="2134">
               <caret line="99" column="9" lean-forward="false" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="text.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/text.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="105" column="19" lean-forward="false" selection-start-line="105" selection-start-column="19" selection-end-line="105" selection-end-column="19" />
-              <folding>
-                <marker date="1490420481000" expanded="true" signature="2263:2364" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="echarts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/echarts/echarts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="42938" column="0" lean-forward="false" selection-start-line="42938" selection-start-column="0" selection-end-line="42938" selection-end-column="0" />
-              <folding>
-                <marker date="1488637771000" expanded="true" signature="249578:249695" ph="..." />
-                <marker date="1488637771000" expanded="true" signature="2103146:2103155" ph="..." />
-                <marker date="1488637771000" expanded="true" signature="2103209:2103224" ph="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -93,8 +69,8 @@
       <file leaf-file-name="entry.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/entry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+            <state relative-caret-position="707">
+              <caret line="156" column="64" lean-forward="true" selection-start-line="156" selection-start-column="64" selection-end-line="156" selection-end-column="64" />
               <folding>
                 <element signature="e#362#400#0" expanded="true" />
               </folding>
@@ -102,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="threeDimensionalFigure.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="threeDimensionalFigure.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="287" column="39" lean-forward="false" selection-start-line="287" selection-start-column="39" selection-end-line="287" selection-end-column="39" />
+            <state relative-caret-position="471">
+              <caret line="395" column="24" lean-forward="false" selection-start-line="395" selection-start-column="24" selection-end-line="395" selection-end-column="24" />
               <folding>
                 <element signature="e#44#87#0" expanded="true" />
               </folding>
@@ -170,11 +146,11 @@
         <option value="$PROJECT_DIR$/lib/three/TypedArrayUtils.js" />
         <option value="$PROJECT_DIR$/lib/three/kdTree.js" />
         <option value="$PROJECT_DIR$/text.html" />
-        <option value="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
         <option value="$PROJECT_DIR$/modules/parallel.js" />
-        <option value="$PROJECT_DIR$/entry.js" />
         <option value="$PROJECT_DIR$/public/main.scss" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/entry.js" />
+        <option value="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
       </list>
     </option>
   </component>
@@ -215,6 +191,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -244,7 +221,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -434,12 +410,13 @@
       <workItem from="1491046357035" duration="552000" />
       <workItem from="1491047691357" duration="42000" />
       <workItem from="1491047751068" duration="102000" />
-      <workItem from="1491047888431" duration="1024000" />
+      <workItem from="1491047888431" duration="1340000" />
+      <workItem from="1491137417227" duration="2453000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131990000" />
+    <option name="totallyTimeSpent" value="134759000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -648,9 +625,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="51" lean-forward="false" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="119" column="5" lean-forward="false" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/echarts/echarts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="22">
           <caret line="42938" column="0" lean-forward="false" selection-start-line="42938" selection-start-column="0" selection-end-line="42938" selection-end-column="0" />
           <folding>
             <marker date="1488637771000" expanded="true" signature="249578:249695" ph="..." />
@@ -662,7 +655,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/text.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="2310">
           <caret line="105" column="19" lean-forward="false" selection-start-line="105" selection-start-column="19" selection-end-line="105" selection-end-column="19" />
           <folding>
             <marker date="1490420481000" expanded="true" signature="2263:2364" ph="..." />
@@ -670,55 +663,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="287" column="39" lean-forward="false" selection-start-line="287" selection-start-column="39" selection-end-line="287" selection-end-column="39" />
-          <folding>
-            <element signature="e#44#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/parallel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="2134">
           <caret line="99" column="9" lean-forward="false" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-          <folding>
-            <element signature="e#362#400#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="15" column="51" lean-forward="false" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="119" column="5" lean-forward="true" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="79" column="4" lean-forward="false" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="4" />
+        <state relative-caret-position="562">
+          <caret line="51" column="23" lean-forward="false" selection-start-line="51" selection-start-column="18" selection-end-line="51" selection-end-column="23" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="707">
+          <caret line="156" column="64" lean-forward="true" selection-start-line="156" selection-start-column="64" selection-end-line="156" selection-end-column="64" />
+          <folding>
+            <element signature="e#362#400#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/threeDimensionalFigure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="395" column="24" lean-forward="false" selection-start-line="395" selection-start-column="24" selection-end-line="395" selection-end-column="24" />
+          <folding>
+            <element signature="e#44#87#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

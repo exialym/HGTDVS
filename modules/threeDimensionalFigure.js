@@ -13,7 +13,8 @@ module.exports = {
   init : init,
   animate : animate,
   displayNearest : displayNearest,
-  choosePoints : choosePoints
+  choosePoints : choosePoints,
+  listHoverPoints : listHoverPoints
 };
 
 //init pram
@@ -332,7 +333,7 @@ function render() {
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index,colorChosen);
-    } else if  (relatedPointIndex.length!=0) {
+    } else if  (relatedPointIndex.length!==0) {
       let flag = false;
       for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
         if (intersectedPoint.index===relatedPointIndex[i]) {
@@ -389,5 +390,31 @@ function choosePoints(indexes) {
   for (let i = 0;i < indexes.length;i++) {
     changeColor(indexes[i],colorRelated);
   }
+  attributes.color.needsUpdate = true;
+}
+function listHoverPoints(index,hoverFlag) {
+  index = Number(index);
+  if (hoverFlag) {
+    changeColor(index,colorChosen);
+  } else {
+    if (chosenPoint && chosenPoint.index === index) {
+      changeColor(index,colorChosen);
+    } else if  (relatedPointIndex.length!==0) {
+      let flag = false;
+      for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
+        if (index===relatedPointIndex[i]) {
+          changeColor(index,colorRelated);
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        changeColor(index,colorFade);
+      }
+    } else {
+      changeColor(index,colorNormal);
+    }
+  }
+
   attributes.color.needsUpdate = true;
 }
