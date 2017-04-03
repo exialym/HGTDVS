@@ -257,6 +257,29 @@ main {
         line-height:14px;
       }
     }
+    .datas {
+      margin-top:5px;
+      .dataList {
+        padding:0;
+        overflow: auto;
+        li {
+          list-style:none;
+          overflow: hidden;
+          border-bottom:1px solid transparent;
+          span {
+            float: left;
+          }
+          button {
+            float:right;
+          }
+          &:hover{
+            border-bottom:1px solid #19a1f2;
+            cursor:pointer;
+          }
+        }
+
+      }
+    }
   }
 
 }

@@ -228,5 +228,21 @@ main {
       main nav .begin-op #tSNEState {
         float: left;
         line-height: 14px; }
+    main nav .datas {
+      margin-top: 5px; }
+      main nav .datas .dataList {
+        padding: 0;
+        overflow: auto; }
+        main nav .datas .dataList li {
+          list-style: none;
+          overflow: hidden;
+          border-bottom: 1px solid transparent; }
+          main nav .datas .dataList li span {
+            float: left; }
+          main nav .datas .dataList li button {
+            float: right; }
+          main nav .datas .dataList li:hover {
+            border-bottom: 1px solid #19a1f2;
+            cursor: pointer; }
 
 /*# sourceMappingURL=main.css.map */

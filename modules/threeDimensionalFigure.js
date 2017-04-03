@@ -279,15 +279,22 @@ function displayNearest(point) {
   }
 
   relatedPointIndex = [];
-
+  let html = "";
   for ( let j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
     let object = imagePositionsInRange[j];
     let objectIndex = object[0].i;
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
+    html += "<li data-index='"+ objectIndex +"'>"
+      +"<span>"+ objectIndex +"</span>"
+      +"<button class='btn btn-xs'>detail</button>"
+      +"</li>";
   }
   parallelView = require('./parallel');
   parallelView.highLightData(window.rawData,relatedPointIndex);
+  $(".dataList").html(html);
+
+
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
