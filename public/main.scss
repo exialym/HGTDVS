@@ -188,7 +188,7 @@ main {
     }
 
   }
-  nav {
+  .right-nav {
     font-size:12px;
     font-weight: 100;
     flex: 0 0 20em;
@@ -258,9 +258,9 @@ main {
       }
     }
     .datas {
-      margin-top:5px;
+      overflow: auto;
       .dataList {
-        padding:0;
+        padding:5px 0;
         overflow: auto;
         li {
           list-style:none;

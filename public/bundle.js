@@ -286,7 +286,8 @@ module.exports = {
   init: init,
   animate: animate,
   displayNearest: displayNearest,
-  choosePoints: choosePoints
+  choosePoints: choosePoints,
+  listHoverPoints: listHoverPoints
 };
 
 //init pram
@@ -538,15 +539,18 @@ function displayNearest(point) {
   }
 
   relatedPointIndex = [];
-
+  var html = "";
   for (var j = 0, il = imagePositionsInRange.length; j < il; j++) {
     var object = imagePositionsInRange[j];
     var objectIndex = object[0].i;
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex, colorRelated);
+    html += "<li data-index='" + objectIndex + "'>" + "<span>" + objectIndex + "</span>" + "<button class='btn btn-xs'>detail</button>" + "</li>";
   }
   parallelView = __webpack_require__(0);
   parallelView.highLightData(window.rawData, relatedPointIndex);
+  $(".dataList").html(html);
+
   changeColor(point.index, colorChosen);
   attributes.color.needsUpdate = true;
 }
@@ -592,7 +596,7 @@ function render() {
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index, colorChosen);
-    } else if (relatedPointIndex.length != 0) {
+    } else if (relatedPointIndex.length !== 0) {
       var _flag = false;
       for (var _i7 = relatedPointIndex.length - 1; _i7 >= 0; _i7--) {
         if (intersectedPoint.index === relatedPointIndex[_i7]) {
@@ -648,6 +652,32 @@ function choosePoints(indexes) {
   for (var _i10 = 0; _i10 < indexes.length; _i10++) {
     changeColor(indexes[_i10], colorRelated);
   }
+  attributes.color.needsUpdate = true;
+}
+function listHoverPoints(index, hoverFlag) {
+  index = Number(index);
+  if (hoverFlag) {
+    changeColor(index, colorChosen);
+  } else {
+    if (chosenPoint && chosenPoint.index === index) {
+      changeColor(index, colorChosen);
+    } else if (relatedPointIndex.length !== 0) {
+      var flag = false;
+      for (var _i11 = relatedPointIndex.length - 1; _i11 >= 0; _i11--) {
+        if (index === relatedPointIndex[_i11]) {
+          changeColor(index, colorRelated);
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        changeColor(index, colorFade);
+      }
+    } else {
+      changeColor(index, colorNormal);
+    }
+  }
+
   attributes.color.needsUpdate = true;
 }
 
@@ -45646,6 +45676,9 @@ $(document).ready(function () {
   var $rawData = $('#rawData');
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
+  var $Datas = $('.datas');
+  var $Ops = $('.ops');
+  var $RightNav = $('.right-nav');
 
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
   //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
@@ -45764,6 +45797,17 @@ $(document).ready(function () {
     $beginTSNE.removeAttr('disabled');
     document.getElementById('tSNEState').innerHTML = '';
   });
+  $Datas.on('mouseenter', 'li', function (e) {
+    if (e.target.dataset.index) {
+      threeDFigure.listHoverPoints(e.target.dataset.index, true);
+    }
+  });
+  $Datas.on('mouseleave', 'li', function (e) {
+    if (e.target.dataset.index) {
+      threeDFigure.listHoverPoints(e.target.dataset.index, false);
+    }
+  });
+  $Datas.height($RightNav.height() - $Ops.height());
 });
 
 /***/ })

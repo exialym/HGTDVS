@@ -31,6 +31,9 @@ $(document).ready(function () {
   let $rawData = $('#rawData');
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
+  let $Datas = $('.datas');
+  let $Ops = $('.ops');
+  let $RightNav = $('.right-nav');
 
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
   //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
@@ -152,16 +155,17 @@ $(document).ready(function () {
     $beginTSNE.removeAttr('disabled');
     document.getElementById( 'tSNEState' ).innerHTML = '';
   });
-  $(".datas").on('mouseenter','li',function(e){
+  $Datas.on('mouseenter','li',function(e){
     if (e.target.dataset.index) {
       threeDFigure.listHoverPoints(e.target.dataset.index,true);
     }
   });
-  $(".datas").on('mouseleave','li',function(e){
+  $Datas.on('mouseleave','li',function(e){
     if (e.target.dataset.index) {
       threeDFigure.listHoverPoints(e.target.dataset.index,false);
     }
   });
+  $Datas.height($RightNav.height()-$Ops.height());
 
 
 

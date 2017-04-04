@@ -158,16 +158,16 @@ main {
         flex-basis: 75%; }
       main .figures .figurs-bottom .timeLine {
         flex-basis: 25%; }
-  main nav {
+  main .right-nav {
     font-size: 12px;
     font-weight: 100;
     flex: 0 0 20em;
     padding: 0.3em;
     border-radius: 3px;
     background: #E6F3F8; }
-    main nav .file-op {
+    main .right-nav .file-op {
       overflow: hidden; }
-      main nav .file-op #DataSourceLabel {
+      main .right-nav .file-op #DataSourceLabel {
         float: left;
         font-size: 12px;
         margin: 0;
@@ -176,34 +176,34 @@ main {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden; }
-      main nav .file-op #clearFile {
+      main .right-nav .file-op #clearFile {
         float: right;
         border: 1px solid red;
         background-color: transparent;
         color: red; }
-        main nav .file-op #clearFile:hover {
+        main .right-nav .file-op #clearFile:hover {
           border-color: red;
           background-color: red;
           color: white; }
-    main nav .sliderBar-op {
+    main .right-nav .sliderBar-op {
       margin-top: 5px;
       overflow: hidden; }
-      main nav .sliderBar-op p {
+      main .right-nav .sliderBar-op p {
         float: left;
         font-size: 12px;
         margin: 0;
         margin-top: 2px; }
-      main nav .sliderBar-op .sliderNum {
+      main .right-nav .sliderBar-op .sliderNum {
         float: left;
         font-size: 12px;
         display: block;
         margin-top: 2px;
         width: 3.5em;
         text-align: center; }
-      main nav .sliderBar-op .bar {
+      main .right-nav .sliderBar-op .bar {
         float: left;
         width: 9em; }
-      main nav .sliderBar-op #relatedNumLabel {
+      main .right-nav .sliderBar-op #relatedNumLabel {
         float: right;
         width: 4em;
         padding: 0;
@@ -211,37 +211,37 @@ main {
         height: 22px;
         border-radius: 4px;
         text-align: center; }
-    main nav .begin-op {
+    main .right-nav .begin-op {
       margin-top: 5px;
       overflow: hidden; }
-      main nav .begin-op #beginTSNE {
+      main .right-nav .begin-op #beginTSNE {
         float: left;
         margin-right: 5px;
         width: 90px;
         border: 1px solid #19a1f2;
         background-color: transparent;
         color: #19a1f2; }
-        main nav .begin-op #beginTSNE:hover {
+        main .right-nav .begin-op #beginTSNE:hover {
           border-color: #19a1f2;
           background-color: #19a1f2;
           color: white; }
-      main nav .begin-op #tSNEState {
+      main .right-nav .begin-op #tSNEState {
         float: left;
         line-height: 14px; }
-    main nav .datas {
-      margin-top: 5px; }
-      main nav .datas .dataList {
-        padding: 0;
+    main .right-nav .datas {
+      overflow: auto; }
+      main .right-nav .datas .dataList {
+        padding: 5px 0;
         overflow: auto; }
-        main nav .datas .dataList li {
+        main .right-nav .datas .dataList li {
           list-style: none;
           overflow: hidden;
           border-bottom: 1px solid transparent; }
-          main nav .datas .dataList li span {
+          main .right-nav .datas .dataList li span {
             float: left; }
-          main nav .datas .dataList li button {
+          main .right-nav .datas .dataList li button {
             float: right; }
-          main nav .datas .dataList li:hover {
+          main .right-nav .datas .dataList li:hover {
             border-bottom: 1px solid #19a1f2;
             cursor: pointer; }
 
