@@ -48,4 +48,14 @@ utils.switchMod = function (model) {
       $waitOK.hide();
   }
 };
+utils.changeDataList = function(indexes) {
+  let html = "";
+  for ( let i = 0; i < indexes.length; i ++ ) {
+    html += "<li data-index='"+ indexes[i] +"'>"
+      +"<span>"+ indexes[i] +"</span>"
+      +"<button class='btn btn-xs'>detail</button>"
+      +"</li>";
+  }
+  $(".dataList").html(html);
+};
 module.exports = utils;

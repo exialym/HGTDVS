@@ -2,6 +2,7 @@
  * Created by exialym on 2017/3/5.
  */
 import * as threeDFigure from './threeDimensionalFigure'
+import utils from './utils'
 let myChart;
 let init = function (data) {
   myChart = echarts.init(document.getElementById('parallel'));
@@ -103,6 +104,7 @@ let init = function (data) {
     let series = myChart.getModel().getSeries()[0];
     let indices = series.getRawIndicesByActiveState('active');
     threeDFigure.choosePoints(indices);
+    utils.changeDataList(indices);
   });
 };
 let highLightData = function(dataRow,indexes) {
