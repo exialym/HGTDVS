@@ -79,12 +79,32 @@
   <script src="lib/jqueryUI/jquery-ui.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script type="application/javascript">
-    $('#wait').modal({backdrop: 'static', keyboard: false});
+    var Detector = {
+      webgl: ( function () {
+        try {
+          var canvas = document.createElement( 'canvas' );
+          return !! ( window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ) );
+        } catch ( e ) {
+          return false;
+        }
+      })(),
+    };
+    if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/chrome/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
+      $('.waitTips').html("Please Use Chrome or Firefox for better experience!");
+      $('.waitButton').show();
+      $('.waitWarning').show();
+      $('.loading').hide();
+      $('#wait').modal();
+    } else {
+      $('#wait').modal({backdrop: 'static', keyboard: false});
+    }
   </script>
   <script src="lib/echarts/echarts.js"></script>
   <script src="./public/bundle.js"></script>
   <script type="application/javascript">
-    $('#wait').modal('hide');
+    if ((/firefox/.test(navigator.userAgent.toLowerCase())||/chrome/.test(navigator.userAgent.toLowerCase()))&&Detector.webgl) {
+      $('#wait').modal('hide');
+    }
   </script>
 </body>
 </html>

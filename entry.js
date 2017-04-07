@@ -1,11 +1,8 @@
 /**
  * Created by exialym on 2017/2/6.
  */
-import Detector from './lib/three/Detector'
 import utils from './modules/utils'
-if (!(/firefox/.test(navigator.userAgent.toLowerCase())||/chrome/.test(navigator.userAgent.toLowerCase()))||!Detector.webgl) {
-  utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
-}
+
 import './lib/three/TrackballControls'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
