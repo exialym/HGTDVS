@@ -80,6 +80,7 @@ let init = function (data) {
     ]
   };
   myChart.setOption(option);
+  //选中平行坐标中的数据触发的事件
   myChart.on('axisareaselected', function () {
     myChart.setOption({
       visualMap: [
@@ -107,6 +108,7 @@ let init = function (data) {
     utils.changeDataList(indices);
   });
 };
+//高亮其他视图中选中的数据
 let highLightData = function(dataRow,indexes) {
   let data = dataRow.concat();
   if (indexes.length===0) {
