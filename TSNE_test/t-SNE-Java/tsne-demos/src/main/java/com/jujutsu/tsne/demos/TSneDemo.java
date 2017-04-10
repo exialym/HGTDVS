@@ -9,6 +9,9 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 
+import com.jujutsu.tsne.barneshut.BHTSne;
+import com.jujutsu.tsne.barneshut.BarnesHutTSne;
+import com.jujutsu.tsne.barneshut.ParallelBHTsne;
 import org.math.plot.FrameView;
 import org.math.plot.Plot2DPanel;
 import org.math.plot.PlotPanel;
@@ -27,9 +30,9 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-
-    private static String path = "/Users/exialym/Desktop/Git/T-SNE-Java-me/tsne-demos/src/main/resources/datasets/";
-
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
 	}
@@ -173,13 +176,13 @@ public class TSneDemo {
     	int iters = 2000;
     	System.out.println("Running " + iters + " iterations of TSne on " + filename);
         double [][] X = MatrixUtils.simpleRead2DMatrix(new File(filename), ",");
-        //System.out.println("X:" + MatrixOps.doubleArrayToString(X));
+        System.out.println("X:" + MatrixOps.doubleArrayToString(X));
         X = MatrixOps.log(X, true);
         //System.out.println("X:" + MatrixOps.doubleArrayToString(X));
         X = MatrixOps.centerAndScale(X);
         System.out.println("Shape is: " + X.length + " x " + X[0].length);
         System.out.println("Starting TSNE: " + new Date());
-        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity, iters);
+        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity, iters,false);
         System.out.println("Finished TSNE: " + new Date());
         //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
         System.out.println("Result is = " + Y.length + " x " + Y[0].length);
@@ -250,7 +253,7 @@ public class TSneDemo {
         double [][] X = MatrixUtils.simpleRead2DMatrix(new File(path + "mnist" + nistSize + "_X.txt"));
     	String [] imgfiles = new String[nistSize];
     	for (int i = 0; i < imgfiles.length; i++) {
-			imgfiles[i] = "src/main/resources/nistimgs/img" + i + ".png";
+			imgfiles[i] = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/nistimgs/img" + i + ".png";
 		}
         System.out.println("Shape is: " + X.length + " x " + X[0].length);
         TSne tsne = new SimpleTSne();
@@ -279,21 +282,50 @@ public class TSneDemo {
 //        	System.out.println("usage: java -cp target/tsne-demos-X.X.X.jar com.jujutsu.tsne.demos.TSneDemo src/main/resources/datasets/mnist2500_X.txt");
 //        	System.exit(0);
 //        }
-        pca_iris();
-        pca_mnist(1000);
-        tsne_iris();
-        tsne_mnist(250);
-        tsne_mnist_icons(500);
-        tsne_mnist(500);
-        tsne_mnist(1000);
-        tsne_mnist(1000);
-        fast_tsne_mnist(2500);
+        //pca_iris();
+        //pca_mnist(1000);
+        //tsne_iris();
+        //tsne_mnist(250);
+        //tsne_mnist_icons(500);
+        //tsne_mnist(500);
+        //tsne_mnist(1000);
+        //tsne_mnist(2500);
+        //fast_tsne_mnist(2500);
+        //fast_tsne_no_labels(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt");
 //        pca_no_labels(args[0]);
 //        pca_no_labels(args[0]);
 //        if(args.length==1)
 //        	fast_tsne_no_labels(args[0]);
 //        else
 //        	fast_tsne(args[0], args[1]);
+        int initial_dims = 55;
+        double perplexity = 20.0;
+        //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt"), "   ");
+        double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
+        System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
+        BarnesHutTSne tsne;
+        boolean parallel = false;
+        if(parallel) {
+            tsne = new ParallelBHTsne();
+        } else {
+            tsne = new BHTSne();
+        }
+        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity);
+        System.out.println("Finished TSNE: " + new Date());
+        //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
+        System.out.println("Result is = " + Y.length + " x " + Y[0].length);
+        saveFile(new File("Java-tsne-result.txt"), MatrixOps.doubleArrayToString(Y));
+        Plot2DPanel plot = new Plot2DPanel();
+
+        ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
+        plot.plotCanvas.setNotable(true);
+        plot.plotCanvas.setNoteCoords(true);
+        plot.plotCanvas.addPlot(setosaPlot);
+
+        FrameView plotframe = new FrameView(plot);
+        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        plotframe.setVisible(true);
     }
+
 
 }

@@ -67,7 +67,7 @@ public class BHTSne implements BarnesHutTSne {
 		int D = X[0].length;
 		return run(X, N, D, no_dims, initial_dims, perplexity, max_iter, use_pca, theta);
 	}
-
+	//将二维数组拍平为1维数组
 	private double[] flatten(double[][] x) {
 		int noCols = x[0].length;
 		double [] flat = new double[x.length*x[0].length];
@@ -92,22 +92,24 @@ public class BHTSne implements BarnesHutTSne {
 	static double sign_tsne(double x) { return (x == .0 ? .0 : (x < .0 ? -1.0 : 1.0)); }
 
 	// Perform t-SNE
-	double [][] run(double [][] Xin, int N, int D, int no_dims, int initial_dims, double perplexity, 
-			int max_iter, boolean use_pca, double theta) {
+
+	double [][] run(double [][] Xin, int N, int D, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, double theta) {
 		boolean exact = (theta == .0) ? true : false;
 		if(exact) throw new IllegalArgumentException("The Barnes Hut implementation does not support exact inference yet (theta==0.0), if you want exact t-SNE please use one of the standard t-SNE implementations (FastTSne for instance)");
-		
+		//进行PCA，先行将高维数据降维到给定的initial_dims，减小t-SNE的计算复杂度
 		if(use_pca && D > initial_dims && initial_dims > 0) {
 			PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
 			Xin = pca.pca(Xin, initial_dims);
 			D = initial_dims;
 			System.out.println("X:Shape after PCA is = " + Xin.length + " x " + Xin[0].length);
 		}
+		//将二维数组拍平为1维数组
 		double [] X = flatten(Xin);	
-		
+		//一维表示的结果数组
 		double [] Y = new double[N*no_dims];
 		System.out.println("X:Shape is = " + N + " x " + D);
 		// Determine whether we are using an exact algorithm
+		//判断perplexity和数据点是否匹配
 		if(N - 1 < 3 * perplexity) { throw new IllegalArgumentException("Perplexity too large for the number of data points!\n"); }
 		System.out.printf("Using no_dims = %d, perplexity = %f, and theta = %f\n", no_dims, perplexity, theta);
 
@@ -127,6 +129,7 @@ public class BHTSne implements BarnesHutTSne {
 		System.out.println("Computing input similarities...");
 		long start = System.currentTimeMillis();
 		//zeroMean(X, N, D);
+		//将所有坐标值按照最大的归一化，避免数字越界等问题（这里没有考虑负数）
 		double max_X = .0;
 		for(int i = 0; i < N * D; i++) {
 			if(X[i] > max_X) max_X = X[i];
@@ -135,6 +138,7 @@ public class BHTSne implements BarnesHutTSne {
 		for(int i = 0; i < N * D; i++) X[i] /= max_X;
 
 		double [] P = null;
+		//（这个K貌似代表在VP树中找最近K个邻居）
 		int K  = (int) (3 * perplexity);
 		int [] row_P = new int[N+1];
 		int [] col_P = new int[N*K];
@@ -457,13 +461,16 @@ public class BHTSne implements BarnesHutTSne {
 		row_P[0] = 0;
 		for(int n = 0; n < N; n++) row_P[n + 1] = row_P[n] + K;    
 
-		// Build ball tree on data set
+		// 初始化一个VP树，传入自定义的距离，这里是欧拉距离
 		VpTree<DataPoint> tree = new VpTree<DataPoint>(distance);
+		//DataPoint是一个保存数据点的结构，包括：数据点在所有点中的索引，维数，具体的坐标数组。
 		final DataPoint [] obj_X = new DataPoint [N];
+		//将被拍平的数据转移到DataPoint数组中
 		for(int n = 0; n < N; n++) {
 			double [] row = MatrixOps.extractRowFromFlatMatrix(X,n,D);
 			obj_X[n] = new DataPoint(D, n, row);
 		}
+		//构建VP树
 		tree.create(obj_X);
 
 		// VERIFIED THAT TREES LOOK THE SAME
@@ -489,6 +496,7 @@ public class BHTSne implements BarnesHutTSne {
 			indices.clear();
 			distances.clear();
 			//System.out.println("Looking at: " + obj_X.get(n).index());
+			//找出当前点的K临近点和当前点与它们的距离，分别存在数组indices, distances
 			tree.search(obj_X[n], K + 1, indices, distances);
 
 			// Initialize some variables for binary search
