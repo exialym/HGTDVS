@@ -199,11 +199,13 @@ function init() {
   });
 }
 
+//鼠标按下时触发
 function onContainerMouseDown(event) {
   event.preventDefault();
   mouseFlag[0] = mouse.x;
   mouseFlag[1] = mouse.y;
 }
+//鼠标抬起时触发
 function onContainerMouseUp(event) {
   event.preventDefault();
   //如果鼠标抬起时和落下时位置一样
@@ -214,10 +216,12 @@ function onContainerMouseUp(event) {
       if (chosenPoint) {
         changeColor(chosenPoint.index,colorFade);
       }
+      //计算当前选中点的最近邻居
       displayNearest(intersectedPoint);
       attributes.color.needsUpdate = true;
       chosenPoint = intersectedPoint;
     } else {
+      //鼠标下没有点的时候，取消选中，平行坐标取消选中，列表清空
       chosenPoint = undefined;
       relatedPointIndex = [];
       for (let i = 0;i < particleNum;i++) {
@@ -278,7 +282,6 @@ function displayNearest(point) {
       changeColor(i,colorFade);
     }
   }
-
   relatedPointIndex = [];
   for ( let j = 0, il = imagePositionsInRange.length; j < il; j ++ ) {
     let object = imagePositionsInRange[j];

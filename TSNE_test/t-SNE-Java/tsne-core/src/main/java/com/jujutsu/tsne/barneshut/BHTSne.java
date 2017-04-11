@@ -138,10 +138,13 @@ public class BHTSne implements BarnesHutTSne {
 		for(int i = 0; i < N * D; i++) X[i] /= max_X;
 
 		double [] P = null;
-		//（这个K貌似代表在VP树中找最近K个邻居）
+		//这个K代表在VP树中找最近K个邻居，这个K是根据用户选择的参数perplexity决定的
 		int K  = (int) (3 * perplexity);
+		//row_P中存的是每个点的K个邻居的数据在col_P和val_P中的起始下标
 		int [] row_P = new int[N+1];
+		//col_P中存着每个点的K个邻居在原数据中的位置
 		int [] col_P = new int[N*K];
+		//val_P中存着每个点与其K个邻居的归一化概率
 		double [] val_P = new double[N*K];
 		/**_row_P = (int*)    malloc((N + 1) * sizeof(int));
 		 *_col_P = (int*)    calloc(N * K, sizeof(int));
@@ -170,16 +173,17 @@ public class BHTSne implements BarnesHutTSne {
 			for(int i = 0; i < N * N; i++) P[i] /= sum_P;
 		}
 
-		// Compute input similarities for approximate t-SNE
+		// 计算近似的高维联合概率矩阵
 		else {
 
-			// Compute asymmetric pairwise input similarities
+			// 计算不对称的条件概率矩阵
 			computeGaussianPerplexity(X, N, D, row_P, col_P, val_P, perplexity, K);
 
 			// Verified that val_P,col_P,row_P is the same at this point
 
-			// Symmetrize input similarities
+			// 计算对称的联合概率矩阵
 			SymResult res = symmetrizeMatrix(row_P, col_P, val_P, N);
+			//这三个数组还是和原来的结构一样，只不过对于每一个点来说保存的不只是K个邻居的数据，会还有以它为邻居的点的数据
 			row_P = res.sym_row_P;
 			col_P = res.sym_col_P;
 			val_P = res.sym_val_P;
@@ -190,11 +194,11 @@ public class BHTSne implements BarnesHutTSne {
 		}
 		long end = System.currentTimeMillis();
 
-		// Lie about the P-values
+		// 根据论文对概率进行初期夸大，类方便聚成团，方便在低维嵌入中移动
 		if(exact) { for(int i = 0; i < N * N; i++)        P[i] *= 12.0; }
 		else {      for(int i = 0; i < row_P[N]; i++) val_P[i] *= 12.0; }
 
-		// Initialize solution (randomly)
+		// 随机初始化结果
 		for(int i = 0; i < N * no_dims; i++) Y[i] = ThreadLocalRandom.current().nextDouble() * 0.0001;
 
 		// Perform main training loop
@@ -488,11 +492,12 @@ public class BHTSne implements BarnesHutTSne {
 		System.out.println("Building tree...");
 		List<DataPoint> indices = new ArrayList<>();
 		List<Double> distances = new ArrayList<>();
+		//遍历所有点
 		for(int n = 0; n < N; n++) {
 
 			if(n % 10000 == 0) System.out.printf(" - point %d of %d\n", n, N);
 
-			// Find nearest neighbors
+
 			indices.clear();
 			distances.clear();
 			//System.out.println("Looking at: " + obj_X.get(n).index());
@@ -500,6 +505,7 @@ public class BHTSne implements BarnesHutTSne {
 			tree.search(obj_X[n], K + 1, indices, distances);
 
 			// Initialize some variables for binary search
+			//对于每一个点使用二分法找到符合设置的perplexity的那个theta值
 			boolean found = false;
 			double beta = 1.0;
 			double min_beta = -Double.MAX_VALUE;
