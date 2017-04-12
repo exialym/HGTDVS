@@ -44,7 +44,8 @@ import com.jujutsu.utils.MatrixOps;
 
 public class BHTSne implements BarnesHutTSne {
 
-	protected final Distance distance = new EuclideanDistance();
+	//protected final Distance distance = new EuclideanDistance();
+	protected final Distance distance = new FractionalDistance((Double)(1.0/2.0));
 
 	@Override
 	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity) {
