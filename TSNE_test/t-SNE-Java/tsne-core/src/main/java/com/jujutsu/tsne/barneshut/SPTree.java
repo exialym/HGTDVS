@@ -9,23 +9,31 @@ public class SPTree {
 
 	  // Fixed constants
     final static int QT_NODE_CAPACITY = 1;
-        
+
+    //当前节点的父节点
 	protected SPTree parent;
+	//树的维数，如果是2维，就是一个quad tree
 	protected int dimension;
+	//是否是叶子节点
 	protected boolean is_leaf;
+	//？？
 	protected int size;
+	//当前区域中包含多少个点
 	protected int cum_size;
 	
-	 // Axis-aligned bounding box stored as a center with half-dimensions to represent the boundaries of this quad tree
+	 // 当前区域的边界，储存的格式看Cell类
     Cell boundary;
     
-    // Indices in this space-partitioning tree node, corresponding center-of-mass, and list of all children
+    // 当前区域的点的坐标数据
     double[] data;
+    //当前区域的质心
     double[] center_of_mass;
+    //??
     int [] index = new int[QT_NODE_CAPACITY];
     
-    // Children
+    // 当前区域的子区域，2维的话就是4个
     SPTree [] children;
+    //子区域的个数
     int no_children;
 
 	public SPTree(int D, double[] inp_data, int N) {
@@ -301,7 +309,7 @@ public class SPTree {
 	}
 
 
-	// Computes edge forces
+	// 计算拉力，也就是所有概率矩阵中有值的地方
 	void computeEdgeForces(int [] row_P, int [] col_P, double [] val_P, int N, double [] pos_f)
 	{
 		// Loop over all edges in the graph
@@ -355,9 +363,12 @@ public class SPTree {
 		}
 	}
 	
-	class Cell {		
+	class Cell {
+		//区域的维度
 		int dimension;
+		//该区域每个维度的中心
 		double [] corner;
+		//该区域每个维度的半径
 		double [] width;
 		    
 		// Constructs cell

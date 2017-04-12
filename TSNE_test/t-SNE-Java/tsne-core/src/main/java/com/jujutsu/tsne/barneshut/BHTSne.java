@@ -213,7 +213,7 @@ public class BHTSne implements BarnesHutTSne {
 			
 			updateGradient(N, no_dims, Y, momentum, eta, dY, uY, gains);
 
-			// Make solution zero-mean
+			// 使降维结果是0均值的
 			zeroMean(Y, N, no_dims);
 
 			// Stop lying about the P-values after a while, and switch momentum
@@ -265,7 +265,9 @@ public class BHTSne implements BarnesHutTSne {
 
 		// Compute all terms required for t-SNE gradient
 		double [] sum_Q = new double[1];
+		//计算所有拉力
 		double [] pos_f = new double[N * D];
+		//计算所有 斥力
 		double [][] neg_f = new double[N][D];
 
 		tree.computeEdgeForces(inp_row_P, inp_col_P, inp_val_P, N, pos_f);
