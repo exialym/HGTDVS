@@ -6,6 +6,7 @@ public class EuclideanDistance implements Distance{
 
 	public EuclideanDistance() {
 	}
+	private int count = 0;
 
 	@Override
 	public double distance(DataPoint d1, DataPoint d2) {
@@ -17,6 +18,7 @@ public class EuclideanDistance implements Distance{
 	        diff = (x1[d] - x2[d]);
 	        dd += diff * diff;
 	    }
+		//System.out.printf("\n"+count++);
 	    return sqrt(dd);
 
 	}

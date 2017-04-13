@@ -3,9 +3,11 @@ package com.jujutsu.tsne.barneshut;
 import static java.lang.Math.sqrt;
 
 public class FractionalDistance implements Distance{
-
+	private int count = 0;
 	private double f;
+	private double one_f;
 	public FractionalDistance(double f) {
+		this.one_f = 1/f;
 		this.f = f;
 	}
 
@@ -18,8 +20,14 @@ public class FractionalDistance implements Distance{
 	    for(int d = 0; d < d1._D; d++) {
 	        diff = (x1[d] - x2[d]);
 	        dd += Math.pow(Math.abs(diff),f);
+			//dd += Math.abs(diff);
 	    }
-	    return Math.pow(dd,1/f);
+	    //6621945 2920007 1902000 1815000
+		count++;
+	    if (count%1000==0)
+			System.out.printf("\n"+count);
+	    return Math.pow(dd,one_f);
+		//return dd;
 
 	}
 

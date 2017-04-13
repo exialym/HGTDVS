@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7844955e-313e-41ca-aab2-0205246c743d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/target/classes/com/jujutsu/tsne/barneshut/BHTSne.class" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/target/classes/com/jujutsu/tsne/barneshut/BHTSne.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/target/classes/com/jujutsu/tsne/demos/TSneDemo.class" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/target/classes/com/jujutsu/tsne/demos/TSneDemo.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/parallel.js" afterPath="$PROJECT_DIR$/modules/parallel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/Java-tsne-result.txt" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/Java-tsne-result.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,7 +59,7 @@
       <file leaf-file-name="parallel.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/parallel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
+            <state relative-caret-position="-756">
               <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
               <folding>
                 <element signature="e#43#99#0" expanded="true" />
@@ -477,11 +481,12 @@
       <workItem from="1491747759225" duration="1129000" />
       <workItem from="1491751623129" duration="246000" />
       <workItem from="1491751933175" duration="71000" />
+      <workItem from="1492085194281" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="142711000" />
+    <option name="totallyTimeSpent" value="142730000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -754,7 +759,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/parallel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
+        <state relative-caret-position="-756">
           <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
           <folding>
             <element signature="e#43#99#0" expanded="true" />
