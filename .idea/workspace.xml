@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7844955e-313e-41ca-aab2-0205246c743d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/target/classes/com/jujutsu/tsne/barneshut/BHTSne.class" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/target/classes/com/jujutsu/tsne/barneshut/BHTSne.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/target/classes/com/jujutsu/tsne/demos/TSneDemo.class" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/target/classes/com/jujutsu/tsne/demos/TSneDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/Java-tsne-result.txt" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/Java-tsne-result.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java" afterPath="$PROJECT_DIR$/TSNE_test/t-SNE-Java/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2222">
-              <caret line="101" column="48" lean-forward="false" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
+            <state relative-caret-position="716">
+              <caret line="52" column="12" lean-forward="false" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -49,18 +44,18 @@
       <file leaf-file-name="main.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/main.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5764">
-              <caret line="262" column="16" lean-forward="false" selection-start-line="262" selection-start-column="16" selection-end-line="262" selection-end-column="16" />
+            <state relative-caret-position="1083">
+              <caret line="284" column="1" lean-forward="false" selection-start-line="284" selection-start-column="1" selection-end-line="284" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parallel.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parallel.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/parallel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-756">
-              <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
+            <state relative-caret-position="484">
+              <caret line="103" column="7" lean-forward="true" selection-start-line="103" selection-start-column="7" selection-end-line="103" selection-end-column="7" />
               <folding>
                 <element signature="e#43#99#0" expanded="true" />
               </folding>
@@ -160,12 +155,12 @@
         <option value="$PROJECT_DIR$/lib/three/TypedArrayUtils.js" />
         <option value="$PROJECT_DIR$/lib/three/kdTree.js" />
         <option value="$PROJECT_DIR$/text.html" />
-        <option value="$PROJECT_DIR$/public/main.scss" />
         <option value="$PROJECT_DIR$/modules/utils.js" />
         <option value="$PROJECT_DIR$/modules/threeDimensionalFigure.js" />
         <option value="$PROJECT_DIR$/entry.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/modules/parallel.js" />
+        <option value="$PROJECT_DIR$/public/main.scss" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -278,10 +273,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HGTDVS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HGTDVS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HGTDVS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HGTDVS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bootstrap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fonts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -482,11 +517,12 @@
       <workItem from="1491751623129" duration="246000" />
       <workItem from="1491751933175" duration="71000" />
       <workItem from="1492085194281" duration="19000" />
+      <workItem from="1492519900113" duration="1108000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="142730000" />
+    <option name="totallyTimeSpent" value="143838000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -702,14 +738,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5764">
-          <caret line="262" column="16" lean-forward="false" selection-start-line="262" selection-start-column="16" selection-end-line="262" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1298">
@@ -728,14 +756,6 @@
             <marker date="1487067096000" expanded="true" signature="1456:1466" ph="..." />
             <marker date="1487067096000" expanded="true" signature="1553:1563" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2222">
-          <caret line="101" column="48" lean-forward="false" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -759,11 +779,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/parallel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-756">
-          <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
+        <state relative-caret-position="484">
+          <caret line="103" column="7" lean-forward="true" selection-start-line="103" selection-start-column="7" selection-end-line="103" selection-end-column="7" />
           <folding>
             <element signature="e#43#99#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1083">
+          <caret line="284" column="1" lean-forward="false" selection-start-line="284" selection-start-column="1" selection-end-line="284" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="716">
+          <caret line="52" column="12" lean-forward="false" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

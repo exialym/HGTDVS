@@ -163,6 +163,7 @@ var init = function init(data) {
     }]
   };
   myChart.setOption(option);
+  //选中平行坐标中的数据触发的事件
   myChart.on('axisareaselected', function () {
     myChart.setOption({
       visualMap: [{
@@ -188,6 +189,7 @@ var init = function init(data) {
     _utils2.default.changeDataList(indices);
   });
 };
+//高亮其他视图中选中的数据
 var highLightData = function highLightData(dataRow, indexes) {
   var data = dataRow.concat();
   if (indexes.length === 0) {
@@ -537,11 +539,13 @@ function init() {
   });
 }
 
+//鼠标按下时触发
 function onContainerMouseDown(event) {
   event.preventDefault();
   mouseFlag[0] = mouse.x;
   mouseFlag[1] = mouse.y;
 }
+//鼠标抬起时触发
 function onContainerMouseUp(event) {
   event.preventDefault();
   //如果鼠标抬起时和落下时位置一样
@@ -552,10 +556,12 @@ function onContainerMouseUp(event) {
       if (chosenPoint) {
         changeColor(chosenPoint.index, colorFade);
       }
+      //计算当前选中点的最近邻居
       displayNearest(intersectedPoint);
       attributes.color.needsUpdate = true;
       chosenPoint = intersectedPoint;
     } else {
+      //鼠标下没有点的时候，取消选中，平行坐标取消选中，列表清空
       chosenPoint = undefined;
       relatedPointIndex = [];
       for (var _i3 = 0; _i3 < particleNum; _i3++) {
@@ -611,7 +617,6 @@ function displayNearest(point) {
       changeColor(_i5, colorFade);
     }
   }
-
   relatedPointIndex = [];
   for (var j = 0, il = imagePositionsInRange.length; j < il; j++) {
     var object = imagePositionsInRange[j];
