@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 
+import com.jujutsu.tsne.*;
 import com.jujutsu.tsne.barneshut.BHTSne;
 import com.jujutsu.tsne.barneshut.BarnesHutTSne;
 import com.jujutsu.tsne.barneshut.ParallelBHTsne;
@@ -19,10 +20,6 @@ import org.math.plot.plots.ColoredScatterPlot;
 import org.math.plot.plots.IconScatterPlot;
 import org.math.plot.plots.ScatterPlot;
 
-import com.jujutsu.tsne.FastTSne;
-import com.jujutsu.tsne.PrincipalComponentAnalysis;
-import com.jujutsu.tsne.SimpleTSne;
-import com.jujutsu.tsne.TSne;
 import com.jujutsu.utils.MatrixOps;
 import com.jujutsu.utils.MatrixUtils;
 
@@ -30,8 +27,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -334,6 +331,7 @@ public class TSneDemo {
         FrameView plotframe = new FrameView(plot);
         plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         plotframe.setVisible(true);
+        System.out.println("KNN accurcy = " + (new KNNClasifer()).KNNAccurcy(Y,1,labels));
     }
 
 
