@@ -59,7 +59,7 @@ public class KNNClasifer {
 					maxCount = classMap.get(key);
 				}
 			}
-			if (label[n]==maxClass) right += 1.0;
+			if (label[n].equals(maxClass)) right += 1.0;
 		}
 		return right/y.length;
 	}

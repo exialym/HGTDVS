@@ -27,8 +27,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    private static String basePath = "E:/Git/HGTDVS/";
-    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    //private static String basePath = "E:/Git/HGTDVS/";
+    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -295,6 +295,9 @@ public class TSneDemo {
 //        	fast_tsne_no_labels(args[0]);
 //        else
 //        	fast_tsne(args[0], args[1]);
+
+
+
         int initial_dims = 55;
         double perplexity = 20.0;
         double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt"), "   ");
@@ -331,7 +334,11 @@ public class TSneDemo {
         FrameView plotframe = new FrameView(plot);
         plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         plotframe.setVisible(true);
-        System.out.println("KNN accurcy = " + (new KNNClasifer()).KNNAccurcy(Y,1,labels));
+
+
+        //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
+        for (int i = 1;i < 100; i++)
+            System.out.println(i + ":" + (new KNNClasifer()).KNNAccurcy(Y,i,labels));
     }
 
 
