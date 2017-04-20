@@ -45,7 +45,7 @@ import com.jujutsu.utils.MatrixOps;
 public class BHTSne implements BarnesHutTSne {
 
 	//protected final Distance distance = new EuclideanDistance();
-	protected final Distance distance = new FractionalDistance((Double)(1.0/2.0));
+	protected final Distance distance = new FractionalDistance(0.65);
 
 	@Override
 	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity) {
@@ -98,12 +98,12 @@ public class BHTSne implements BarnesHutTSne {
 		boolean exact = (theta == .0) ? true : false;
 		if(exact) throw new IllegalArgumentException("The Barnes Hut implementation does not support exact inference yet (theta==0.0), if you want exact t-SNE please use one of the standard t-SNE implementations (FastTSne for instance)");
 		//进行PCA，先行将高维数据降维到给定的initial_dims，减小t-SNE的计算复杂度
-//		if(use_pca && D > initial_dims && initial_dims > 0) {
-//			PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
-//			Xin = pca.pca(Xin, initial_dims);
-//			D = initial_dims;
-//			System.out.println("X:Shape after PCA is = " + Xin.length + " x " + Xin[0].length);
-//		}
+		if(use_pca && D > initial_dims && initial_dims > 0) {
+			PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
+			Xin = pca.pca(Xin, initial_dims);
+			D = initial_dims;
+			System.out.println("X:Shape after PCA is = " + Xin.length + " x " + Xin[0].length);
+		}
 		//将二维数组拍平为1维数组
 		double [] X = flatten(Xin);	
 		//一维表示的结果数组
