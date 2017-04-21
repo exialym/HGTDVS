@@ -45,7 +45,7 @@ import com.jujutsu.utils.MatrixOps;
 public class BHTSne implements BarnesHutTSne {
 
 	//protected final Distance distance = new EuclideanDistance();
-	protected final Distance distance = new FractionalDistance(0.5);
+	protected Distance distance;
 
 	@Override
 	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity) {
@@ -59,13 +59,18 @@ public class BHTSne implements BarnesHutTSne {
 
 	@Override
 	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca) {
-		return tsne(X,no_dims,initial_dims,perplexity,max_iter,use_pca, 0.5);
+		return tsne(X,no_dims,initial_dims,perplexity,max_iter,use_pca, 0.5, 2);
 	}
 
 	@Override
-	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, double theta) {
+	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, double theta, double f) {
 		int N = X.length;
 		int D = X[0].length;
+		if (f==2) {
+			distance = new EuclideanDistance();
+		} else {
+			distance = new FractionalDistance(f);
+		}
 		return run(X, N, D, no_dims, initial_dims, perplexity, max_iter, use_pca, theta);
 	}
 	//将二维数组拍平为1维数组

@@ -21,6 +21,7 @@ public class KNNClasifer {
 	protected  Double right = 0.0;
 
 	public double KNNAccurcy(double[][] y, int k, String[] label) {
+		right = 0.0;
 		// 初始化一个VP树，传入自定义的距离，这里是欧拉距离
 		VpTree<DataPoint> tree = new VpTree<DataPoint>(distance);
 		//DataPoint是一个保存数据点的结构，包括：数据点在所有点中的索引，维数，具体的坐标数组。
