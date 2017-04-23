@@ -300,7 +300,7 @@ public class TSneDemo {
                 //System.out.println("Finished TSNE: " + new Date());
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length);
-                saveFile(new File("MNIST_2500_F_"+f+"_result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
+                saveFile(new File("MNIST_2500_F_"+f+"_noPCA_result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
 //                Plot2DPanel plot = new Plot2DPanel();
 //
 //                ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
@@ -341,7 +341,7 @@ public class TSneDemo {
             }
             res += "\r\n";
         }
-        saveFile(new File("MNIST_2500_workFlow.txt"), res);
+        saveFile(new File("MNIST_2500_onPCA_workFlow.txt"), res);
         Plot2DPanel plot = new Plot2DPanel();
 
         //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
@@ -396,7 +396,7 @@ public class TSneDemo {
         double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.99};
 
-        test_workflow(fileName,LabelName,true,fArr,55,20.0,100, 10);
+        test_workflow(fileName,LabelName,false,fArr,55,20.0,100, 10);
 
 
 //        int initial_dims = 55;
