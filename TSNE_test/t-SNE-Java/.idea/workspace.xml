@@ -36,104 +36,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TSneDemo.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TSneDemo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="409" column="42" lean-forward="true" selection-start-line="409" selection-start-column="42" selection-end-line="409" selection-end-column="42" />
+            <state relative-caret-position="8880">
+              <caret line="395" column="84" lean-forward="false" selection-start-line="395" selection-start-column="84" selection-end-line="395" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BHTSne.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BHTSne.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1512">
-              <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state relative-caret-position="441">
+              <caret line="639" column="0" lean-forward="false" selection-start-line="639" selection-start-column="0" selection-end-line="639" selection-end-column="0" />
               <folding>
-                <element signature="e#0#28332#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BarnesHutTSne.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BarnesHutTSne.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="888">
-              <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlotPanel.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/PlotPanel.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="936">
-              <caret line="64" column="42" lean-forward="false" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlotCanvas.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/canvas/PlotCanvas.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5832">
-              <caret line="313" column="16" lean-forward="false" selection-start-line="313" selection-start-column="16" selection-end-line="313" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MatrixOps.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/utils/MatrixOps.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3048">
-              <caret line="142" column="25" lean-forward="false" selection-start-line="142" selection-start-column="25" selection-end-line="142" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#863#864#0" expanded="false" />
-                <element signature="e#924#925#0" expanded="false" />
-                <element signature="e#985#986#0" expanded="false" />
-                <element signature="e#1035#1036#0" expanded="false" />
-                <element signature="e#1099#1100#0" expanded="false" />
-                <element signature="e#1152#1153#0" expanded="false" />
-                <element signature="e#4821#4822#0" expanded="false" />
-                <element signature="e#4862#4863#0" expanded="false" />
-                <element signature="e#8991#8992#0" expanded="false" />
-                <element signature="e#9028#9029#0" expanded="false" />
-                <element signature="e#15291#15292#0" expanded="false" />
-                <element signature="e#15347#15348#0" expanded="false" />
-                <element signature="e#19473#19474#0" expanded="false" />
-                <element signature="e#19507#19508#0" expanded="false" />
-                <element signature="e#24928#24929#0" expanded="false" />
-                <element signature="e#24961#24962#0" expanded="false" />
-                <element signature="e#30467#30468#0" expanded="false" />
-                <element signature="e#30506#30507#0" expanded="false" />
-                <element signature="e#31650#31740#0" expanded="false" />
-                <element signature="e#31739#31740#0" expanded="false" />
-                <element signature="e#31763#31853#0" expanded="false" />
-                <element signature="e#31852#31853#0" expanded="false" />
-                <element signature="e#36976#36977#0" expanded="false" />
-                <element signature="e#37012#37013#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BarnesHutTSneCsv.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/BarnesHutTSneCsv.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7848">
-              <caret line="357" column="111" lean-forward="false" selection-start-line="357" selection-start-column="111" selection-end-line="357" selection-end-column="111" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#11646#11647#0" expanded="false" />
-                <element signature="e#11689#11690#0" expanded="false" />
+                <element signature="e#16514#16525#0" expanded="true" />
+                <element signature="e#20106#20117#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -157,12 +77,13 @@
         <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/SPTree.java" />
         <option value="$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/Plot2DPanel.class" />
         <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/EuclideanDistance.java" />
-        <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BarnesHutTSne.java" />
-        <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" />
         <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/KNNClasifer.java" />
-        <option value="$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/BarnesHutTSneCsv.java" />
         <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java" />
+        <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BarnesHutTSne.java" />
         <option value="$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java" />
+        <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/ParallelBHTsne.java" />
+        <option value="$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/BarnesHutTSneCsv.java" />
+        <option value="$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java" />
       </list>
     </option>
   </component>
@@ -173,10 +94,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1456" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -323,6 +244,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -337,7 +259,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -566,7 +487,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1075,14 +996,17 @@
       <workItem from="1492914570294" duration="2053000" />
       <workItem from="1493085141211" duration="1211000" />
       <workItem from="1493259779072" duration="1073000" />
+      <workItem from="1493359472985" duration="1876000" />
+      <workItem from="1493361413359" duration="3816000" />
+      <workItem from="1493367480151" duration="2571000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122778000" />
+    <option name="totallyTimeSpent" value="131041000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1099,19 +1023,19 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0052083335" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0069444445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2313253" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2706131" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1373494" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13636364" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1150,7 +1074,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java</url>
-          <line>507</line>
+          <line>511</line>
           <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
@@ -1166,14 +1090,8 @@
           <properties />
           <option name="timeStamp" value="47" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java</url>
-          <line>102</line>
-          <properties />
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="49" />
+      <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1194,8 +1112,8 @@
         <state relative-caret-position="11352">
           <caret line="473" column="27" lean-forward="true" selection-start-line="473" selection-start-column="27" selection-end-line="473" selection-end-column="27" />
           <folding>
-            <element signature="e#0#28332#0" expanded="false" />
-            <element signature="imports" expanded="false" />
+            <element signature="e#16514#16525#0" expanded="true" />
+            <element signature="e#20106#20117#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1255,8 +1173,8 @@
         <state relative-caret-position="12048">
           <caret line="502" column="0" lean-forward="false" selection-start-line="502" selection-start-column="0" selection-end-line="502" selection-end-column="0" />
           <folding>
-            <element signature="e#0#28332#0" expanded="false" />
-            <element signature="imports" expanded="false" />
+            <element signature="e#16514#16525#0" expanded="true" />
+            <element signature="e#20106#20117#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1460,53 +1378,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/utils/MatrixOps.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3048">
-          <caret line="142" column="25" lean-forward="false" selection-start-line="142" selection-start-column="25" selection-end-line="142" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#863#864#0" expanded="false" />
-            <element signature="e#924#925#0" expanded="false" />
-            <element signature="e#985#986#0" expanded="false" />
-            <element signature="e#1035#1036#0" expanded="false" />
-            <element signature="e#1099#1100#0" expanded="false" />
-            <element signature="e#1152#1153#0" expanded="false" />
-            <element signature="e#4821#4822#0" expanded="false" />
-            <element signature="e#4862#4863#0" expanded="false" />
-            <element signature="e#8991#8992#0" expanded="false" />
-            <element signature="e#9028#9029#0" expanded="false" />
-            <element signature="e#15291#15292#0" expanded="false" />
-            <element signature="e#15347#15348#0" expanded="false" />
-            <element signature="e#19473#19474#0" expanded="false" />
-            <element signature="e#19507#19508#0" expanded="false" />
-            <element signature="e#24928#24929#0" expanded="false" />
-            <element signature="e#24961#24962#0" expanded="false" />
-            <element signature="e#30467#30468#0" expanded="false" />
-            <element signature="e#30506#30507#0" expanded="false" />
-            <element signature="e#31650#31740#0" expanded="false" />
-            <element signature="e#31739#31740#0" expanded="false" />
-            <element signature="e#31763#31853#0" expanded="false" />
-            <element signature="e#31852#31853#0" expanded="false" />
-            <element signature="e#36976#36977#0" expanded="false" />
-            <element signature="e#37012#37013#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/canvas/PlotCanvas.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5832">
           <caret line="313" column="16" lean-forward="false" selection-start-line="313" selection-start-column="16" selection-end-line="313" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/PlotPanel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="64" column="42" lean-forward="false" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1517,13 +1392,6 @@
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/ParallelBHTsne.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="161" column="42" lean-forward="false" selection-start-line="161" selection-start-column="42" selection-end-line="161" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1541,42 +1409,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BarnesHutTSne.java">
+    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/ParallelBHTsne.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+        <state relative-caret-position="528">
+          <caret line="88" column="113" lean-forward="false" selection-start-line="88" selection-start-column="113" selection-end-line="88" selection-end-column="113" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
+    <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state relative-caret-position="8880">
+          <caret line="395" column="84" lean-forward="false" selection-start-line="395" selection-start-column="84" selection-end-line="395" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BarnesHutTSne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="689">
+          <caret line="38" column="145" lean-forward="false" selection-start-line="38" selection-start-column="145" selection-end-line="38" selection-end-column="145" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/PlotPanel.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="64" column="42" lean-forward="false" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/utils/MatrixOps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="142" column="25" lean-forward="false" selection-start-line="142" selection-start-column="25" selection-end-line="142" selection-end-column="25" />
           <folding>
-            <element signature="e#0#28332#0" expanded="false" />
-            <element signature="imports" expanded="false" />
+            <element signature="e#4821#4822#0" expanded="true" />
+            <element signature="e#4862#4863#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/BarnesHutTSneCsv.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7848">
-          <caret line="357" column="111" lean-forward="false" selection-start-line="357" selection-start-column="111" selection-end-line="357" selection-end-column="111" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#11646#11647#0" expanded="false" />
-            <element signature="e#11689#11690#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="494">
+          <caret line="357" column="106" lean-forward="false" selection-start-line="357" selection-start-column="106" selection-end-line="357" selection-end-column="106" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
+    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="409" column="42" lean-forward="true" selection-start-line="409" selection-start-column="42" selection-end-line="409" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="441">
+          <caret line="639" column="0" lean-forward="false" selection-start-line="639" selection-start-column="0" selection-end-line="639" selection-end-column="0" />
+          <folding>
+            <element signature="e#16514#16525#0" expanded="true" />
+            <element signature="e#20106#20117#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

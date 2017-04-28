@@ -355,7 +355,7 @@ public class BarnesHutTSneCsv {
 		} else {
 			tsne = new BHTSne();
 		}
-		double [][] Y = tsne.tsne(matrix, output_dims, initial_dims, perplexity, iterations, true, theta, 2.0);
+		double [][] Y = tsne.tsne(matrix, output_dims, initial_dims, perplexity, iterations, true, false, theta, 2.0);
 		if(transpose_after) Y = MatrixOps.transposeSerial(matrix);
 		long t2 = System.currentTimeMillis();
 		System.out.println("TSne took: " + ((double) (t2-t1) / 1000.0) + " seconds");

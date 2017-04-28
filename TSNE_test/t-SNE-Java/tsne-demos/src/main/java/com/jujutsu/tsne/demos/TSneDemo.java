@@ -29,8 +29,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -269,7 +269,7 @@ public class TSneDemo {
         plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         plotframe.setVisible(true);
     }
-    public static void test_workflow(String dataFile, String labelFile, Boolean usePCA, double[] fArr, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
+    public static void test_workflow(String dataFile, String labelFile, boolean usePCA, boolean useRankorder, double[] fArr, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
         //int initial_dims = 55;
         //double perplexity = 20.0;
 
@@ -296,7 +296,7 @@ public class TSneDemo {
                 } else {
                     tsne = new BHTSne();
                 }
-                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,usePCA,0.5,f);
+                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,usePCA,useRankorder,0.5,f);
                 //System.out.println("Finished TSNE: " + new Date());
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length);
@@ -396,7 +396,7 @@ public class TSneDemo {
         double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.99};
 
-        test_workflow(fileName,LabelName,false,fArr,55,20.0,100, 10);
+        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
 
 
 //        int initial_dims = 55;

@@ -59,11 +59,11 @@ public class BHTSne implements BarnesHutTSne {
 
 	@Override
 	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca) {
-		return tsne(X,no_dims,initial_dims,perplexity,max_iter,use_pca, 0.5, 2);
+		return tsne(X,no_dims,initial_dims,perplexity,max_iter,use_pca, false,0.5, 2);
 	}
 
 	@Override
-	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, double theta, double f) {
+	public double[][] tsne(double[][] X, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, boolean use_rank_order, double theta, double f) {
 		int N = X.length;
 		int D = X[0].length;
 		if (f==2) {
@@ -71,7 +71,7 @@ public class BHTSne implements BarnesHutTSne {
 		} else {
 			distance = new FractionalDistance(f);
 		}
-		return run(X, N, D, no_dims, initial_dims, perplexity, max_iter, use_pca, theta);
+		return run(X, N, D, no_dims, initial_dims, perplexity, max_iter, use_pca, use_rank_order, theta);
 	}
 	//将二维数组拍平为1维数组
 	private double[] flatten(double[][] x) {
@@ -99,7 +99,7 @@ public class BHTSne implements BarnesHutTSne {
 
 	// Perform t-SNE
 
-	double [][] run(double [][] Xin, int N, int D, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, double theta) {
+	double [][] run(double [][] Xin, int N, int D, int no_dims, int initial_dims, double perplexity, int max_iter, boolean use_pca, boolean use_rank_order, double theta) {
 		boolean exact = (theta == .0) ? true : false;
 		if(exact) throw new IllegalArgumentException("The Barnes Hut implementation does not support exact inference yet (theta==0.0), if you want exact t-SNE please use one of the standard t-SNE implementations (FastTSne for instance)");
 		//进行PCA，先行将高维数据降维到给定的initial_dims，减小t-SNE的计算复杂度
@@ -181,9 +181,13 @@ public class BHTSne implements BarnesHutTSne {
 
 		// 计算近似的高维联合概率矩阵
 		else {
+			if (!use_rank_order) {
+				// 计算不对称的条件概率矩阵
+				computeGaussianPerplexity(X, N, D, row_P, col_P, val_P, perplexity, K);
+			} else {
+				computeGaussianPerplexityWithRankorder(X, N, D, row_P, col_P, val_P, perplexity, K);
+			}
 
-			// 计算不对称的条件概率矩阵
-			computeGaussianPerplexity(X, N, D, row_P, col_P, val_P, perplexity, K);
 
 			// Verified that val_P,col_P,row_P is the same at this point
 
@@ -562,6 +566,137 @@ public class BHTSne implements BarnesHutTSne {
 			}
 
 			// Row-normalize current row of P and store in matrix 
+			for(int m = 0; m < K; m++) {
+				cur_P[m] /= sum_P;
+				col_P[row_P[n] + m] = indices.get(m + 1).index();
+				val_P[row_P[n] + m] = cur_P[m];
+			}
+		}
+	}
+	// Compute input similarities with Rank-order distance using ball trees
+	void computeGaussianPerplexityWithRankorder(double [] X, int N, int D, int [] _row_P, int [] _col_P, double [] _val_P, double perplexity, int K) {
+		if(perplexity > K) System.out.println("Perplexity should be lower than K!");
+
+		// Allocate the memory we need
+		/**_row_P = (int*)    malloc((N + 1) * sizeof(int));
+		 *_col_P = (int*)    calloc(N * K, sizeof(int));
+		 *_val_P = (double*) calloc(N * K, sizeof(double));
+		 if(*_row_P == null || *_col_P == null || *_val_P == null) { Rcpp::stop("Memory allocation failed!\n"); }*/
+		int [] row_P = _row_P;
+		int [] col_P = _col_P;
+		double [] val_P = _val_P;
+		double [] cur_P = new double[N - 1];
+
+		row_P[0] = 0;
+		for(int n = 0; n < N; n++) row_P[n + 1] = row_P[n] + K;
+
+		// 初始化一个VP树，传入自定义的距离，这里是欧拉距离
+		VpTree<DataPoint> tree = new VpTree<DataPoint>(distance);
+		//DataPoint是一个保存数据点的结构，包括：数据点在所有点中的索引，维数，具体的坐标数组。
+		final DataPoint [] obj_X = new DataPoint [N];
+		//将被拍平的数据转移到DataPoint数组中
+		for(int n = 0; n < N; n++) {
+			double [] row = MatrixOps.extractRowFromFlatMatrix(X,n,D);
+			obj_X[n] = new DataPoint(D, n, row);
+		}
+		//构建VP树
+		tree.create(obj_X);
+
+		// VERIFIED THAT TREES LOOK THE SAME
+		//System.out.println("Created Tree is: ");
+		//			AdditionalInfoProvider pp = new AdditionalInfoProvider() {
+		//				@Override
+		//				public String provideInfo(Node node) {
+		//					return "" + obj_X[node.index].index();
+		//				}
+		//			};
+		//			TreePrinter printer = new TreePrinter(pp);
+		//			printer.printTreeHorizontal(tree.getRoot());
+
+		// Loop over all points to find nearest neighbors
+		System.out.println("Building tree...");
+		//遍历所有点，将所有点的K邻居信息保存起来
+		List<List<DataPoint>> neighborPoints = new ArrayList<>();
+		List<List<Double>> neighborDistance = new ArrayList<>();
+		for(int n = 0; n < N; n++) {
+			List<DataPoint> indices = new ArrayList<>();
+			List<Double> distances = new ArrayList<>();
+			tree.search(obj_X[n], K + 1, indices, distances);
+			neighborPoints.add(indices);
+			neighborDistance.add(distances);
+		}
+
+		//遍历所有点
+		for(int n = 0; n < N; n++) {
+
+			List<DataPoint> indices = neighborPoints.get(n);
+			List<Double> distances = neighborDistance.get(n);
+
+			if(n % 10000 == 0) System.out.printf(" - point %d of %d\n", n, N);
+
+			for (int k1 = 1; k1 <= K; k1++) {
+				List<DataPoint> nsn = neighborPoints.get(indices.get(k1).index());
+				for (int k2 = 1; k2 <= K; k2++) {
+
+				}
+			}
+
+
+
+			//System.out.println("Looking at: " + obj_X.get(n).index());
+			//找出当前点的K临近点和当前点与它们的距离，分别存在数组indices, distances
+			tree.search(obj_X[n], K + 1, indices, distances);
+
+			// Initialize some variables for binary search
+			//对于每一个点使用二分法找到符合设置的perplexity的那个theta值
+			boolean found = false;
+			double beta = 1.0;
+			double min_beta = -Double.MAX_VALUE;
+			double max_beta =  Double.MAX_VALUE;
+			double tol = 1e-5;
+
+			// Iterate until we found a good perplexity
+			int iter = 0;
+			double sum_P = 0.;
+			while(!found && iter < 200) {
+
+				// Compute Gaussian kernel row and entropy of current row
+				sum_P = Double.MIN_VALUE;
+				double H = .0;
+				for(int m = 0; m < K; m++) {
+					cur_P[m] = exp(-beta * distances.get(m + 1));
+					sum_P += cur_P[m];
+					H += beta * (distances.get(m + 1) * cur_P[m]);
+				}
+				H = (H / sum_P) + log(sum_P);
+
+				// Evaluate whether the entropy is within the tolerance level
+				double Hdiff = H - log(perplexity);
+				if(Hdiff < tol && -Hdiff < tol) {
+					found = true;
+				}
+				else {
+					if(Hdiff > 0) {
+						min_beta = beta;
+						if(max_beta == Double.MAX_VALUE || max_beta == -Double.MAX_VALUE)
+							beta *= 2.0;
+						else
+							beta = (beta + max_beta) / 2.0;
+					}
+					else {
+						max_beta = beta;
+						if(min_beta == -Double.MAX_VALUE || min_beta == Double.MAX_VALUE)
+							beta /= 2.0;
+						else
+							beta = (beta + min_beta) / 2.0;
+					}
+				}
+
+				// Update iteration counter
+				iter++;
+			}
+
+			// Row-normalize current row of P and store in matrix
 			for(int m = 0; m < K; m++) {
 				cur_P[m] /= sum_P;
 				col_P[row_P[n] + m] = indices.get(m + 1).index();
