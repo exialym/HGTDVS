@@ -1,6 +1,8 @@
 package com.jujutsu.tsne.demos;
 
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.BufferedWriter;
@@ -32,8 +34,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    private static String basePath = "E:/Git/HGTDVS/";
-    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    //private static String basePath = "E:/Git/HGTDVS/";
+    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -303,20 +305,31 @@ public class TSneDemo {
                 //System.out.println("Finished TSNE: " + new Date());
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
                 //System.out.println("Result is = " + Y.length + " x " + Y[0].length);
-                saveFile(new File("MNIST_2500_F_"+f+"_noPCA_result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
-//                Plot2DPanel plot = new Plot2DPanel();
-//
-//                ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
-//                //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
-//                plot.plotCanvas.setNotable(true);
-//                plot.plotCanvas.setNoteCoords(true);
-//                plot.plotCanvas.addPlot(setosaPlot);
-//
-//                FrameView plotframe = new FrameView(plot);
+                saveFile(new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
+                Plot2DPanel plot = new Plot2DPanel();
+
+                ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
+                //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
+                plot.plotCanvas.setNotable(true);
+                plot.plotCanvas.setNoteCoords(true);
+                plot.plotCanvas.addPlot(setosaPlot);
+
+                FrameView plotframe = new FrameView(plot);
+//                plot.setSize(new Dimension(1600,1000));
+//                plotframe.setSize(new Dimension(1600,1000));
 //                plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                plotframe.setVisible(true);
-
-
+                plotframe.setVisible(true);
+                Dimension imageSize = plotframe.getSize();
+                BufferedImage image = new BufferedImage(imageSize.width,
+                        imageSize.height, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g = image.createGraphics();
+                plot.paint(g);
+                g.dispose();
+                try {
+                    ImageIO.write(image, "png", new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
                 for (int i = 1;i <= KNNNum; i++) {
@@ -345,7 +358,7 @@ public class TSneDemo {
             }
             res += "\r\n";
         }
-        saveFile(new File("MNIST_2500_onPCA_workFlow.txt"), res);
+        saveFile(new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
         Plot2DPanel plot = new Plot2DPanel();
 
         //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
@@ -362,45 +375,30 @@ public class TSneDemo {
         plot.plotLegend.setEnabled(true);
         plot.addLegend("East");
         FrameView plotframe = new FrameView(plot);
-        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         plotframe.setVisible(true);
+        Dimension imageSize = plotframe.getSize();
+        BufferedImage image = new BufferedImage(imageSize.width,
+                imageSize.height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = image.createGraphics();
+        plot.paint(g);
+        g.dispose();
+        try {
+            ImageIO.write(image, "png", new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     
     public static void main(String [] args) {
         System.out.println("TSneDemo: Runs t-SNE on various dataset.");
-//        if(args.length<1||args.length>2) {
-//        	System.out.println("usage: For the data format TSneDemo accepts, look at the file 'src/main/resources/datasets/mnist2500_X.txt' file and accompaning label file 'src/main/resources/datasets/mnist2500_labels.txt'.");
-//        	System.out.println("       The label file must have as meny rows as the input matrix");
-//        	System.out.println("usage: Example using the data and label file in: tsne-demos/src/main/resources/datasets/");
-//        	System.out.println("usage: java -cp target/tsne-demos-X.X.X.jar com.jujutsu.tsne.demos.TSneDemo src/main/resources/datasets/mnist2500_X.txt src/main/resources/datasets/mnist2500_labels.txt");
-//        	System.out.println("usage: Example using only data file in: tsne-demos/src/main/resources/datasets/");
-//        	System.out.println("usage: java -cp target/tsne-demos-X.X.X.jar com.jujutsu.tsne.demos.TSneDemo src/main/resources/datasets/mnist2500_X.txt");
-//        	System.exit(0);
-//        }
-        //pca_iris();
-        //pca_mnist(1000);
-        //tsne_iris();
-        //tsne_mnist(250);
-        //tsne_mnist_icons(500);
-        //tsne_mnist(500);
-        //tsne_mnist(1000);
-        //tsne_mnist(2500);
-        //fast_tsne_mnist(2500);
-        //fast_tsne_no_labels(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt");
-//        pca_no_labels(args[0]);
-//        pca_no_labels(args[0]);
-//        if(args.length==1)
-//        	fast_tsne_no_labels(args[0]);
-//        else
-//        	fast_tsne(args[0], args[1]);
 
-//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-//        String LabelName = path + "mnist2500_labels.txt";
-//        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
-//        double[] fArr = {2.0};
-//
-//        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
+        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+        String LabelName = path + "mnist2500_labels.txt";
+        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
+        double[] fArr = {0.50};
+
+        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 5);
 
 
 //        int initial_dims = 55;
@@ -446,38 +444,46 @@ public class TSneDemo {
 //            System.out.println(i + ":" + (new KNNClasifer()).KNNAccurcy(Y,i,labels));
 //
 //
-        Plot2DPanel plot = new Plot2DPanel();
-
-        //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
-        //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
-        plot.plotCanvas.setNotable(true);
-        plot.plotCanvas.setNoteCoords(true);
-        double[] xAxis = {1,2,3};
-        double[] temp = {1,2,3};
-
-        plot.addLinePlot("123",xAxis,temp);
-        plot.plotLegend.setEnabled(true);
-        plot.addLegend("East");
-        Image image = plot.createImage(100,100);
-        BufferedImage bi = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR);
-
-//再创建一个Graphics变量，用来画出来要保持的图片，及上面传递过来的Image变量
-        Graphics g = bi.getGraphics();
-        try {
-            g.drawImage(image, 0, 0, null);
-
-//将BufferedImage变量写入文件中。
-            ImageIO.write(bi,"jpg",new File("MNIST_2500_Fesult.jpg"));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
 
 
-        FrameView plotframe = new FrameView(plot);
-        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        plotframe.setVisible(true);
+//        Plot2DPanel plot = new Plot2DPanel();
+//        //plot.setSize(new Dimension(1600,1000));
+//
+//        //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
+//        //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
+//        plot.plotCanvas.setNotable(true);
+//        plot.plotCanvas.setNoteCoords(true);
+//
+//        double[] xAxis = {1,2,3};
+//        double[] temp = {1,2,3};
+//
+//        plot.addLinePlot("123",xAxis,temp);
+//        plot.plotLegend.setEnabled(true);
+//        plot.addLegend("East");
+//
+//        FrameView plotframe = new FrameView(plot);
+//
+//        //plotframe.setSize(new Dimension(1600,1000));
+//        //plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        plotframe.setVisible(true);
+//
+//        Dimension imageSize = plot.getSize();
+//        BufferedImage image = new BufferedImage(imageSize.width,
+//                imageSize.height, BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g = image.createGraphics();
+//        plot.paint(g);
+//        g.dispose();
+//        try {
+//            ImageIO.write(image, "png", new File("MNIST_2500_F-noPCA_resul.png"));
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+
+
+
+
+
 
     }
 
