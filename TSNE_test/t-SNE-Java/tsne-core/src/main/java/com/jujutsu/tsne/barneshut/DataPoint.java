@@ -8,6 +8,7 @@ public class DataPoint {
 	int _ind;
 	double [] _x;
 	int _D;
+	boolean _hasComputed = false;
 	
 	public DataPoint() {
         _D = 1;
@@ -30,6 +31,8 @@ public class DataPoint {
 	}
 
 	public int index() { return _ind; }
+	public boolean hasComputed() { return _hasComputed; }
+	public void computed() { _hasComputed = true; }
 	int dimensionality() { return _D; }
 	double x(int d) { return _x[d]; }
 	

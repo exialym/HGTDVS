@@ -34,6 +34,7 @@ package com.jujutsu.tsne.barneshut;
 
 import static java.lang.Math.exp;
 import static java.lang.Math.log;
+import static java.lang.Math.min;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -633,11 +634,40 @@ public class BHTSne implements BarnesHutTSne {
 			List<Double> distances = neighborDistance.get(n);
 
 			if(n % 10000 == 0) System.out.printf(" - point %d of %d\n", n, N);
-
 			for (int k1 = 1; k1 <= K; k1++) {
+				if (indices.get(k1).hasComputed()) continue;
 				List<DataPoint> nsn = neighborPoints.get(indices.get(k1).index());
-				for (int k2 = 1; k2 <= K; k2++) {
-
+				List<Double> nsdis = neighborDistance.get(indices.get(k1).index());
+				double Dab = 0;
+				double Dba = 0;
+				double Oa = 0;
+				double Ob = 0;
+				for (int indexInself = 0; indexInself<=K;indexInself++) {
+					boolean hasfound = false;
+					for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
+						if (indices.get(indexInself).index()==nsn.get(indexInNeb).index()) {
+							if (indexInself==0) Oa=indexInNeb;
+							if (indexInNeb==0) Ob=indexInself;
+							Dab += indexInNeb;
+							Dba += indexInself;
+							hasfound = true;
+							break;
+						}
+					}
+					if (!hasfound) {
+						Dab += K;
+						Dba += K;
+					}
+				}
+				if (Oa==0) Oa=K;
+				if (Ob==0) Ob=K;
+				distances.set(k1,(Dab+Dba)/min(Oa,Ob));
+				indices.get(k1).computed();
+				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
+					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
+						nsdis.set(indexInNeb,(Dab+Dba)/min(Oa,Ob));
+						nsn.get(indexInNeb).computed();
+					}
 				}
 			}
 
@@ -645,7 +675,7 @@ public class BHTSne implements BarnesHutTSne {
 
 			//System.out.println("Looking at: " + obj_X.get(n).index());
 			//找出当前点的K临近点和当前点与它们的距离，分别存在数组indices, distances
-			tree.search(obj_X[n], K + 1, indices, distances);
+//			tree.search(obj_X[n], K + 1, indices, distances);
 
 			// Initialize some variables for binary search
 			//对于每一个点使用二分法找到符合设置的perplexity的那个theta值
@@ -703,6 +733,7 @@ public class BHTSne implements BarnesHutTSne {
 				val_P[row_P[n] + m] = cur_P[m];
 			}
 		}
+		System.out.print("");
 	}
 
 	void computeGaussianPerplexity(double [] X, int N, int D, int [] _row_P, int [] _col_P, double [] _val_P, double perplexity, double threshold) {
