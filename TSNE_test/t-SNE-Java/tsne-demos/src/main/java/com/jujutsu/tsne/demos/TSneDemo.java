@@ -1,6 +1,8 @@
 package com.jujutsu.tsne.demos;
 
-import java.awt.Color;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import com.jujutsu.tsne.*;
@@ -314,6 +317,7 @@ public class TSneDemo {
 //                plotframe.setVisible(true);
 
 
+
                 //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
                 for (int i = 1;i <= KNNNum; i++) {
                     tempKNNresult[i] += classifer.KNNAccurcy(Y,i,labels);
@@ -391,12 +395,12 @@ public class TSneDemo {
 //        else
 //        	fast_tsne(args[0], args[1]);
 
-        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-        String LabelName = path + "mnist2500_labels.txt";
-        double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
-        //double[] fArr = {2.0,0.99};
-
-        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
+//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+//        String LabelName = path + "mnist2500_labels.txt";
+//        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
+//        double[] fArr = {2.0};
+//
+//        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
 
 
 //        int initial_dims = 55;
@@ -419,7 +423,7 @@ public class TSneDemo {
 //        }
 //        System.out.println("Shape is: " + X.length + " x " + X[0].length);
 //        System.out.println("Starting TSNE: " + new Date());
-//        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity);
+//        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,false,true,0.5,2);
 //        System.out.println("Finished TSNE: " + new Date());
 //        //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
 //        System.out.println("Result is = " + Y.length + " x " + Y[0].length);
@@ -440,7 +444,40 @@ public class TSneDemo {
 //        //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
 //        for (int i = 1;i < 100; i++)
 //            System.out.println(i + ":" + (new KNNClasifer()).KNNAccurcy(Y,i,labels));
+//
+//
+        Plot2DPanel plot = new Plot2DPanel();
 
+        //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
+        //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
+        plot.plotCanvas.setNotable(true);
+        plot.plotCanvas.setNoteCoords(true);
+        double[] xAxis = {1,2,3};
+        double[] temp = {1,2,3};
+
+        plot.addLinePlot("123",xAxis,temp);
+        plot.plotLegend.setEnabled(true);
+        plot.addLegend("East");
+        Image image = plot.createImage(100,100);
+        BufferedImage bi = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR);
+
+//再创建一个Graphics变量，用来画出来要保持的图片，及上面传递过来的Image变量
+        Graphics g = bi.getGraphics();
+        try {
+            g.drawImage(image, 0, 0, null);
+
+//将BufferedImage变量写入文件中。
+            ImageIO.write(bi,"jpg",new File("MNIST_2500_Fesult.jpg"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+
+        FrameView plotframe = new FrameView(plot);
+        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        plotframe.setVisible(true);
 
     }
 
