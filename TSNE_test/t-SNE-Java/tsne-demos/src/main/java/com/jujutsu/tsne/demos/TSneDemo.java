@@ -34,8 +34,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -396,9 +396,9 @@ public class TSneDemo {
         String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
         String LabelName = path + "mnist2500_labels.txt";
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
-        double[] fArr = {0.50};
+        double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
 
-        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 5);
+        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
 
 
 //        int initial_dims = 55;
