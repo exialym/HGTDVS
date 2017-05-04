@@ -661,12 +661,13 @@ public class BHTSne implements BarnesHutTSne {
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
-				distances.set(k1,(Dab+Dba)/min(Oa,Ob));
+				distances.set(k1,distances.get(k1)+(Dab+Dba)/(2*K*K));
 				indices.get(k1).computed();
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
-						nsdis.set(indexInNeb,(Dab+Dba)/min(Oa,Ob));
+						nsdis.set(indexInNeb,nsdis.get(indexInNeb)+(Dab+Dba)/(2*K*K));
 						nsn.get(indexInNeb).computed();
+						break;
 					}
 				}
 			}
