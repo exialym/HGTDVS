@@ -37,8 +37,8 @@
       <file leaf-file-name="TSneDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="401" column="45" lean-forward="false" selection-start-line="401" selection-start-column="45" selection-end-line="401" selection-end-column="45" />
+            <state relative-caret-position="480">
+              <caret line="405" column="35" lean-forward="true" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -47,12 +47,9 @@
       <file leaf-file-name="BHTSne.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="657" column="33" lean-forward="false" selection-start-line="657" selection-start-column="33" selection-end-line="657" selection-end-column="33" />
-              <folding>
-                <element signature="e#16548#16559#0" expanded="true" />
-                <element signature="e#20140#20151#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="24">
+              <caret line="736" column="0" lean-forward="false" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,10 +89,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1456" />
-    <option name="height" value="876" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -470,6 +467,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
@@ -485,7 +483,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1002,14 +999,15 @@
       <workItem from="1493722306424" duration="4126000" />
       <workItem from="1493775306045" duration="10473000" />
       <workItem from="1493860730291" duration="11711000" />
+      <workItem from="1493947174291" duration="15903000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158475000" />
+    <option name="totallyTimeSpent" value="174378000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1022,19 +1020,19 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39058524" sideWeight="0.50296295" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23759791" sideWeight="0.49703702" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23678647" sideWeight="0.49703702" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.104166664" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.078125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12402089" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25052854" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1083,24 +1081,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java</url>
-          <line>351</line>
+          <line>344</line>
           <properties />
-          <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java</url>
-          <line>367</line>
-          <properties />
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java</url>
-          <line>736</line>
-          <properties />
-          <option name="timeStamp" value="64" />
+          <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="68" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="69" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1120,10 +1109,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11352">
           <caret line="473" column="27" lean-forward="true" selection-start-line="473" selection-start-column="27" selection-end-line="473" selection-end-column="27" />
-          <folding>
-            <element signature="e#16548#16559#0" expanded="true" />
-            <element signature="e#20140#20151#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1181,10 +1167,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12048">
           <caret line="502" column="0" lean-forward="false" selection-start-line="502" selection-start-column="0" selection-end-line="502" selection-end-column="0" />
-          <folding>
-            <element signature="e#16548#16559#0" expanded="true" />
-            <element signature="e#20140#20151#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1433,7 +1416,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="11" column="37" lean-forward="false" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1441,6 +1423,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="736" column="0" lean-forward="false" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1453,21 +1442,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="657" column="33" lean-forward="false" selection-start-line="657" selection-start-column="33" selection-end-line="657" selection-end-column="33" />
-          <folding>
-            <element signature="e#16548#16559#0" expanded="true" />
-            <element signature="e#20140#20151#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="401" column="45" lean-forward="false" selection-start-line="401" selection-start-column="45" selection-end-line="401" selection-end-column="45" />
+        <state relative-caret-position="480">
+          <caret line="405" column="35" lean-forward="true" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
           <folding />
         </state>
       </provider>
