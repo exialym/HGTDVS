@@ -23,9 +23,9 @@ public class FractionalDistance implements Distance{
 			//dd += Math.abs(diff);
 	    }
 	    //6621945 2920007 1902000 1815000
-		count++;
-	    if (count%100000==0)
-			System.out.printf("\n"+count);
+//		count++;
+//	    if (count%100000==0)
+//			System.out.printf("\n"+count);
 	    return Math.pow(dd,one_f);
 		//return dd;
 
