@@ -655,17 +655,17 @@ public class BHTSne implements BarnesHutTSne {
 						}
 					}
 					if (!hasfound) {
-						Dab += K;
-						Dba += K;
+						Dab += K+indexInself;
+						Dba += K+indexInself;
 					}
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
-				distances.set(k1,distances.get(k1)+(Dab+Dba)/(2*K*K));
+				distances.set(k1,distances.get(k1)*(Dab+Dba)/(2*K*K));
 				indices.get(k1).computed();
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
-						nsdis.set(indexInNeb,nsdis.get(indexInNeb)+(Dab+Dba)/(2*K*K));
+						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*(Dab+Dba)/(2*K*K));
 						nsn.get(indexInNeb).computed();
 						break;
 					}
