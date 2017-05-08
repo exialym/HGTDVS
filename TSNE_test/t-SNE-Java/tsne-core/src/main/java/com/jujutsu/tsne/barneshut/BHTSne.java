@@ -655,8 +655,13 @@ public class BHTSne implements BarnesHutTSne {
 						}
 					}
 					if (!hasfound) {
-						Dab += K+indexInself;
-						Dba += K+indexInself;
+						//V6
+//						Dab += K+indexInself;
+//						Dba += K+indexInself;
+
+						//V7
+						Dab += K+K-indexInself;
+						Dba += K+K-indexInself;
 					}
 				}
 				if (Oa==0) Oa=K;
