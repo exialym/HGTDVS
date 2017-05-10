@@ -21,13 +21,13 @@ print(len(digits.data))
 #     strings.append(temp)
 for index, item in enumerate(digits.data):
     temp = ""
-    for ind,numbers in enumerate(item):
+    for ind, numbers in enumerate(item):
         temp += str(numbers)
-        if ind!=len(item)-1:
+        if ind != len(item)-1:
             temp += ','
-    temp+='\n'
+    temp += '\n'
     strings.append(temp)
-file_object = file('mnist_data.txt','w')
+file_object = file('mnist_data.txt', 'w')
 file_object.writelines(strings)
-file_object.close( )
+file_object.close()
 

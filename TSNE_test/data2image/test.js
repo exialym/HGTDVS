@@ -68,9 +68,6 @@ function linedata(txt) {
   return res;
 }
 let lineOption = {
-  title: {
-    text: '折线图堆叠'
-  },
   tooltip: {
     trigger: 'axis'
   },
