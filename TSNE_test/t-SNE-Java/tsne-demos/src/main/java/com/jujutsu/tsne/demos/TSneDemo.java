@@ -399,7 +399,7 @@ public class TSneDemo {
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         //double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 10);
+        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 10);
 
 
 //        int initial_dims = 55;
