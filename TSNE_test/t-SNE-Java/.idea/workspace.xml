@@ -39,8 +39,8 @@
       <file leaf-file-name="TSneDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="344" column="46" lean-forward="true" selection-start-line="344" selection-start-column="46" selection-end-line="344" selection-end-column="46" />
+            <state relative-caret-position="581">
+              <caret line="341" column="46" lean-forward="false" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -1018,12 +1018,12 @@
       <workItem from="1494080887831" duration="1319000" />
       <workItem from="1494158491707" duration="537000" />
       <workItem from="1494164074824" duration="1795000" />
-      <workItem from="1494168835924" duration="44784000" />
+      <workItem from="1494168835924" duration="45989000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="223423000" />
+    <option name="totallyTimeSpent" value="224628000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1456" height="876" extended-state="6" />
@@ -1448,8 +1448,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="344" column="46" lean-forward="true" selection-start-line="344" selection-start-column="46" selection-end-line="344" selection-end-column="46" />
+        <state relative-caret-position="581">
+          <caret line="341" column="46" lean-forward="false" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
           <folding />
         </state>
       </provider>
