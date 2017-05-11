@@ -51,22 +51,58 @@
 # csvfile.close()
 
 """
-处理数据
+处理数据，地址转为坐标，不用的列去除
+"""
+# import csv
+# addressReader = csv.reader(file('E:/Git/HGTDVS/csv_test1.csv', 'rb'))
+# adddict = {}
+# for line in addressReader:
+#     adddict[line[0]] = [line[2], line[3]]
+# #print(adddict)
+#
+# reader = csv.reader(file('E:/uspollution/pollution_us_2000_2016.csv', 'rb'))
+# csvfile = file('pollution_data.csv', 'wb')
+# writer = csv.writer(csvfile)
+# for line in reader:
+#     if line[0] == "":
+#         writer.writerow(["No.", "lat", "lng", line[8], line[10], line[11], line[12], line[13],
+#                          line[15], line[16], line[17], line[18],
+#                          line[20], line[21], line[22], line[23],
+#                          line[25], line[26], line[27], line[28]])
+#     else:
+#         add = line[4] + "," + line[5] + "," + line[6] + "," + line[7]
+#         lat = adddict[add][0]
+#         lng = adddict[add][1]
+#         writer.writerow([line[0], lat, lng, line[8], line[10], line[11], line[12], line[13],
+#                          line[15], line[16], line[17], line[18],
+#                          line[20], line[21], line[22], line[23],
+#                          line[25], line[26], line[27], line[28]])
+# csvfile.close()
+
+"""
+处理数据，地址转为坐标，不用的列去除
 """
 import csv
-reader = csv.reader(file('E:/uspollution/pollution_us_2000_2016.csv', 'rb'))
-adddict = {}
-for line in reader:
-    add = line[4] + "," + line[5] + "," + line[6] + "," + line[7]
-    if add in adddict:
-        adddict[add] += 1
-    else:
-        adddict[add] = 1
-print(adddict)
-csvfile = file('csv_test.csv', 'wb')
+reader = csv.reader(file('E:/Git/HGTDVS/pollution_data.csv', 'rb'))
+csvfile = file('pollution_data_raw.csv', 'wb')
 writer = csv.writer(csvfile)
-for key in adddict:
-    writer.writerow([key, "NO"])
+co2 = ""
+so2 = ""
+for line in reader:
+    if line[0] != "No.":
+        if line[15] == "":
+            line[15] = so2
+        else:
+            so2 = line[15]
+        if line[19] == "":
+            line[19] = co2
+        else:
+            co2 = line[19]
+        if line[0] != "":
+            writer.writerow([line[4], line[5], line[6], line[7], line[8],
+                             line[9], line[10], line[11], line[12],
+                             line[13], line[14], line[15], line[16],
+                             line[17], line[18], line[19]])
 csvfile.close()
 
 
