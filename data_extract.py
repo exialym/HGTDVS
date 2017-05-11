@@ -82,27 +82,41 @@
 """
 处理数据，地址转为坐标，不用的列去除
 """
+# import csv
+# reader = csv.reader(file('E:/Git/HGTDVS/pollution_data.csv', 'rb'))
+# csvfile = file('pollution_data_raw.csv', 'wb')
+# writer = csv.writer(csvfile)
+# co2 = ""
+# so2 = ""
+# for line in reader:
+#     if line[0] != "No.":
+#         if line[15] == "":
+#             line[15] = so2
+#         else:
+#             so2 = line[15]
+#         if line[19] == "":
+#             line[19] = co2
+#         else:
+#             co2 = line[19]
+#         if line[0] != "":
+#             writer.writerow([line[4], line[5], line[6], line[7], line[8],
+#                              line[9], line[10], line[11], line[12],
+#                              line[13], line[14], line[15], line[16],
+#                              line[17], line[18], line[19]])
+# csvfile.close()
+
+"""
+数据太多，筛选
+"""
 import csv
 reader = csv.reader(file('E:/Git/HGTDVS/pollution_data.csv', 'rb'))
-csvfile = file('pollution_data_raw.csv', 'wb')
+csvfile = file('pollution_data_raw_small.csv', 'wb')
 writer = csv.writer(csvfile)
-co2 = ""
-so2 = ""
+flag = 0
 for line in reader:
-    if line[0] != "No.":
-        if line[15] == "":
-            line[15] = so2
-        else:
-            so2 = line[15]
-        if line[19] == "":
-            line[19] = co2
-        else:
-            co2 = line[19]
-        if line[0] != "":
-            writer.writerow([line[4], line[5], line[6], line[7], line[8],
-                             line[9], line[10], line[11], line[12],
-                             line[13], line[14], line[15], line[16],
-                             line[17], line[18], line[19]])
+    if (flag % 3) == 0:
+        writer.writerow([line[0], line[1], line[2], line[3],line[4], line[5], line[6], line[7], line[8],
+                         line[9], line[10], line[11], line[12],
+                         line[13], line[14], line[15]])
+    flag++
 csvfile.close()
-
-
