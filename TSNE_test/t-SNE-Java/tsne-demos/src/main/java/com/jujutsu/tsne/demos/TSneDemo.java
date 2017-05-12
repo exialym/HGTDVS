@@ -391,20 +391,20 @@ public class TSneDemo {
     }
     
     public static void main(String [] args) {
-        System.out.println("TSneDemo: Runs t-SNE on various dataset.");
-
-        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-        String LabelName = path + "mnist2500_labels.txt";
-        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
-        //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
-        double[] fArr = {2.0};
-
-        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
+//        System.out.println("TSneDemo: Runs t-SNE on various dataset.");
+//
+//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+//        String LabelName = path + "mnist2500_labels.txt";
+//        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
+//        //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
+//        double[] fArr = {2.0};
+//
+//        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
 
 
         int initial_dims = 55;
         double perplexity = 20.0;
-        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_raw.csv"), ",");
+        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_selected_raw.csv"), ",");
         //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
         System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
         BarnesHutTSne tsne;
