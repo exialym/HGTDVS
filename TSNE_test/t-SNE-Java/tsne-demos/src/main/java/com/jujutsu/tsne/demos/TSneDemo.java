@@ -403,8 +403,8 @@ public class TSneDemo {
 
 
         int initial_dims = 55;
-        double perplexity = 20.0;
-        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_selected_raw.csv"), ",");
+        double perplexity = 30.0;
+        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_selected_raw_AD2000.csv"), ",");
         //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
         System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
         BarnesHutTSne tsne;
