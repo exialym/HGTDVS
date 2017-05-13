@@ -103,11 +103,11 @@
 # csvfile.close()
 
 """
-数据筛选，每天的同一地点数据合并  
+数据筛选，每月or日的同一地点数据合并  
 """
 # import csv
-# reader = csv.reader(file('E:/Git/HGTDVS/pollution_data_filled.csv', 'rb'))
-# csvfile = file('pollution_data_filled_selected.csv', 'wb')
+# reader = csv.reader(file('/Users/exialym/Desktop/uspollution/pollution_data_withGPS_filled.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_combined_day.csv', 'wb')
 # writer = csv.writer(csvfile)
 # record = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # count = 1
@@ -118,16 +118,19 @@
 #
 #
 # for lineS in reader:
-#
+#     if lineS[0] == "No.":
+#         writer.writerow(lineS)
+#         continue
 #     line = [lineS[0], lineS[1], lineS[2], lineS[3], float(lineS[4]), float(lineS[5]),
 #             float(lineS[6]), float(lineS[7]), float(lineS[8]), float(lineS[9]), float(lineS[10]), float(lineS[11]),
 #             float(lineS[12]), float(lineS[13]), float(lineS[14]), float(lineS[15]), float(lineS[16]), float(lineS[17]),
 #             float(lineS[18]), float(lineS[19])]
 #
+#     #if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:7] != record[3][0:7]):
 #     if (line[1] != record[1]) or (line[2] != record[2]) or (line[3] != record[3]):
 #         writer.writerow([record[0], record[1], record[2], record[3], record[4]/count, record[5]/count,
 #                          record[6]/count, record[7]/count, record[8]/count, record[9]/count, record[10]/count,
-#                          record[11]/count, record[12]/count, line[13]/count, record[14]/count, record[15]/count,
+#                          record[11]/count, record[12]/count, record[13]/count, record[14]/count, record[15]/count,
 #                          record[16]/count, record[17]/count, record[18]/count, record[19]/count])
 #         record = line
 #         count = 1
@@ -151,34 +154,36 @@
 #
 # writer.writerow([record[0], record[1], record[2], record[3], record[4]/count, record[5]/count,
 #                  record[6]/count, record[7]/count, record[8]/count, record[9]/count, record[10]/count,
-#                  record[11]/count, record[12]/count, line[13]/count, record[14]/count, record[15]/count,
+#                  record[11]/count, record[12]/count, record[13]/count, record[14]/count, record[15]/count,
 #                  record[16]/count, record[17]/count, record[18]/count, record[19]/count])
 # csvfile.close()
 
 """
 取出不带日期和坐标的数据
 """
-# import csv
-# reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_selected.csv', 'rb'))
-# csvfile = file('pollution_data_withGPS_filled_selected_raw.csv', 'wb')
-# writer = csv.writer(csvfile)
-# for line in reader:
-#     if line[0] != "No.":
-#         writer.writerow([line[4], line[5], line[6],
-#                          line[7], line[8], line[9], line[10], line[11], line[12], line[13],
-#                          line[14], line[15], line[16], line[17], line[18], line[19]])
-# csvfile.close()
-
-
 import csv
-reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_selected_raw.csv', 'rb'))
-csvfile = file('pollution_data_withGPS_filled_selected_raw_AD2000.csv', 'wb')
+reader = csv.reader(file('pollution_data_withGPS_filled_combined_day.csv', 'rb'))
+csvfile = file('pollution_data_withGPS_filled_combined_day_raw.csv', 'wb')
 writer = csv.writer(csvfile)
-count = 1
 for line in reader:
-    writer.writerow(line)
-    count += 1
-    if count > 22797:
-        break
+    if line[0] != "No.":
+        writer.writerow([line[4], line[5], line[6],
+                         line[7], line[8], line[9], line[10], line[11], line[12], line[13],
+                         line[14], line[15], line[16], line[17], line[18], line[19]])
 csvfile.close()
+
+"""
+取出2000年的所有数据
+"""
+# import csv
+# reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_selected_raw.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_selected_raw_AD2000.csv', 'wb')
+# writer = csv.writer(csvfile)
+# count = 1
+# for line in reader:
+#     writer.writerow(line)
+#     count += 1
+#     if count > 22797:
+#         break
+# csvfile.close()
 
