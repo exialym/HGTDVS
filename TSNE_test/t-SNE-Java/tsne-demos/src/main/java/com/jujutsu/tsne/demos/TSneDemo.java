@@ -34,8 +34,10 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    private static String basePath = "E:/Git/HGTDVS/";
-    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    //private static String basePath = "E:/Git/HGTDVS/";
+    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String dataPath = "/Users/exialym/Desktop/uspollution/";
+    //private static String dataPath = "E:/uspollution/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -51,7 +53,184 @@ public class TSneDemo {
         }
     }
 	
-//	public static void pca_iris() {
+
+    public static void test_workflow(String dataFile, String labelFile, boolean usePCA, boolean useRankorder, double[] fArr, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
+
+	    String [] labels = MatrixUtils.simpleReadLines(new File(labelFile));
+        for (int i = 0; i < labels.length; i++) {
+            labels[i] = labels[i].trim().substring(0, 1);
+        }
+        ArrayList<double[]> finalKNNResult = new ArrayList<double[]>();
+        KNNClasifer classifer = new KNNClasifer();
+        for (double f:fArr) {
+            double[] tempKNNresult = new double[KNNNum+1];
+            for (int j = 0; j < repeatNum;j++) {
+                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "   ");
+                BarnesHutTSne tsne;
+                boolean parallel = false;
+                if(parallel) {
+                    tsne = new ParallelBHTsne();
+                } else {
+                    tsne = new BHTSne();
+                }
+                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,usePCA,useRankorder,0.5,f);
+                saveFile(new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
+                Plot2DPanel plot = new Plot2DPanel();
+
+                ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
+                plot.plotCanvas.setNotable(true);
+                plot.plotCanvas.setNoteCoords(true);
+                plot.plotCanvas.addPlot(setosaPlot);
+
+                FrameView plotframe = new FrameView(plot);
+                plotframe.setVisible(true);
+                Dimension imageSize = plotframe.getSize();
+                BufferedImage image = new BufferedImage(imageSize.width,
+                        imageSize.height, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g = image.createGraphics();
+                plot.paint(g);
+                g.dispose();
+                try {
+                    ImageIO.write(image, "png", new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 1;i <= KNNNum; i++) {
+                    tempKNNresult[i] += classifer.KNNAccurcy(Y,i,labels);
+                }
+
+            }
+            tempKNNresult[0] = f;
+            for (int i = 1;i <= KNNNum; i++) {
+                tempKNNresult[i] /= repeatNum;
+                tempKNNresult[i] *= 100;
+            }
+            finalKNNResult.add(tempKNNresult);
+
+
+        }
+
+
+        String res = "";
+        for (int j = 0;j <= KNNNum; j++) {
+            for (int i = 0;i < finalKNNResult.size(); i++) {
+                if (i==0)
+                    res += j+"\t:\t" + String.format("%.4f", finalKNNResult.get(i)[j]) + "\t";
+                else
+                    res += String.format("%.4f", finalKNNResult.get(i)[j]) + "\t";
+            }
+            res += "\r\n";
+        }
+        saveFile(new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
+        Plot2DPanel plot = new Plot2DPanel();
+
+
+        plot.plotCanvas.setNotable(true);
+        plot.plotCanvas.setNoteCoords(true);
+        double[] xAxis = new double[KNNNum];
+        for (int i = 0; i < KNNNum; i++) xAxis[i] = i+1;
+        for (int i = 0; i < finalKNNResult.size(); i++) {
+            double [] temp = new double[KNNNum];
+            System.arraycopy(finalKNNResult.get(i), 1, temp, 0, KNNNum);
+            plot.addLinePlot(""+finalKNNResult.get(i)[0],xAxis,temp);
+        }
+        plot.plotLegend.setEnabled(true);
+        plot.addLegend("East");
+        FrameView plotframe = new FrameView(plot);
+        plotframe.setVisible(true);
+        Dimension imageSize = plotframe.getSize();
+        BufferedImage image = new BufferedImage(imageSize.width,
+                imageSize.height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = image.createGraphics();
+        plot.paint(g);
+        g.dispose();
+        try {
+            ImageIO.write(image, "png", new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void show_air_pollution(String data, String label,boolean hasLabel) {
+
+        Plot2DPanel plot = new Plot2DPanel();
+        plot.plotCanvas.setNotable(true);
+        plot.plotCanvas.setNoteCoords(true);
+
+        double [][] result = MatrixUtils.simpleRead2DMatrix(new File(data), ",");
+        if (hasLabel) {
+            String [] labels = MatrixUtils.simpleReadLines(new File(label));
+            for (int i = 0; i < labels.length; i++) {
+                labels[i] = labels[i].trim();
+            }
+            ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", result, labels);
+            plot.plotCanvas.addPlot(setosaPlot);
+        } else {
+            ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, result);
+            plot.plotCanvas.addPlot(setosaPlot);
+        }
+        FrameView plotframe = new FrameView(plot);
+        plotframe.setVisible(true);
+    }
+    public static void calculate_air_pollution(double perplexity,boolean use_rank,int max_iter,double theta,double f,String dataPath) {
+        int initial_dims = 55;
+        double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataPath), ",");
+        System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
+        BarnesHutTSne tsne;
+        boolean parallel = false;
+        if(parallel) {
+            tsne = new ParallelBHTsne();
+        } else {
+            tsne = new BHTSne();
+        }
+
+
+        System.out.println("Shape is: " + X.length + " x " + X[0].length);
+        System.out.println("Starting TSNE: " + new Date());
+        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,max_iter,false,use_rank,theta,f);
+        System.out.println("Finished TSNE: " + new Date());
+        //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
+        System.out.println("Result is = " + Y.length + " x " + Y[0].length);
+        saveFile(new File("Air_Pollution_"+perplexity+"_"+max_iter+"_"+use_rank+".txt"), MatrixOps.doubleArrayToString(Y));
+        Plot2DPanel plot = new Plot2DPanel();
+
+        ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
+        plot.plotCanvas.setNotable(true);
+        plot.plotCanvas.setNoteCoords(true);
+        plot.plotCanvas.addPlot(setosaPlot);
+
+        FrameView plotframe = new FrameView(plot);
+        plotframe.setVisible(true);
+
+
+    }
+    
+    public static void main(String [] args) {
+//
+//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+//        String LabelName = path + "mnist2500_labels.txt";
+//        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
+//        //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
+//        double[] fArr = {2.0};
+//
+//        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
+
+
+        //calculate_air_pollution(100.0,false,200000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw");
+
+        show_air_pollution(basePath+"TSNE_test/t-SNE-Java/pollution_data_withGPS_filled_combined_month_100_20W.txt",
+                dataPath+"pollution_data_withGPS_filled_combined_month_label_GPS.csv",true);
+    }
+
+
+
+
+
+
+
+
+    //	public static void pca_iris() {
 //    	double [][] X = MatrixUtils.simpleRead2DMatrix(new File(path + "iris_X.txt"), ",");
 //    	System.out.println("Input is = " + X.length + " x " + X[0].length + " => \n" + MatrixOps.doubleArrayToPrintString(X));
 //        PrincipalComponentAnalysis pca = new PrincipalComponentAnalysis();
@@ -274,187 +453,6 @@ public class TSneDemo {
 //        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        plotframe.setVisible(true);
 //    }
-    public static void test_workflow(String dataFile, String labelFile, boolean usePCA, boolean useRankorder, double[] fArr, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
-        //int initial_dims = 55;
-        //double perplexity = 20.0;
-
-
-
-        String [] labels = MatrixUtils.simpleReadLines(new File(labelFile));
-        for (int i = 0; i < labels.length; i++) {
-            labels[i] = labels[i].trim().substring(0, 1);
-        }
-        ArrayList<double[]> finalKNNResult = new ArrayList<double[]>();
-        KNNClasifer classifer = new KNNClasifer();
-        for (double f:fArr) {
-            //System.out.println("Shape is: " + X.length + " x " + X[0].length);
-            //System.out.println("Starting TSNE: " + new Date());
-            double[] tempKNNresult = new double[KNNNum+1];
-            for (int j = 0; j < repeatNum;j++) {
-                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "   ");
-                //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
-                //System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
-                BarnesHutTSne tsne;
-                boolean parallel = false;
-                if(parallel) {
-                    tsne = new ParallelBHTsne();
-                } else {
-                    tsne = new BHTSne();
-                }
-                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,usePCA,useRankorder,0.5,f);
-                //System.out.println("Finished TSNE: " + new Date());
-                //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
-                //System.out.println("Result is = " + Y.length + " x " + Y[0].length);
-                saveFile(new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
-                Plot2DPanel plot = new Plot2DPanel();
-
-                ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
-                //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
-                plot.plotCanvas.setNotable(true);
-                plot.plotCanvas.setNoteCoords(true);
-                plot.plotCanvas.addPlot(setosaPlot);
-
-                FrameView plotframe = new FrameView(plot);
-//                plot.setSize(new Dimension(1600,1000));
-//                plotframe.setSize(new Dimension(1600,1000));
-//                plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                plotframe.setVisible(true);
-                Dimension imageSize = plotframe.getSize();
-                BufferedImage image = new BufferedImage(imageSize.width,
-                        imageSize.height, BufferedImage.TYPE_INT_ARGB);
-                Graphics2D g = image.createGraphics();
-                plot.paint(g);
-                g.dispose();
-                try {
-                    ImageIO.write(image, "png", new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
-                for (int i = 1;i <= KNNNum; i++) {
-                    tempKNNresult[i] += classifer.KNNAccurcy(Y,i,labels);
-                }
-
-            }
-            tempKNNresult[0] = f;
-            for (int i = 1;i <= KNNNum; i++) {
-                tempKNNresult[i] /= repeatNum;
-                tempKNNresult[i] *= 100;
-            }
-            finalKNNResult.add(tempKNNresult);
-
-
-        }
-
-
-        String res = "";
-        for (int j = 0;j <= KNNNum; j++) {
-            for (int i = 0;i < finalKNNResult.size(); i++) {
-                if (i==0)
-                    res += j+"\t:\t" + String.format("%.4f", finalKNNResult.get(i)[j]) + "\t";
-                else
-                    res += String.format("%.4f", finalKNNResult.get(i)[j]) + "\t";
-            }
-            res += "\r\n";
-        }
-        saveFile(new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
-        Plot2DPanel plot = new Plot2DPanel();
-
-        //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
-        //ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
-        plot.plotCanvas.setNotable(true);
-        plot.plotCanvas.setNoteCoords(true);
-        double[] xAxis = new double[KNNNum];
-        for (int i = 0; i < KNNNum; i++) xAxis[i] = i+1;
-        for (int i = 0; i < finalKNNResult.size(); i++) {
-            double [] temp = new double[KNNNum];
-            System.arraycopy(finalKNNResult.get(i), 1, temp, 0, KNNNum);
-            plot.addLinePlot(""+finalKNNResult.get(i)[0],xAxis,temp);
-        }
-        plot.plotLegend.setEnabled(true);
-        plot.addLegend("East");
-        FrameView plotframe = new FrameView(plot);
-        plotframe.setVisible(true);
-        Dimension imageSize = plotframe.getSize();
-        BufferedImage image = new BufferedImage(imageSize.width,
-                imageSize.height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
-        plot.paint(g);
-        g.dispose();
-        try {
-            ImageIO.write(image, "png", new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    
-    public static void main(String [] args) {
-//        System.out.println("TSneDemo: Runs t-SNE on various dataset.");
-//
-//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-//        String LabelName = path + "mnist2500_labels.txt";
-//        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
-//        //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
-//        double[] fArr = {2.0};
-//
-//        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
-
-
-        int initial_dims = 55;
-        double perplexity = 100.0;
-        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_combined_month_raw.csv"), ",");
-        //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
-        System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
-        BarnesHutTSne tsne;
-        boolean parallel = false;
-        if(parallel) {
-            tsne = new ParallelBHTsne();
-        } else {
-            tsne = new BHTSne();
-        }
-
-
-//        String [] labels = MatrixUtils.simpleReadLines(new File(path + "mnist2500_labels.txt"));
-//        for (int i = 0; i < labels.length; i++) {
-//            labels[i] = labels[i].trim().substring(0, 1);
-//        }
-        System.out.println("Shape is: " + X.length + " x " + X[0].length);
-        System.out.println("Starting TSNE: " + new Date());
-        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,200000,false,false,0.5,2);
-        System.out.println("Finished TSNE: " + new Date());
-        //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
-        System.out.println("Result is = " + Y.length + " x " + Y[0].length);
-        saveFile(new File("Java-tsne-result.txt"), MatrixOps.doubleArrayToString(Y));
-        Plot2DPanel plot = new Plot2DPanel();
-
-        //ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
-        ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
-        plot.plotCanvas.setNotable(true);
-        plot.plotCanvas.setNoteCoords(true);
-        plot.plotCanvas.addPlot(setosaPlot);
-
-        FrameView plotframe = new FrameView(plot);
-        plotframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        plotframe.setVisible(true);
-
-
-        //double [][] result = MatrixUtils.simpleRead2DMatrix(new File("Java-tsne-result.txt"), ",");
-//        for (int i = 1;i < 100; i++)
-//            System.out.println(i + ":" + (new KNNClasifer()).KNNAccurcy(Y,i,labels));
-
-
-
-
-
-
-
-
-
-
-
-    }
 
 
 }

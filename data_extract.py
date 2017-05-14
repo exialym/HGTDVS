@@ -161,29 +161,25 @@
 """
 取出不带日期和坐标的数据
 """
+# import csv
+# reader = csv.reader(file('pollution_data_withGPS_filled_combined_day.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_combined_day_raw.csv', 'wb')
+# writer = csv.writer(csvfile)
+# for line in reader:
+#     if line[0] != "No.":
+#         writer.writerow([line[4], line[5], line[6],
+#                          line[7], line[8], line[9], line[10], line[11], line[12], line[13],
+#                          line[14], line[15], line[16], line[17], line[18], line[19]])
+# csvfile.close()
+
+"""
+取出or坐标作为label
+"""
 import csv
-reader = csv.reader(file('pollution_data_withGPS_filled_combined_day.csv', 'rb'))
-csvfile = file('pollution_data_withGPS_filled_combined_day_raw.csv', 'wb')
+reader = csv.reader(file('/Users/exialym/Desktop/uspollution/pollution_data_withGPS_filled_combined_month.csv', 'rb'))
+csvfile = file('pollution_data_withGPS_filled_combined_month_label_month.csv', 'wb')
 writer = csv.writer(csvfile)
 for line in reader:
     if line[0] != "No.":
-        writer.writerow([line[4], line[5], line[6],
-                         line[7], line[8], line[9], line[10], line[11], line[12], line[13],
-                         line[14], line[15], line[16], line[17], line[18], line[19]])
+        writer.writerow([line[3][5:7]])
 csvfile.close()
-
-"""
-取出2000年的所有数据
-"""
-# import csv
-# reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_selected_raw.csv', 'rb'))
-# csvfile = file('pollution_data_withGPS_filled_selected_raw_AD2000.csv', 'wb')
-# writer = csv.writer(csvfile)
-# count = 1
-# for line in reader:
-#     writer.writerow(line)
-#     count += 1
-#     if count > 22797:
-#         break
-# csvfile.close()
-
