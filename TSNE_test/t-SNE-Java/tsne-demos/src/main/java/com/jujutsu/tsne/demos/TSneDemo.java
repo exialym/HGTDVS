@@ -403,8 +403,8 @@ public class TSneDemo {
 
 
         int initial_dims = 55;
-        double perplexity = 30.0;
-        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_selected_raw_AD2000.csv"), ",");
+        double perplexity = 100.0;
+        double [][] X = MatrixUtils.simpleRead2DMatrix(new File("E:/uspollution/pollution_data_withGPS_filled_combined_month_raw.csv"), ",");
         //double [][] X = MatrixUtils.simpleRead2DMatrix(new File(basePath + "TSNE_test/t-SNE-Python/mnist_data11111111111.txt"), ",");
         System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
         BarnesHutTSne tsne;
@@ -422,7 +422,7 @@ public class TSneDemo {
 //        }
         System.out.println("Shape is: " + X.length + " x " + X[0].length);
         System.out.println("Starting TSNE: " + new Date());
-        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,false,false,0.5,2);
+        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,200000,false,false,0.5,2);
         System.out.println("Finished TSNE: " + new Date());
         //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
         System.out.println("Result is = " + Y.length + " x " + Y[0].length);
