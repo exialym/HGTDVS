@@ -22,6 +22,7 @@ import com.jujutsu.tsne.barneshut.BarnesHutTSne;
 import com.jujutsu.tsne.barneshut.ParallelBHTsne;
 import org.math.plot.FrameView;
 import org.math.plot.Plot2DPanel;
+import org.math.plot.Plot3DPanel;
 import org.math.plot.PlotPanel;
 import org.math.plot.plots.ColoredScatterPlot;
 import org.math.plot.plots.IconScatterPlot;
@@ -34,10 +35,10 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
-    private static String dataPath = "/Users/exialym/Desktop/uspollution/";
-    //private static String dataPath = "E:/uspollution/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    //private static String dataPath = "/Users/exialym/Desktop/uspollution/";
+    private static String dataPath = "E:/uspollution/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
 	public static void saveFile(File file, String text) {
 		saveFile(file,text,false);
@@ -152,9 +153,15 @@ public class TSneDemo {
         }
 
     }
-    public static void show_air_pollution(String data, String label,boolean hasLabel) {
+    public static void show_air_pollution(String data, String label,boolean hasLabel,boolean is3D) {
 
-        Plot2DPanel plot = new Plot2DPanel();
+        PlotPanel plot = null;
+	    if (is3D) {
+            plot = new Plot3DPanel();
+        } else {
+            plot = new Plot2DPanel();
+        }
+
         plot.plotCanvas.setNotable(true);
         plot.plotCanvas.setNoteCoords(true);
 
@@ -166,6 +173,8 @@ public class TSneDemo {
             }
             ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", result, labels);
             plot.plotCanvas.addPlot(setosaPlot);
+            plot.plotLegend.setEnabled(true);
+            plot.addLegend("East");
         } else {
             ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, result);
             plot.plotCanvas.addPlot(setosaPlot);
@@ -173,7 +182,7 @@ public class TSneDemo {
         FrameView plotframe = new FrameView(plot);
         plotframe.setVisible(true);
     }
-    public static void calculate_air_pollution(double perplexity,boolean use_rank,int max_iter,double theta,double f,String dataPath) {
+    public static void calculate_air_pollution(boolean is3D, double perplexity,boolean use_rank,int max_iter,double theta,double f,String dataPath) {
         int initial_dims = 55;
         double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataPath), ",");
         System.out.println(MatrixOps.doubleArrayToPrintString(X, ", ", 50,10));
@@ -188,12 +197,17 @@ public class TSneDemo {
 
         System.out.println("Shape is: " + X.length + " x " + X[0].length);
         System.out.println("Starting TSNE: " + new Date());
-        double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,max_iter,false,use_rank,theta,f);
+        double [][] Y = tsne.tsne(X, is3D?3:2, initial_dims, perplexity,max_iter,false,use_rank,theta,f);
         System.out.println("Finished TSNE: " + new Date());
         //System.out.println("Result is = " + Y.length + " x " + Y[0].length + " => \n" + MatrixOps.doubleArrayToString(Y));
         System.out.println("Result is = " + Y.length + " x " + Y[0].length);
-        saveFile(new File("Air_Pollution_"+perplexity+"_"+max_iter+"_"+use_rank+".txt"), MatrixOps.doubleArrayToString(Y));
-        Plot2DPanel plot = new Plot2DPanel();
+        saveFile(new File("Air_Pollution_"+perplexity+"_"+max_iter+(use_rank?"_withRank_":"_noRank_")+".txt"), MatrixOps.doubleArrayToString(Y));
+        PlotPanel plot = null;
+        if (is3D) {
+            plot = new Plot3DPanel();
+        } else {
+            plot = new Plot2DPanel();
+        }
 
         ScatterPlot setosaPlot = new ScatterPlot("setosa", Color.BLACK, Y);
         plot.plotCanvas.setNotable(true);
@@ -217,10 +231,11 @@ public class TSneDemo {
 //        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
 
 
-        //calculate_air_pollution(100.0,false,200000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw");
+//        calculate_air_pollution(200.0,true,200000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
 
-        show_air_pollution(basePath+"TSNE_test/t-SNE-Java/pollution_data_withGPS_filled_combined_month_100_20W.txt",
-                dataPath+"pollution_data_withGPS_filled_combined_month_label_GPS.csv",true);
+        show_air_pollution(basePath+"TSNE_test/t-SNE-Java/Air_Pollution_Combined_Month_50.0_20000_noRank_3D.txt",
+                dataPath+"pollution_data_withGPS_filled_combined_month_label_gps.csv",true, true);
+
     }
 
 
