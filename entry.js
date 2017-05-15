@@ -8,12 +8,15 @@ import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 import exampleRaw from './modules/example_data'
 import * as parallelView from './modules/parallel'
+import * as mapView from './modules/map'
 
 
 window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0;//0:停止；1：进行；2：暂停
 window.rawData = exampleRaw;
+window.date = [];
+window.gps = [];
 
 
 
@@ -119,6 +122,9 @@ $(document).ready(function () {
           let res = fileReader.readRawFile(this.result);
           if (res.isValid) {
             window.rawData = res.data;
+            window.gps = res.gps;
+            window.date = res.date;
+            mapView.initPoints();
             parallelView.init(window.rawData);
             window.beginTSNE = 0;
             $DataSourceLabel.html('Source:' + file.name);

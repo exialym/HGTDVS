@@ -9,11 +9,13 @@ module.exports.readRawFile = function (txt) {
     isValid:true,
     error:'',
     data:[],
+    gps:[],
+    date:[],
   };
   let lines = txt.split("\n");
   let data = [];
   let len = -1;
-  for(let i = 0;i < lines.length;i++) {
+  for(let i = 1;i < lines.length;i++) {
     let row = lines[i];
     if (! /\S/.test(row)) {
       // row is empty and only has whitespace
@@ -21,23 +23,29 @@ module.exports.readRawFile = function (txt) {
     }
     let cells = row.split(',');
     let point = [];
-    for(let j = 0;j < cells.length;j++) {
-      if(cells[j].length !== 0) {
+    let gpsTemp = [];
+    for(let j = 1;j < cells.length;j++) {
+      if (j===1) gpsTemp.push(cells[j]);
+      else if (j===2) gpsTemp.push(cells[j]);
+      else if (j===3) res.date.push(cells[j]);
+      else {
         point.push(parseFloat(cells[j]));
       }
     }
-    let dl = point.length;
-    if(i === 0) { len = dl; }
-    if(len !== dl) {
-      // TROUBLE. Not all same length.
-      res.error = 'TROUBLE: row ' + i + ' has bad length ' + len;
-      len = dl; // hmmm...
-      res.isValid = false;
-      return res;
-    }
+    // let dl = point.length;
+    // if(i === 0) { len = dl; }
+    // if(len !== dl) {
+    //   // TROUBLE. Not all same length.
+    //   res.error = 'TROUBLE: row ' + i + ' has bad length ' + len;
+    //   len = dl; // hmmm...
+    //   res.isValid = false;
+    //   return res;
+    // }
     data.push(point);
+    res.gps.push(gpsTemp);
   }
   res.data = data; // set global
+
   return res;
 };
 
