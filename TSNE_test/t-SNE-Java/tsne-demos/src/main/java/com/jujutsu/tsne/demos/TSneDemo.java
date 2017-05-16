@@ -231,10 +231,10 @@ public class TSneDemo {
 //        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 50);
 
 
-//        calculate_air_pollution(200.0,true,200000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
+//        calculate_air_pollution(true,100.0,false,200000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
 
-        show_air_pollution(basePath+"TSNE_test/t-SNE-Java/Air_Pollution_Combined_Month_50.0_20000_noRank_3D.txt",
-                dataPath+"pollution_data_withGPS_filled_combined_month_label_gps.csv",true, true);
+        show_air_pollution(basePath+"TSNE_test/t-SNE-Java/Air_Pollution_Combined_Month_200.0_20W_withRank_V7/Air_Pollution_Combined_Month_200.0_20W_withRank_V7.txt",
+                dataPath+"pollution_data_withGPS_filled_combined_month_label_month.csv",false, false);
 
     }
 
