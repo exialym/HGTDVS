@@ -6,8 +6,7 @@ import tsnejs from '../lib/tsne'
 import utils from './utils'
 import * as exampleRaw from './example_data'
 import KdTreeUtil from '../lib/three/kdTree'
-import * as mapView from './map'
-let parallelView;
+import eventDispatcher from './event'
 
 //export function
 module.exports = {
@@ -228,10 +227,7 @@ function onContainerMouseUp(event) {
       for (let i = 0;i < particleNum;i++) {
         changeColor(i,colorNormal);
       }
-      parallelView = require('./parallel');
-      parallelView.highLightData(window.rawData,[]);
-      utils.changeDataList(relatedPointIndex);
-      mapView.displayPoints(relatedPointIndex);
+      eventDispatcher.emit('choose',relatedPointIndex);
       attributes.color.needsUpdate = true;
     }
   }
@@ -291,11 +287,7 @@ function displayNearest(point) {
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
-  parallelView = require('./parallel');
-  parallelView.highLightData(window.rawData,relatedPointIndex);
-  utils.changeDataList(relatedPointIndex);
-  mapView.displayPoints(relatedPointIndex);
-
+  eventDispatcher.emit('choose',relatedPointIndex);
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
@@ -426,3 +418,4 @@ function listHoverPoints(index,hoverFlag) {
 
   attributes.color.needsUpdate = true;
 }
+eventDispatcher.on('choose',choosePoints);

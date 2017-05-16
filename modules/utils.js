@@ -1,6 +1,7 @@
 /**
  * Created by exialym on 2017/2/22.
  */
+import eventDispatcher from './event'
 let utils = {};
 let $wait = $('#wait');
 let $waitTips = $wait.find('.waitTips');
@@ -58,4 +59,5 @@ utils.changeDataList = function(indexes) {
   }
   $(".dataList").html(html);
 };
+eventDispatcher.on('choose',utils.changeDataList);
 module.exports = utils;

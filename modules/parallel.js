@@ -1,9 +1,8 @@
 /**
  * Created by exialym on 2017/3/5.
  */
-import * as threeDFigure from './threeDimensionalFigure'
-import * as mapView from './map'
-import utils from './utils'
+import eventDispatcher from './event'
+
 let myChart;
 let init = function (data) {
   myChart = echarts.init(document.getElementById('parallel'));
@@ -30,7 +29,7 @@ let init = function (data) {
       right: 1,
       bottom: 20,
       top:20,
-      axisExpandable: true,
+      axisExpandable: false,
       axisExpandCenter: 15,
       axisExpandCount: 10,
       axisExpandWidth: 100,
@@ -105,14 +104,12 @@ let init = function (data) {
     });
     let series = myChart.getModel().getSeries()[0];
     let indices = series.getRawIndicesByActiveState('active');
-    threeDFigure.choosePoints(indices);
-    utils.changeDataList(indices);
-    mapView.displayPoints(indices);
+    eventDispatcher.emit('choose',indices);
   });
 };
 //高亮其他视图中选中的数据
-let highLightData = function(dataRow,indexes) {
-  let data = dataRow;
+let highLightData = function(indexes) {
+  let data = window.rawData;
   if (indexes.length===0) {
     for (let i = 0; i < data.length;i++) {
       data[i].push(1);
@@ -171,4 +168,5 @@ let parallelView = {
   init:init,
   highLightData:highLightData,
 };
+eventDispatcher.on('choose',highLightData);
 module.exports = parallelView;
