@@ -176,14 +176,14 @@
 """
 取出年，月or坐标作为label
 """
-import csv
-reader = csv.reader(file('pollution_data_withGPS_filled_combined_year.csv', 'rb'))
-csvfile = file('pollution_data_withGPS_filled_combined_year_label_gps.csv', 'wb')
-writer = csv.writer(csvfile)
-for line in reader:
-    if line[0] != "No.":
-        writer.writerow([line[1]])
-csvfile.close()
+# import csv
+# reader = csv.reader(file('pollution_data_withGPS_filled_combined_year.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_combined_year_label_gps.csv', 'wb')
+# writer = csv.writer(csvfile)
+# for line in reader:
+#     if line[0] != "No.":
+#         writer.writerow([line[1]])
+# csvfile.close()
 
 """
 取出前n个数据
@@ -200,3 +200,27 @@ csvfile.close()
 #         writer.writerow(line)
 #     count += 1
 # csvfile.close()
+
+"""
+生成数组
+"""
+import csv
+import json
+data = {}
+data["gps"] = []
+data["data"] = []
+data["date"] = []
+print(json.dumps(data))
+reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_combined_year.csv', 'rb'))
+file_object = file('air_pollution_data_json.txt', 'w')
+
+for line in reader:
+    if line[0] != "No.":
+        data["gps"].append([line[1], line[2]])
+        data["date"].append(line[3])
+        data["data"].append([float(line[4]), float(line[5]), float(line[6]), float(line[7]), float(line[8]),
+                             float(line[9]), float(line[10]), float(line[11]), float(line[12]), float(line[13]),
+                             float(line[14]), float(line[15]), float(line[16]), float(line[17]), float(line[18]), float(line[19])])
+
+file_object.writelines(json.dumps(data))
+file_object.close()

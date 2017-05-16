@@ -6,7 +6,7 @@ import utils from './modules/utils'
 import './lib/three/TrackballControls'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
-import exampleRaw from './modules/example_data'
+import * as exampleRaw from './modules/example_data'
 import * as parallelView from './modules/parallel'
 import * as mapView from './modules/map'
 
@@ -14,9 +14,9 @@ import * as mapView from './modules/map'
 window.relatedPointsNum = 100;
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0;//0:停止；1：进行；2：暂停
-window.rawData = exampleRaw;
-window.date = [];
-window.gps = [];
+window.rawData = exampleRaw.data;
+window.date = exampleRaw.date;
+window.gps = exampleRaw.gps;
 
 
 
@@ -42,8 +42,9 @@ $(document).ready(function () {
 
 
 
-  //threeDFigure.init(rawData);
+  //threeDFigure.init();
   parallelView.init(window.rawData);
+  mapView.initPoints();
   $relatedNumSlider.slider({
     min: 5,
     max: window.particleNum,
@@ -151,8 +152,11 @@ $(document).ready(function () {
   $clearFile.bind('click',function () {
     $rawData.val('');
     window.beginTSNE = 0;
-    window.rawData = exampleRaw;
+    window.rawData = exampleRaw.data;
+    window.date = exampleRaw.date;
+    window.gps = exampleRaw.gps;
     parallelView.init(window.rawData);
+    mapView.initPoints();
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');

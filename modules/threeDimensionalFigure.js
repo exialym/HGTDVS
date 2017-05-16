@@ -4,8 +4,9 @@
 import * as THREE from '../lib/three/three'
 import tsnejs from '../lib/tsne'
 import utils from './utils'
-import exampleRaw from './example_data'
+import * as exampleRaw from './example_data'
 import KdTreeUtil from '../lib/three/kdTree'
+import * as mapView from './map'
 let parallelView;
 
 //export function
@@ -90,7 +91,7 @@ container.addEventListener( 'mousemove', onDocumentMouseMove, false );
 container.addEventListener('mousedown', onContainerMouseDown, false );
 container.addEventListener('mouseup', onContainerMouseUp, false );
 
-window.particleNum = exampleRaw.length;
+window.particleNum = exampleRaw.data.length;
 $('relatedNumSlider').slider( "max" , window.particleNum);
 let intersectedPoint = undefined;
 let chosenPoint = undefined;
@@ -139,7 +140,7 @@ function init() {
   utils.showWaitingModel('shown.bs.modal', 'Initializing t-SNE, Won\'t be long.', 'Processing', function () {
     console.log('init Webgl modal');
     if (window.rawData.length===0)
-      window.rawData = exampleRaw;
+      window.rawData = exampleRaw.data;
 
     //init TSNE
     let opt = {};
@@ -230,6 +231,7 @@ function onContainerMouseUp(event) {
       parallelView = require('./parallel');
       parallelView.highLightData(window.rawData,[]);
       utils.changeDataList(relatedPointIndex);
+      mapView.displayPoints(relatedPointIndex);
       attributes.color.needsUpdate = true;
     }
   }
@@ -292,7 +294,7 @@ function displayNearest(point) {
   parallelView = require('./parallel');
   parallelView.highLightData(window.rawData,relatedPointIndex);
   utils.changeDataList(relatedPointIndex);
-
+  mapView.displayPoints(relatedPointIndex);
 
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;

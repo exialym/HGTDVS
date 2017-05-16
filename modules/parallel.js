@@ -2,6 +2,7 @@
  * Created by exialym on 2017/3/5.
  */
 import * as threeDFigure from './threeDimensionalFigure'
+import * as mapView from './map'
 import utils from './utils'
 let myChart;
 let init = function (data) {
@@ -106,11 +107,12 @@ let init = function (data) {
     let indices = series.getRawIndicesByActiveState('active');
     threeDFigure.choosePoints(indices);
     utils.changeDataList(indices);
+    mapView.displayPoints(indices);
   });
 };
 //高亮其他视图中选中的数据
 let highLightData = function(dataRow,indexes) {
-  let data = dataRow.concat();
+  let data = dataRow;
   if (indexes.length===0) {
     for (let i = 0; i < data.length;i++) {
       data[i].push(1);
@@ -161,6 +163,9 @@ let highLightData = function(dataRow,indexes) {
       }
     ]
   });
+  for (let i = 0; i < data.length;i++) {
+    data[i].pop();
+  }
 };
 let parallelView = {
   init:init,
