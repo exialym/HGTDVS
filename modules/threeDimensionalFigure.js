@@ -227,7 +227,7 @@ function onContainerMouseUp(event) {
       for (let i = 0;i < particleNum;i++) {
         changeColor(i,colorNormal);
       }
-      eventDispatcher.emit('choose',relatedPointIndex);
+      eventDispatcher.emit('choose',relatedPointIndex,'three');
       attributes.color.needsUpdate = true;
     }
   }
@@ -287,7 +287,7 @@ function displayNearest(point) {
     relatedPointIndex.push(objectIndex);
     changeColor(objectIndex,colorRelated);
   }
-  eventDispatcher.emit('choose',relatedPointIndex);
+  eventDispatcher.emit('choose',relatedPointIndex,'three');
   changeColor(point.index,colorChosen);
   attributes.color.needsUpdate = true;
 }
@@ -375,7 +375,8 @@ function changeColor(index,color) {
   attributes.color.array[index * 3 + 1] = color.g;
   attributes.color.array[index * 3 + 2] = color.b;
 }
-function choosePoints(indexes) {
+function choosePoints(indexes,view) {
+  if (view==='three') return;
   relatedPointIndex = indexes;
   chosenPoint = null;
   if (relatedPointIndex.length===0) {

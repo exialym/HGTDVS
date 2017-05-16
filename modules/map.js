@@ -54,7 +54,7 @@ let overlaycomplete = function(e){
       chosenIndexes.push([i]);
     }
   }
-  eventDispatcher.emit('choose',chosenIndexes);
+  eventDispatcher.emit('choose',chosenIndexes,'map');
   e.overlay.remove();
 };
 

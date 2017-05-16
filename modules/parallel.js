@@ -104,11 +104,12 @@ let init = function (data) {
     });
     let series = myChart.getModel().getSeries()[0];
     let indices = series.getRawIndicesByActiveState('active');
-    eventDispatcher.emit('choose',indices);
+    eventDispatcher.emit('choose',indices,'parallel');
   });
 };
 //高亮其他视图中选中的数据
-let highLightData = function(indexes) {
+let highLightData = function(indexes,view) {
+  if (view==='parallel') return;
   let data = window.rawData;
   if (indexes.length===0) {
     for (let i = 0; i < data.length;i++) {
