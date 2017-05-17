@@ -275,7 +275,7 @@ function onContainerMouseUp(event) {
       displayNearest(intersectedPoint);
       attributes.color.needsUpdate = true;
       chosenPoint = intersectedPoint;
-    } else {
+    } else if (chosenPoint) {
       //鼠标下没有点的时候，取消选中，平行坐标取消选中，列表清空
       chosenPoint = undefined;
       relatedPointIndex = [];
@@ -433,7 +433,9 @@ function changeColor(index,color) {
   attributes.color.array[index * 3 + 2] = color.b;
 }
 function choosePoints(indexes,view) {
+
   if (view==='three') return;
+  console.time("choosePoints:");
   relatedPointIndex = indexes;
   chosenPoint = null;
   if (relatedPointIndex.length===0) {
@@ -449,6 +451,7 @@ function choosePoints(indexes,view) {
     changeColor(indexes[i],colorRelated);
   }
   attributes.color.needsUpdate = true;
+  console.timeEnd("choosePoints:");
 }
 function listHoverPoints(index,hoverFlag,view) {
   if (view==='three') return;

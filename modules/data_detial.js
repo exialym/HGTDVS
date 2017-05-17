@@ -3,6 +3,7 @@
  */
 import eventDispatcher from './event'
 let changeDataList = function(indexes) {
+  console.time("changeDataList:");
   let html = "";
   for ( let i = 0; i < indexes.length; i ++ ) {
     html += "<li data-index='"+ indexes[i] +"'>"
@@ -14,6 +15,7 @@ let changeDataList = function(indexes) {
       +"</li>";
   }
   $(".dataList").html(html);
+  console.timeEnd("changeDataList:");
 };
 function hoverData(index,hoverFlag,view) {
   if (view==='list') return;

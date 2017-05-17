@@ -22,6 +22,7 @@ function initPoints() {
   displayPoints([]);
 }
 function displayPoints(indexes)  {
+  console.time("displayPoints:");
   if (markerClusterer) {
     markerClusterer.clearMarkers();
   }
@@ -35,12 +36,19 @@ function displayPoints(indexes)  {
       markers.push(new BMap.Marker(points[indexes[i]]));
     }
   }
-  markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+  markerClusterer = new BMapLib.MarkerClusterer(map, {
+    markers:markers,
+    //girdSize:600,// {Number} 聚合计算时网格的像素大小，默认60
+    //maxZoom:7,//最大的聚合级别，大于该级别就不进行相应的聚合
+    //isAverangeCenter:true,// 聚合点的落脚位置是否是所有聚合在内点的平均值，默认为否，落脚在聚合内的第一个点
+    //styles {Array<IconStyle>} 自定义聚合后的图标风格，请参考TextIconOverlay类
+  });
   // let pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
   // pointCollection.addEventListener('click', function (e) {
   //   alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
   // });
   // map.addOverlay(pointCollection);  // 添加Overlay
+  console.timeEnd("displayPoints:");
 }
 
 //回调获得覆盖物信息

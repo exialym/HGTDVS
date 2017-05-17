@@ -4,6 +4,7 @@
 import eventDispatcher from './event'
 
 let myChart;
+let saveTimeId;
 let init = function (data) {
   myChart = echarts.init(document.getElementById('parallel'));
   let parallelAxis = [];
@@ -82,34 +83,41 @@ let init = function (data) {
   myChart.setOption(option);
   //选中平行坐标中的数据触发的事件
   myChart.on('axisareaselected', function () {
-    myChart.setOption({
-      visualMap: [
-        {
-          show:false,
-          dimension: data[0].length-1,
-          selected: {
-            0: false,
-          },
-          categories: [0,1],
-          inRange: {
-            color:"#577ceb",
-            opacity: 1
-          },
-          outOfRange: {
-            color: '#577ceb',
-            opacity: 1
-          }
-        }
-      ],
-    });
-    let series = myChart.getModel().getSeries()[0];
-    let indices = series.getRawIndicesByActiveState('active');
-    eventDispatcher.emit('choose',indices,'parallel');
+    clearTimeout(saveTimeId);
+    saveTimeId = setTimeout(dataSelect,500);
+    // myChart.setOption({
+    //   visualMap: [
+    //     {
+    //       show:false,
+    //       dimension: data[0].length-1,
+    //       selected: {
+    //         0: false,
+    //       },
+    //       categories: [0,1],
+    //       inRange: {
+    //         color:"#577ceb",
+    //         opacity: 1
+    //       },
+    //       outOfRange: {
+    //         color: '#577ceb',
+    //         opacity: 1
+    //       }
+    //     }
+    //   ],
+    // });
+
   });
 };
+function dataSelect() {
+  let series = myChart.getModel().getSeries()[0];
+  let indices = series.getRawIndicesByActiveState('active');
+  eventDispatcher.emit('choose',indices,'parallel');
+}
 //高亮其他视图中选中的数据
 let highLightData = function(indexes,view) {
+
   if (view==='parallel') return;
+  console.time("highLightData:");
   let data = window.rawData;
   if (indexes.length===0) {
     for (let i = 0; i < data.length;i++) {
@@ -164,6 +172,7 @@ let highLightData = function(indexes,view) {
   for (let i = 0; i < data.length;i++) {
     data[i].pop();
   }
+  console.timeEnd("highLightData:");
 };
 let parallelView = {
   init:init,
