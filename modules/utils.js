@@ -1,7 +1,6 @@
 /**
  * Created by exialym on 2017/2/22.
  */
-import eventDispatcher from './event'
 let utils = {};
 let $wait = $('#wait');
 let $waitTips = $wait.find('.waitTips');
@@ -49,15 +48,4 @@ utils.switchMod = function (model) {
       $waitOK.hide();
   }
 };
-utils.changeDataList = function(indexes) {
-  let html = "";
-  for ( let i = 0; i < indexes.length; i ++ ) {
-    html += "<li data-index='"+ indexes[i] +"'>"
-      +"<span>"+ indexes[i] +"</span>"
-      +"<button class='btn btn-xs'>detail</button>"
-      +"</li>";
-  }
-  $(".dataList").html(html);
-};
-eventDispatcher.on('choose',utils.changeDataList);
 module.exports = utils;

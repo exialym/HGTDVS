@@ -234,6 +234,7 @@ main {
         padding: 5px 0;
         overflow: auto; }
         main .right-nav .datas .dataList li {
+          padding: 5px;
           list-style: none;
           overflow: hidden;
           border-bottom: 1px solid transparent; }
@@ -244,5 +245,7 @@ main {
           main .right-nav .datas .dataList li:hover {
             border-bottom: 1px solid #19a1f2;
             cursor: pointer; }
+          main .right-nav .datas .dataList li.hover {
+            border-bottom: 1px solid #19a1f2; }
 
 /*# sourceMappingURL=main.css.map */

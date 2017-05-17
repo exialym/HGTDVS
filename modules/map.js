@@ -2,6 +2,7 @@
  * Created by exialym on 2017/5/15 0015.
  */
 import eventDispatcher from './event'
+
 let map = new BMap.Map("map", {});
 map.centerAndZoom(new BMap.Point(-94.63548,39.118077), 5);
 map.enableScrollWheelZoom();

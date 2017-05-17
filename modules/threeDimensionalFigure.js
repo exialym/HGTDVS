@@ -304,6 +304,7 @@ function render() {
       //检查刚才鼠标下是否有点
       if (intersectedPoint) {
         //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
+        eventDispatcher.emit('hover',intersectedPoint.index,true,'three');
         if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
           changeColor(intersectedPoint.index,colorChosen);
         } else if  (relatedPointIndex.length!=0) {
@@ -330,6 +331,7 @@ function render() {
     }
     //当前鼠标下没有点，但刚才有
   } else if (intersectedPoint) {
+    eventDispatcher.emit('hover',intersectedPoint.index,false,'three');
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index,colorChosen);
@@ -393,7 +395,8 @@ function choosePoints(indexes,view) {
   }
   attributes.color.needsUpdate = true;
 }
-function listHoverPoints(index,hoverFlag) {
+function listHoverPoints(index,hoverFlag,view) {
+  if (view==='three') return;
   index = Number(index);
   if (hoverFlag) {
     changeColor(index,colorChosen);
@@ -420,3 +423,4 @@ function listHoverPoints(index,hoverFlag) {
   attributes.color.needsUpdate = true;
 }
 eventDispatcher.on('choose',choosePoints);
+eventDispatcher.on('hover',listHoverPoints);

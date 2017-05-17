@@ -16,9 +16,6 @@ EventDispatcher.prototype = {
     let listeners = this.listeners[type];
     let args = Array.prototype.slice.call(arguments);
     args.shift();
-    if (typeof window.console !== "undefined") {
-      window.console.info("on\t" + type + "\t" + args.join(" , "));
-    }
     if (listeners) {
       for (let i = 0, len = listeners.length; i < len; i++) {
         listeners[i].apply(this, args);

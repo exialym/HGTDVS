@@ -4,11 +4,13 @@
 import utils from './modules/utils'
 
 import './lib/three/TrackballControls'
+import eventDispatcher from './modules/event'
 import * as threeDFigure from './modules/threeDimensionalFigure'
 import * as fileReader from './modules/file2data'
 import * as exampleRaw from './modules/example_data'
 import * as parallelView from './modules/parallel'
 import * as mapView from './modules/map'
+import * as dataView from './modules/data_detial'
 
 
 window.relatedPointsNum = 100;
@@ -164,12 +166,12 @@ $(document).ready(function () {
   });
   $Datas.on('mouseenter','li',function(e){
     if (e.target.dataset.index) {
-      threeDFigure.listHoverPoints(e.target.dataset.index,true);
+      eventDispatcher.emit('hover',e.target.dataset.index,true,'list');
     }
   });
   $Datas.on('mouseleave','li',function(e){
     if (e.target.dataset.index) {
-      threeDFigure.listHoverPoints(e.target.dataset.index,false);
+      eventDispatcher.emit('hover',e.target.dataset.index,false,'list');
     }
   });
   $Datas.height($RightNav.height()-$Ops.height());
