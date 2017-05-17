@@ -148,9 +148,10 @@ header {
     font-size: 15px;
     line-height: 1.1;
     padding:6px 12px;
+    margin-left: 10px;
     @include change-button(transparent,white,white,#15BF63,#15BF63,white);
   }
-  #rawData {
+  #rawData,#embeddingData {
     display: none;
   }
 }

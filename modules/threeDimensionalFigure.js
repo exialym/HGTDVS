@@ -14,7 +14,8 @@ module.exports = {
   animate : animate,
   displayNearest : displayNearest,
   choosePoints : choosePoints,
-  listHoverPoints : listHoverPoints
+  listHoverPoints : listHoverPoints,
+  showEmbedding : showEmbedding
 };
 
 //init pram
@@ -197,6 +198,60 @@ function init() {
     if (!animationFlag)
       animate();
   });
+}
+function showEmbedding() {
+  if (animationFlag) {
+    cancelAnimationFrame(animationFlag);
+    animationFlag = undefined;
+  }
+
+  intersectedPoint = undefined;
+  chosenPoint = undefined;
+  window.particleNum = window.embeddingData.length;
+  $('#relatedNumSlider').slider({
+    min: 5,
+    max: window.particleNum,
+    step: 1,
+    value: window.relatedPointsNum,
+    orientation: 'horizontal',
+    range: 'min',
+    change:function () {
+      window.relatedPointsNum = $('#relatedNumSlider').slider( "value" );
+      $('#relatedNumLabel').val(window.relatedPointsNum);
+      displayNearest();
+    }
+  });
+  positions = new Float32Array( window.particleNum * 3 );
+  colors = new Float32Array( window.particleNum * 3 );
+
+  for ( let i = 0; i < positions.length; i += 3 ) {
+    // let x = Math.random() * n - n2;
+    // let y = Math.random() * n - n2;
+    // let z = Math.random() * n - n2;
+    positions[ i ]     = window.embeddingData[i/3][0];
+    positions[ i + 1 ] = window.embeddingData[i/3][1];
+    positions[ i + 2 ] = window.embeddingData[i/3][2];
+    colors[ i ]     = colorNormal.r;
+    colors[ i + 1 ] = colorNormal.g;
+    colors[ i + 2 ] = colorNormal.b;
+  }
+  //Todo
+  // 不想开始tsne前都先random位置，但是使用tsne的第一步来初始化位置会使得鼠标交互识别不到鼠标下的点，原因未知
+  // positions = Float32Array.from(tsne.getSolution().reduce(function(a, b){
+  //   return a.concat(b)
+  // }));
+
+  //init points
+  geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+  geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+  geometry.computeBoundingSphere();
+
+  //build kdtree
+  kdtree = new KdTreeUtil.KdTree( positionArr2Obj(positions), distanceFunction, ["x", "y", "z"]);
+  isKdTreeUpdated = true;
+  utils.closeWaitingModel();
+  if (!animationFlag)
+    animate();
 }
 
 //鼠标按下时触发

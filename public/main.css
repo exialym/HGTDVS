@@ -122,6 +122,7 @@ header {
     font-size: 15px;
     line-height: 1.1;
     padding: 6px 12px;
+    margin-left: 10px;
     border: 1px solid white;
     background-color: transparent;
     color: white; }
@@ -129,7 +130,7 @@ header {
       border-color: #15BF63;
       background-color: #15BF63;
       color: white; }
-  header #rawData {
+  header #rawData, header #embeddingData {
     display: none; }
 
 main {

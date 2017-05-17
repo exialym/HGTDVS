@@ -20,7 +20,7 @@ function hoverData(index,hoverFlag,view) {
   if (hoverFlag) {
     $(".dataList [data-index=\""+index+"\"]").addClass('hover');
   } else {
-    $(".dataList [data-index=\""+index+"\"]").removeClass('hover');
+    $(".dataList li").removeClass('hover');
   }
 
 }

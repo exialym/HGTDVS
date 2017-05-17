@@ -30,12 +30,15 @@ $(document).ready(function () {
   let $relatedNumLabel = $('#relatedNumLabel');
   let $beginTSNE = $('#beginTSNE');
   let $chooseFile = $('#chooseFile');
+  let $chooseEmbeddingFile = $('#chooseEmbeddingFile');
   let $rawData = $('#rawData');
+  let $embeddingData = $('#embeddingData');
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
   let $Datas = $('.datas');
   let $Ops = $('.ops');
   let $RightNav = $('.right-nav');
+
 
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
   //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
@@ -113,9 +116,49 @@ $(document).ready(function () {
   $chooseFile.bind('click',function () {
     $rawData.click();
   });
+  $chooseEmbeddingFile.bind('click',function () {
+    $embeddingData.click();
+  });
+  $embeddingData.bind('change', function (e) {
+    utils.showWaitingModel('shown.bs.modal', 'Analysing Your Embedding File, Please Wait.', 'Processing', function () {
+      let files = e.target.files;
+      if (files.length) {
+        $beginTSNE.attr('disabled','disabled');
+        let file = files[0];
+        let reader = new FileReader();//new一个FileReader实例
+        reader.onload = function() {
+          let res = fileReader.readEmbeddingFile(this.result);
+          if (res.isValid) {
+            window.embeddingData = res.embedding;
+            window.rawData = res.data;
+            window.gps = res.gps;
+            window.date = res.date;
+            mapView.initPoints();
+            parallelView.init(window.rawData);
+            threeDFigure.showEmbedding();
+            window.beginTSNE = 0;
+            $DataSourceLabel.html('Embedding:' + file.name);
+            $beginTSNE.html('X');
+            document.getElementById( 'tSNEState' ).innerHTML = '';
+            utils.switchMod('OK');
+            utils.changeWaitingTips('Success, You Can Use Your File Now.');
+          } else {
+            utils.switchMod('Warning');
+            utils.changeWaitingTips(res.error);
+            $beginTSNE.removeAttr('disabled');
+          }
+        };
+        reader.onerror = function() {
+          utils.switchMod('Warning');
+          utils.changeWaitingTips('Something Wrong with Your File.');
+          $beginTSNE.removeAttr('disabled');
+        };
+        reader.readAsText(file);
+      }
+    });
+  });
   $rawData.bind('change', function (e) {
     utils.showWaitingModel('shown.bs.modal', 'Analysing Your File, Please Wait.', 'Processing', function () {
-      console.log('readfile modal');
       let files = e.target.files;
       if (files.length) {
         $beginTSNE.attr('disabled','disabled');
