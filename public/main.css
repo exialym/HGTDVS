@@ -151,14 +151,14 @@ main {
       main .figures .figurs-top .webgl {
         flex-basis: 50%; }
     main .figures .figurs-bottom {
-      display: flex;
-      flex: 0 0 20em;
-      flex-direction: column;
-      flex-wrap: nowrap; }
+      flex: 0 0 20em; }
       main .figures .figurs-bottom .parallel {
-        flex-basis: 75%; }
+        height: 75%; }
       main .figures .figurs-bottom .timeLine {
-        flex-basis: 25%; }
+        height: 25%; }
+        main .figures .figurs-bottom .timeLine .canvasContainer {
+          position: relative;
+          overflow: hidden; }
   main .right-nav {
     font-size: 12px;
     font-weight: 100;

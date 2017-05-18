@@ -11,6 +11,7 @@ import * as exampleRaw from './modules/example_data'
 import * as parallelView from './modules/parallel'
 import * as mapView from './modules/map'
 import * as dataView from './modules/data_detial'
+import * as timeView from './modules/time'
 
 
 window.relatedPointsNum = 100;
@@ -50,6 +51,7 @@ $(document).ready(function () {
   //threeDFigure.init();
   parallelView.init(window.rawData);
   mapView.initPoints();
+  timeView.init();
   $relatedNumSlider.slider({
     min: 5,
     max: window.particleNum,
@@ -136,8 +138,11 @@ $(document).ready(function () {
             mapView.initPoints();
             parallelView.init(window.rawData);
             threeDFigure.showEmbedding();
+            dataView.changeDataList([]);
+            timeView.init();
             window.beginTSNE = 0;
             $DataSourceLabel.html('Embedding:' + file.name);
+            $(".sne").hide();
             $beginTSNE.html('X');
             document.getElementById( 'tSNEState' ).innerHTML = '';
             utils.switchMod('OK');
@@ -172,6 +177,9 @@ $(document).ready(function () {
             window.date = res.date;
             mapView.initPoints();
             parallelView.init(window.rawData);
+            dataView.changeDataList([]);
+            timeView.init();
+            $(".sne").show();
             window.beginTSNE = 0;
             $DataSourceLabel.html('Source:' + file.name);
             $beginTSNE.html('begin');
@@ -196,12 +204,15 @@ $(document).ready(function () {
   });
   $clearFile.bind('click',function () {
     $rawData.val('');
+    $embeddingData.val('');
     window.beginTSNE = 0;
     window.rawData = exampleRaw.data;
     window.date = exampleRaw.date;
     window.gps = exampleRaw.gps;
     parallelView.init(window.rawData);
     mapView.initPoints();
+    dataView.changeDataList([]);
+    $(".sne").show();
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');

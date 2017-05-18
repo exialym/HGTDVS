@@ -107,9 +107,9 @@
 """
 # import csv
 # reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled.csv', 'rb'))
-# csvfile = file('pollution_data_withGPS_filled_combined_year.csv', 'wb')
+# csvfile = file('pollution_data_withGPS_filled_combined_month.csv', 'wb')
 # writer = csv.writer(csvfile)
-# record = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# record = ["", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # count = 1
 #
 #
@@ -126,10 +126,10 @@
 #             float(lineS[12]), float(lineS[13]), float(lineS[14]), float(lineS[15]), float(lineS[16]), float(lineS[17]),
 #             float(lineS[18]), float(lineS[19])]
 #
-#     # if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:7] != record[3][0:7]):
+#     if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:7] != record[3][0:7]):
 #     # if (line[1] != record[1]) or (line[2] != record[2]) or (line[3] != record[3]):
-#     if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:4] != record[3][0:4]):
-#         writer.writerow([record[0], record[1], record[2], record[3], record[4]/count, record[5]/count,
+#     # if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:4] != record[3][0:4]):
+#         writer.writerow([record[0], record[1], record[2], record[3][0:7], record[4]/count, record[5]/count,
 #                          record[6]/count, record[7]/count, record[8]/count, record[9]/count, record[10]/count,
 #                          record[11]/count, record[12]/count, record[13]/count, record[14]/count, record[15]/count,
 #                          record[16]/count, record[17]/count, record[18]/count, record[19]/count])
@@ -204,50 +204,51 @@
 """
 由数据生成json字符串
 """
-# import csv
-# import json
-# data = {}
-# data["gps"] = []
-# data["data"] = []
-# data["date"] = []
-# print(json.dumps(data))
-# reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_combined_year.csv', 'rb'))
-# file_object = file('air_pollution_data_json.txt', 'w')
-#
-# for line in reader:
-#     if line[0] != "No.":
-#         data["gps"].append([line[1], line[2]])
-#         data["date"].append(line[3])
-#         data["data"].append([float(line[4]), float(line[5]), float(line[6]), float(line[7]), float(line[8]),
-#                              float(line[9]), float(line[10]), float(line[11]), float(line[12]), float(line[13]),
-#                              float(line[14]), float(line[15]), float(line[16]), float(line[17]), float(line[18]), float(line[19])])
-#
-# file_object.writelines(json.dumps(data))
-# file_object.close()
+import csv
+import json
+data = {}
+data["gps"] = []
+data["data"] = []
+data["date"] = []
+print(json.dumps(data))
+reader = csv.reader(file('pollution_data_withGPS_filled_combined_year.csv', 'rb'))
+file_object = file('air_pollution_data_json.txt', 'w')
+
+for line in reader:
+    if line[0] != "No.":
+        data["gps"].append([line[1], line[2]])
+        data["date"].append(line[3])
+        data["data"].append([float(line[4]), float(line[5]), float(line[6]), float(line[7]), float(line[8]),
+                             float(line[9]), float(line[10]), float(line[11]), float(line[12]), float(line[13]),
+                             float(line[14]), float(line[15]), float(line[16]), float(line[17]), float(line[18]), float(line[19])])
+
+file_object.writelines(json.dumps(data))
+file_object.close()
 
 """
 将降维结果和坐标，时间整合，利用系统直接可视化
 """
-import csv
-labeldata = []
-datadata = []
-labelReader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_combined_month.csv', 'rb'))
-dataReader = csv.reader(file('E:/Git/HGTDVS/TSNE_test/t-SNE-Java/Air_Pollution_Combined_Month_100.0_20W_noRank_3D.txt', 'rb'))
+# import csv
+# labeldata = []
+# datadata = []
+# labelReader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled_combined_month.csv', 'rb'))
+# dataReader = csv.reader(file('E:/Git/HGTDVS/TSNE_test/t-SNE-Java/Air_Pollution_Combined_Month_100.0_20W_noRank_3D.txt', 'rb'))
+#
+# for line in labelReader:
+#     if line[0] != "No.":
+#         labeldata.append(line)
+# for line in dataReader:
+#     datadata.append([line[0], line[1], line[2]])
+# csvfile = file('pollution_data_withGPS_filled_combined_month_embedding.csv', 'wb')
+# writer = csv.writer(csvfile)
+# for index, line in enumerate(labeldata):
+#     temp = [line[0], line[1], line[2], line[3],
+#             datadata[index][0], datadata[index][1], datadata[index][2],
+#             line[4], line[5], line[6], line[7], line[8], line[9], line[10],
+#             line[11], line[12], line[13], line[14], line[15], line[16], line[17], line[18], line[19]]
+#     writer.writerow(temp)
+# csvfile.close()
 
-for line in labelReader:
-    if line[0] != "No.":
-        labeldata.append(line)
-for line in dataReader:
-    datadata.append([line[0], line[1], line[2]])
-csvfile = file('pollution_data_withGPS_filled_combined_month_embedding.csv', 'wb')
-writer = csv.writer(csvfile)
-for index, line in enumerate(labeldata):
-    temp = [line[0], line[1], line[2], line[3],
-            datadata[index][0], datadata[index][1], datadata[index][2],
-            line[4], line[5], line[6], line[7], line[8], line[9], line[10],
-            line[11], line[12], line[13], line[14], line[15], line[16], line[17], line[18], line[19]]
-    writer.writerow(temp)
-csvfile.close()
 
 
 

@@ -175,17 +175,23 @@ main {
       }
     }
     .figurs-bottom {
-      display:flex;
+      //display:flex;
       flex: 0 0 20em;
-      flex-direction: column;
-      flex-wrap: nowrap;
+      //flex-direction: column;
+      //flex-wrap: nowrap;
       .parallel {
-        flex-basis: 75%;
+        //flex-basis: 75%;
+        height:75%;
       }
       .timeLine {
-        flex-basis: 25%;
-      }
+        //flex-basis: 25%;
+        height:25%;
+        .canvasContainer{
+          position: relative;
+          overflow: hidden;
+        }
 
+      }
     }
 
   }

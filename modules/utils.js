@@ -48,4 +48,37 @@ utils.switchMod = function (model) {
       $waitOK.hide();
   }
 };
+utils.colorMap = generateColorMap();
 module.exports = utils;
+
+
+
+
+function generateColorMap() {
+  let colors = gradientColor([0,255,0],[255,255,0],50);
+  colors  = colors.concat(gradientColor([255,255,0],[255,0,0],50));
+  return colors;
+}
+
+function gradientColor(startRGB,endRGB,step){
+
+  let startR = startRGB[0];
+  let startG = startRGB[1];
+  let startB = startRGB[2];
+
+  let endR = endRGB[0];
+  let endG = endRGB[1];
+  let endB = endRGB[2];
+
+  let sR = (endR-startR)/step;//总差值
+  let sG = (endG-startG)/step;
+  let sB = (endB-startB)/step;
+
+  let colorArr = [];
+  for(let i=0;i<step;i++){
+    //计算每一步的hex值
+    let hex = 'rgb('+parseInt((sR*i+startR))+','+parseInt((sG*i+startG))+','+parseInt((sB*i+startB))+')';
+    colorArr.push(hex);
+  }
+  return colorArr;
+}

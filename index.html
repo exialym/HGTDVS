@@ -24,7 +24,12 @@
       </div>
       <div class="figurs-bottom">
         <div id="parallel" class="parallel">parallel</div>
-        <div id="timeLine" class="timeLine">timeLine</div>
+        <div id="timeLine" class="timeLine">
+          <div class="canvasContainer">
+            <canvas id="timeLineCanvas" width="0" height="0"></canvas>
+          </div>
+
+        </div>
       </div>
 
     </div>
@@ -34,22 +39,22 @@
           <p id="DataSourceLabel">Source:example data</p>
           <button id="clearFile" class="btn btn-xs">clear</button>
         </div>
-        <div class="sliderBar-op">
+        <div class="sliderBar-op sne">
           <p>perplexity</p>
           <div id="perplexitySlider" class="bar"></div>
           <span class="sliderNum"></span>
         </div>
-        <div class="sliderBar-op">
+        <div class="sliderBar-op sne">
           <p>learn rate</p>
           <div id="learnRateSlider" class="bar" ></div>
           <span class="sliderNum"></span>
         </div>
-        <div class="sliderBar-op">
+        <div class="sliderBar-op sne">
           <p>neighbors</p>
           <div id="relatedNumSlider" class="bar"></div>
           <input id="relatedNumLabel" type="text"/>
         </div>
-        <div class="begin-op">
+        <div class="begin-op sne">
           <button id="beginTSNE" class="btn btn-sm">begin</button>
           <div id="tSNEState"></div>
         </div>

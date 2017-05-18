@@ -2,7 +2,10 @@
  * Created by exialym on 2017/5/17 0017.
  */
 import eventDispatcher from './event'
-let changeDataList = function(indexes) {
+module.exports = {
+  changeDataList : changeDataList,
+};
+function changeDataList (indexes) {
   console.time("changeDataList:");
   let html = "";
   for ( let i = 0; i < indexes.length; i ++ ) {
