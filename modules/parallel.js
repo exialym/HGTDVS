@@ -22,7 +22,7 @@ let init = function (data) {
       },
       outOfBrush: {
         color: '#b99e2a',
-        opacity: 0.1
+        opacity: 0.02
       }
     },
     parallel: {
@@ -148,7 +148,7 @@ let highLightData = function(indexes,view) {
         },
         outOfRange: {
           color: '#b99e2a',
-          opacity: 0.1
+          opacity: 0.02
         }
       }
     ],
@@ -161,7 +161,7 @@ let highLightData = function(indexes,view) {
           normal: {
             color: '#577ceb',
             width: 0.5,
-            opacity: 0.6
+            opacity: 1
           }
         },
         blendMode: 'lighter',

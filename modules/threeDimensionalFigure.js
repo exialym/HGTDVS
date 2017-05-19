@@ -19,12 +19,12 @@ module.exports = {
 };
 
 //init pram
-let PARTICLE_SIZE = 5;
+let PARTICLE_SIZE = 3;
 let relatedPointsDistance = Infinity;
 const colorNormal = new THREE.Color(0x19A1F2);
 const colorFloated = new THREE.Color(0x8800ff);
 const colorChosen = new THREE.Color(0xFC021E);
-const colorRelated = new THREE.Color(0xFFFF3A);
+const colorRelated = new THREE.Color(0xEECB5F);
 const colorFade = new THREE.Color(0x3B51A6);
 
 
@@ -74,7 +74,7 @@ let particles = new THREE.Points( geometry, material );
 
 let scene = new THREE.Scene();
 scene.add( particles );
-scene.add( new THREE.AxisHelper( 20 ) );
+//scene.add( new THREE.AxisHelper( 20 ) );
 
 let renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio( window.devicePixelRatio );

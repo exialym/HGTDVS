@@ -2,12 +2,15 @@
  * Created by exialym on 2017/5/18 0018.
  */
 import * as utils from './utils'
+import eventDispatcher from './event'
 let canvas;
 let ctx;
 let canvasWidth;
 let canvasHeight;
 let colors = utils.colorMap;
 let timeLine;
+let beginPosition;
+let endPosition;
 
 function TimeLine () {
   let $canvasContainer =  $(".canvasContainer");
@@ -40,6 +43,30 @@ function TimeLine () {
   for (let i = 0; i < this.dateList.length;i++) {
     this.nodes[this.dateList[i]] = new TimeNode(this.dateList[i],i*this.nodeWidth,obj[this.dateList[i]]);
   }
+  canvas.onmousedown = function(ev) {
+    let ev1=ev || window.event;
+    beginPosition = ev1.clientX-canvas.offsetLeft;
+    // canvas.onmousemove = function(ev){
+    //
+    // };
+    canvas.onmouseup = function(ev){
+      let ev1 = ev || window.event;
+      endPosition = ev1.clientX-canvas.offsetLeft;
+      let indexes = [];
+      let nodes = [];
+      for(let date in timeLine.nodes){
+        if (timeLine.nodes[date].position>beginPosition&&timeLine.nodes[date].position<endPosition) {
+          nodes.push(timeLine.nodes[date]);
+          indexes = indexes.concat(timeLine.nodes[date].dataValid);
+        }
+      }
+      drawTimeNode(nodes);
+      eventDispatcher.emit('choose',indexes,'time');
+      //canvas.onmousemove = null;
+      canvas.onmouseup = null;
+    };
+
+  }
 
 
 
@@ -62,11 +89,27 @@ function drawTimeNode(nodes) {
   // ctx.fillStyle = "green";
   // ctx.fillRect(1, 1, canvasWidth-1, canvasHeight-1);
 }
-function chooseNode(indexes) {
-  let nodes = [];
-  for (let i = 0; i < indexes.length;i++) {
+function chooseNode(indexes,view) {
 
+  if (view==='time') return;
+  if (indexes.length===0)  {
+    drawTimeNode(timeLine.nodes);
+  } else {
+    let nodes = [];
+    let temp= {};
+    for (let i = 0; i < indexes.length;i++) {
+      let date = window.date[indexes[i]];
+      if (temp[date]) temp[date].push(indexes[i]);
+      else temp[date] = [indexes[i]];
+    }
+    let dates = Object.keys(temp);
+    for (let i = 0; i < dates.length;i++) {
+      let newNode = new TimeNode(dates[i],timeLine.nodes[dates[i]].position,temp[dates[i]]);
+      nodes.push(newNode);
+    }
+    drawTimeNode(nodes);
   }
+
 }
 function TimeNode(time,position,dataValid) {
   this.time = time;
@@ -82,6 +125,7 @@ function init(dateList) {
   timeLine = new TimeLine(dateList);
   drawTimeNode(timeLine.nodes);
 }
+eventDispatcher.on('choose',chooseNode);
 module.exports = {
   init:init,
-}
+};

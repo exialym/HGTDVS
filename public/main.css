@@ -157,7 +157,6 @@ main {
       main .figures .figurs-bottom .timeLine {
         height: 25%; }
         main .figures .figurs-bottom .timeLine .canvasContainer {
-          position: relative;
           overflow: hidden; }
   main .right-nav {
     font-size: 12px;
