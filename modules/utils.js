@@ -8,6 +8,7 @@ let $waitButton = $wait.find('.waitButton');
 let $waitLoader = $wait.find('.loading');
 let $waitWarning = $wait.find('.waitWarning');
 let $waitOK = $wait.find('.waitOK');
+let $tipBox = $('.tipBox');
 utils.showWaitingModel = function(event, tips, model, callback) {
   $wait.off(event);
   $waitTips.html(tips);
@@ -49,6 +50,11 @@ utils.switchMod = function (model) {
   }
 };
 utils.colorMap = generateColorMap();
+utils.showTipBox = function (x,y,text) {
+  $tipBox.css({left:x+'px',top:y+'px'});
+  $tipBox.html(text);
+  $tipBox.show();
+};
 module.exports = utils;
 
 

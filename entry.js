@@ -20,6 +20,7 @@ window.beginTSNE = 0;//0:停止；1：进行；2：暂停
 window.rawData = exampleRaw.data;
 window.date = exampleRaw.date;
 window.gps = exampleRaw.gps;
+window.colName = exampleRaw.colName;
 
 
 
@@ -101,13 +102,13 @@ $(document).ready(function () {
     threeDFigure.displayNearest();
   });
   $beginTSNE.bind('click',function () {
-    if (window.beginTSNE==0) {
+    if (window.beginTSNE===0) {
       window.beginTSNE = 1;
       threeDFigure.init();
       $relatedNumSlider.slider( "value" , window.relatedPointsNum);
       $relatedNumLabel.val(window.relatedPointsNum);
       $beginTSNE.html('pause');
-    } else if (window.beginTSNE==1){
+    } else if (window.beginTSNE===1){
       window.beginTSNE = 2;
       $beginTSNE.html('continue');
     } else {
@@ -135,6 +136,7 @@ $(document).ready(function () {
             window.rawData = res.data;
             window.gps = res.gps;
             window.date = res.date;
+            window.colName  = res.colName;
             mapView.initPoints();
             parallelView.init(window.rawData);
             threeDFigure.showEmbedding();
@@ -175,6 +177,7 @@ $(document).ready(function () {
             window.rawData = res.data;
             window.gps = res.gps;
             window.date = res.date;
+            window.colName  = res.colName;
             mapView.initPoints();
             parallelView.init(window.rawData);
             dataView.changeDataList([]);

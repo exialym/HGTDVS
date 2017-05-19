@@ -9,7 +9,7 @@ let init = function (data) {
   myChart = echarts.init(document.getElementById('parallel'));
   let parallelAxis = [];
   for (let i = 0;i < data[0].length;i++) {
-    parallelAxis.push({dim: i, name: i});
+    parallelAxis.push({dim: i, name: window.colName[i]});
   }
   let option = {
     backgroundColor: '#333',
@@ -26,9 +26,9 @@ let init = function (data) {
       }
     },
     parallel: {
-      left: 0,
-      right: 1,
-      bottom: 20,
+      left: 10,
+      right: 10,
+      bottom: 10,
       top:20,
       axisExpandable: false,
       axisExpandCenter: 15,
@@ -36,9 +36,9 @@ let init = function (data) {
       axisExpandWidth: 100,
       parallelAxisDefault: {
         type: 'value',
-        name: 'AQI指数',
+        name: 'parallelView',
         nameLocation: 'end',
-        nameGap: 20,
+        nameGap: 5,
         nameTextStyle: {
           color: '#fff',
           fontSize: 12

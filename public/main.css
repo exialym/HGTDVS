@@ -248,4 +248,10 @@ main {
           main .right-nav .datas .dataList li.hover {
             border-bottom: 1px solid #19a1f2; }
 
+.tipBox {
+  display: none;
+  position: absolute;
+  background-color: #0f0f0f;
+  color: white; }
+
 /*# sourceMappingURL=main.css.map */
