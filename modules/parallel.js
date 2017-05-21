@@ -57,7 +57,7 @@ let init = function (data) {
           show: true,
         },
         axisLabel: {
-          show:true,
+          show:false,
           showMinLabel:true,
           formatter: function (value, index) {
             return value.toFixed(2);

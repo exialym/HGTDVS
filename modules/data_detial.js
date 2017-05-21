@@ -14,7 +14,6 @@ function changeDataList (indexes) {
       +"<span>&"+ window.date[indexes[i]].slice(0,4) +"</span>"
       +"<span>&"+ window.gps[indexes[i]][0].slice(0,6) +"</span>"
       +"<span>&"+ window.gps[indexes[i]][1].slice(0,6) +"</span>"
-      +"<button class='btn btn-xs'>detail</button>"
       +"</li>";
   }
   $(".dataList").html(html);
