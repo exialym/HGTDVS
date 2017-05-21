@@ -22,7 +22,7 @@ function initPoints() {
   displayPoints([]);
 }
 function displayPoints(indexes)  {
-  console.time("displayPoints:");
+  console.time("map:displayPoints:");
   if (markerClusterer) {
     markerClusterer.clearMarkers();
   }
@@ -48,7 +48,7 @@ function displayPoints(indexes)  {
   //   alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
   // });
   // map.addOverlay(pointCollection);  // 添加Overlay
-  console.timeEnd("displayPoints:");
+  console.timeEnd("map:displayPoints:");
 }
 
 //回调获得覆盖物信息

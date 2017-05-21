@@ -435,7 +435,7 @@ function changeColor(index,color) {
 function choosePoints(indexes,view) {
 
   if (view==='three') return;
-  console.time("choosePoints:");
+  console.time("three:choosePoints:");
   relatedPointIndex = indexes;
   chosenPoint = null;
   if (relatedPointIndex.length===0) {
@@ -451,7 +451,7 @@ function choosePoints(indexes,view) {
     changeColor(indexes[i],colorRelated);
   }
   attributes.color.needsUpdate = true;
-  console.timeEnd("choosePoints:");
+  console.timeEnd("three:choosePoints:");
 }
 function listHoverPoints(index,hoverFlag,view) {
   if (view==='three') return;

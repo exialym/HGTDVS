@@ -106,8 +106,8 @@
 数据筛选，每月or日or年的同一地点数据合并  
 """
 # import csv
-# reader = csv.reader(file('E:/uspollution/pollution_data_withGPS_filled.csv', 'rb'))
-# csvfile = file('pollution_data_withGPS_filled_combined_month.csv', 'wb')
+# reader = csv.reader(file('/Users/exialym/Desktop/uspollution/pollution_data_withGPS_filled.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_combined_monthonly.csv', 'wb')
 # writer = csv.writer(csvfile)
 # record = ["", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # count = 1
@@ -127,8 +127,8 @@
 #             float(lineS[18]), float(lineS[19])]
 #
 #     if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:7] != record[3][0:7]):
-#     # if (line[1] != record[1]) or (line[2] != record[2]) or (line[3] != record[3]):
-#     # if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:4] != record[3][0:4]):
+#     #if (line[1] != record[1]) or (line[2] != record[2]) or (line[3] != record[3]):
+#     #if (line[1] != record[1]) or (line[2] != record[2]) or (line[3][0:4] != record[3][0:4]):
 #         writer.writerow([record[0], record[1], record[2], record[3][0:7], record[4]/count, record[5]/count,
 #                          record[6]/count, record[7]/count, record[8]/count, record[9]/count, record[10]/count,
 #                          record[11]/count, record[12]/count, record[13]/count, record[14]/count, record[15]/count,
@@ -142,6 +142,7 @@
 #         record[7] += line[7]
 #         record[8] += line[8]
 #         record[9] += line[9]
+#         record[10] += line[10]
 #         record[11] += line[11]
 #         record[12] += line[12]
 #         record[13] += line[13]
@@ -153,7 +154,7 @@
 #         record[19] += line[19]
 #         count += 1
 #
-# writer.writerow([record[0], record[1], record[2], record[3], record[4]/count, record[5]/count,
+# writer.writerow([record[0], record[1], record[2], record[3][0:7], record[4]/count, record[5]/count,
 #                  record[6]/count, record[7]/count, record[8]/count, record[9]/count, record[10]/count,
 #                  record[11]/count, record[12]/count, record[13]/count, record[14]/count, record[15]/count,
 #                  record[16]/count, record[17]/count, record[18]/count, record[19]/count])
@@ -163,8 +164,8 @@
 取出不带日期和坐标的数据
 """
 # import csv
-# reader = csv.reader(file('pollution_data_withGPS_filled_combined_year.csv', 'rb'))
-# csvfile = file('pollution_data_withGPS_filled_combined_year_raw.csv', 'wb')
+# reader = csv.reader(file('pollution_data_withGPS_filled_combined_month.csv', 'rb'))
+# csvfile = file('pollution_data_withGPS_filled_combined_month_raw.csv', 'wb')
 # writer = csv.writer(csvfile)
 # for line in reader:
 #     if line[0] != "No.":
@@ -211,7 +212,7 @@ data["gps"] = []
 data["data"] = []
 data["date"] = []
 print(json.dumps(data))
-reader = csv.reader(file('pollution_data_withGPS_filled_combined_onlyyear.csv', 'rb'))
+reader = csv.reader(file('pollution_data_withGPS_filled_combined_yearonly.csv', 'rb'))
 file_object = file('air_pollution_data_json.txt', 'w')
 
 for line in reader:
@@ -251,6 +252,9 @@ file_object.close()
 #             line[11], line[12], line[13], line[14], line[15], line[16], line[17], line[18], line[19]]
 #     writer.writerow(temp)
 # csvfile.close()
+
+
+
 
 
 

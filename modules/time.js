@@ -90,7 +90,7 @@ function drawTimeNode(nodes) {
   let lastTextPosition = -labelLength;
   ctx.clearRect(0,0,canvasWidth,canvasHeight);
   let max = 0;
-  let keys = Object.keys(nodes);
+  let keys = Object.keys(nodes).sort();
   for (let i = 0; i < keys.length;i++) {
     if (nodes[keys[i]].num>max) max = nodes[keys[i]].num;
   }
@@ -99,7 +99,8 @@ function drawTimeNode(nodes) {
 
   for (let i = 0; i < keys.length;i++) {
     if (nodes[keys[i]].num===0) continue;
-    ctx.fillStyle = colors[parseInt(nodes[keys[i]].num/max*100)];
+    let colorIndex = parseInt(nodes[keys[i]].num/max*100);
+    ctx.fillStyle = colors[colorIndex===100?99:colorIndex];
     ctx.fillRect(nodes[keys[i]].position,0,timeLine.nodeWidth,canvasHeight-12);
     ctx.font = canvasFont;
     if (nodes[keys[i]].position>lastTextPosition) {
@@ -115,6 +116,7 @@ function drawTimeNode(nodes) {
 function chooseNode(indexes,view) {
 
   if (view==='time') return;
+  console.time("Time,chooseNode:");
   if (indexes.length===0)  {
     drawTimeNode(timeLine.nodes);
   } else {
@@ -131,7 +133,7 @@ function chooseNode(indexes,view) {
     }
     drawTimeNode(nodes);
   }
-
+  console.timeEnd("Time,chooseNode:");
 }
 function TimeNode(time,position,dataValid) {
   this.time = time;

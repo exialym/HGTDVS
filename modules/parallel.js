@@ -54,9 +54,14 @@ let init = function (data) {
           }
         },
         splitLine: {
-          show: false
+          show: true,
         },
         axisLabel: {
+          show:true,
+          showMinLabel:true,
+          formatter: function (value, index) {
+            return value.toFixed(2);
+          },
           textStyle: {
             color: '#fff'
           }
@@ -117,7 +122,7 @@ function dataSelect() {
 let highLightData = function(indexes,view) {
 
   if (view==='parallel') return;
-  console.time("highLightData:");
+  console.time("parallel,highLightData:");
   let data = window.rawData;
   if (indexes.length===0) {
     for (let i = 0; i < data.length;i++) {
@@ -172,7 +177,7 @@ let highLightData = function(indexes,view) {
   for (let i = 0; i < data.length;i++) {
     data[i].pop();
   }
-  console.timeEnd("highLightData:");
+  console.timeEnd("parallel,highLightData:");
 };
 let parallelView = {
   init:init,

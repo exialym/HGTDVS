@@ -6,7 +6,7 @@ module.exports = {
   changeDataList : changeDataList,
 };
 function changeDataList (indexes) {
-  console.time("changeDataList:");
+  console.time("list:changeDataList:");
   let html = "";
   for ( let i = 0; i < indexes.length; i ++ ) {
     html += "<li data-index='"+ indexes[i] +"'>"
@@ -18,7 +18,7 @@ function changeDataList (indexes) {
       +"</li>";
   }
   $(".dataList").html(html);
-  console.timeEnd("changeDataList:");
+  console.timeEnd("list:changeDataList:");
 };
 function hoverData(index,hoverFlag,view) {
   if (view==='list') return;
