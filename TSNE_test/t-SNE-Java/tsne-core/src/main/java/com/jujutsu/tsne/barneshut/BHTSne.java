@@ -32,16 +32,14 @@
  */
 package com.jujutsu.tsne.barneshut;
 
-import static java.lang.Math.exp;
-import static java.lang.Math.log;
-import static java.lang.Math.min;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.jujutsu.tsne.PrincipalComponentAnalysis;
 import com.jujutsu.utils.MatrixOps;
+
+import static java.lang.Math.*;
 
 public class BHTSne implements BarnesHutTSne {
 
@@ -666,11 +664,11 @@ public class BHTSne implements BarnesHutTSne {
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
-				distances.set(k1,distances.get(k1)*(Dab+Dba)/(2*K*K));
+				distances.set(k1,distances.get(k1)*Math.exp((Dab+Dba)/(2*K*K)));
 				indices.get(k1).computed();
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
-						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*(Dab+Dba)/(2*K*K));
+						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*Math.exp((Dab+Dba)/(2*K*K)));
 						nsn.get(indexInNeb).computed();
 						break;
 					}
