@@ -228,7 +228,7 @@ public class TSneDemo {
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         //double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 50);
+        test_workflow(fileName,LabelName,false,false, fArr,55,20.0,100, 50);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
