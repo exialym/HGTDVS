@@ -664,11 +664,11 @@ public class BHTSne implements BarnesHutTSne {
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
-				distances.set(k1,distances.get(k1)*Math.exp((Dab+Dba)/(2*K*K)));
+				distances.set(k1,distances.get(k1)*Math.exp((Dab+Dba)/(2*K*K)-1));
 				indices.get(k1).computed();
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
-						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*Math.exp((Dab+Dba)/(2*K*K)));
+						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*Math.exp((Dab+Dba)/(2*K*K)-1));
 						nsn.get(indexInNeb).computed();
 						break;
 					}
