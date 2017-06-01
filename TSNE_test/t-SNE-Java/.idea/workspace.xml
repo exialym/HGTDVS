@@ -73,8 +73,8 @@
       <file leaf-file-name="BHTSne.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="670" column="95" lean-forward="false" selection-start-line="670" selection-start-column="95" selection-end-line="670" selection-end-column="95" />
+            <state relative-caret-position="600">
+              <caret line="680" column="59" lean-forward="false" selection-start-line="680" selection-start-column="50" selection-end-line="680" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#16478#16489#0" expanded="true" />
@@ -1067,10 +1067,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="338855000" />
+    <option name="totallyTimeSpent" value="340196000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1565,8 +1565,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="670" column="95" lean-forward="false" selection-start-line="670" selection-start-column="95" selection-end-line="670" selection-end-column="95" />
+        <state relative-caret-position="600">
+          <caret line="680" column="59" lean-forward="false" selection-start-line="680" selection-start-column="50" selection-end-line="680" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#16478#16489#0" expanded="true" />
