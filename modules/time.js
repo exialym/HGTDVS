@@ -13,6 +13,7 @@ let beginPosition;
 let endPosition;
 let canvasFont = "12px serif";
 let labelLength = 0;
+let lastHover;
 
 function TimeLine () {
   let $canvasContainer =  $(".canvasContainer");
@@ -44,7 +45,7 @@ function TimeLine () {
   this.nodeWidth = canvasWidth/this.num;
   labelLength = this.dateList[0].length*5;
   for (let i = 0; i < this.dateList.length;i++) {
-    this.nodes[this.dateList[i]] = new TimeNode(this.dateList[i],i*this.nodeWidth,obj[this.dateList[i]]);
+    this.nodes[this.dateList[i]] = new TimeNode(this.dateList[i],i*this.nodeWidth,obj[this.dateList[i]],obj[this.dateList[i]]);
   }
   canvas.onmousedown = function(ev) {
     let ev1=ev || window.event;
@@ -58,13 +59,18 @@ function TimeLine () {
       let nodes = {};
       for(let date in timeLine.nodes){
         if (timeLine.nodes.hasOwnProperty(date)) {
+          timeLine.nodes[date].setDataValid([]);
+        }
+      }
+      for(let date in timeLine.nodes){
+        if (timeLine.nodes.hasOwnProperty(date)) {
           if (timeLine.nodes[date].position>beginPosition&&timeLine.nodes[date].position+timeLine.nodeWidth<endPosition) {
-            nodes[date] = timeLine.nodes[date];
-            indexes = indexes.concat(timeLine.nodes[date].dataValid);
+            timeLine.nodes[date].setDataValid(timeLine.nodes[date].data);
+            indexes = indexes.concat(timeLine.nodes[date].data);
           }
         }
       }
-      drawTimeNode(nodes);
+      drawTimeNode();
       eventDispatcher.emit('choose',indexes,'time');
       canvas.onmouseup = null;
     };
@@ -73,39 +79,54 @@ function TimeLine () {
   canvas.onmousemove = function(ev){
     let ev1 = ev || window.event;
     let mousePosition = [ev1.clientX,ev1.clientY];
-    for(let date in timeLine.nodes){
-      if (timeLine.nodes.hasOwnProperty(date)) {
-        if (timeLine.nodes[date].position<mousePosition[0]&&timeLine.nodes[date].position+timeLine.nodeWidth>mousePosition[0]) {
-          utils.showTipBox(mousePosition[0],mousePosition[1]-40,date);
-          break;
+    if (lastHover&&lastHover.position<mousePosition[0]&&lastHover.position+timeLine.nodeWidth>mousePosition[0]) {
+      utils.showTipBox(mousePosition[0],mousePosition[1]-40,lastHover.time);
+    } else {
+      for(let date in timeLine.nodes){
+        if (timeLine.nodes.hasOwnProperty(date)) {
+          if (timeLine.nodes[date].position<mousePosition[0]&&timeLine.nodes[date].position+timeLine.nodeWidth>mousePosition[0]) {
+            utils.showTipBox(mousePosition[0],mousePosition[1]-40,date);
+            if (lastHover)
+              eventDispatcher.emit('hover',lastHover.dataValid,false,'time');
+            eventDispatcher.emit('hover',timeLine.nodes[date].dataValid,true,'time');
+            lastHover = timeLine.nodes[date];
+            break;
+          }
         }
       }
     }
+
+  };
+  canvas.onmouseout = function(ev){
+    if (lastHover)
+      eventDispatcher.emit('hover',lastHover.dataValid,false,'time');
+    lastHover = null;
   };
 
 
 
 }
-function drawTimeNode(nodes) {
+function drawTimeNode() {
+  lastHover = null;
   let lastTextPosition = -labelLength;
   ctx.clearRect(0,0,canvasWidth,canvasHeight);
   let max = 0;
-  let keys = Object.keys(nodes).sort();
+  let keys = Object.keys(timeLine.nodes).sort();
   for (let i = 0; i < keys.length;i++) {
-    if (nodes[keys[i]].num>max) max = nodes[keys[i]].num;
+    if (timeLine.nodes[keys[i]].num>max) max = timeLine.nodes[keys[i]].num;
   }
 
 
 
   for (let i = 0; i < keys.length;i++) {
-    if (nodes[keys[i]].num===0) continue;
-    let colorIndex = parseInt(nodes[keys[i]].num/max*100);
+    if (timeLine.nodes[keys[i]].num===0) continue;
+    let colorIndex = parseInt(timeLine.nodes[keys[i]].num/max*100);
     ctx.fillStyle = colors[colorIndex===100?99:colorIndex];
-    ctx.fillRect(nodes[keys[i]].position,0,timeLine.nodeWidth,canvasHeight-12);
+    ctx.fillRect(timeLine.nodes[keys[i]].position,0,timeLine.nodeWidth,canvasHeight-12);
     ctx.font = canvasFont;
-    if (nodes[keys[i]].position>lastTextPosition) {
-      ctx.strokeText(keys[i], nodes[keys[i]].position, canvasHeight, labelLength);
-      lastTextPosition = nodes[keys[i]].position + labelLength;
+    if (timeLine.nodes[keys[i]].position>lastTextPosition) {
+      ctx.strokeText(keys[i], timeLine.nodes[keys[i]].position, canvasHeight, labelLength);
+      lastTextPosition = timeLine.nodes[keys[i]].position + labelLength;
     }
 
   }
@@ -118,7 +139,11 @@ function chooseNode(indexes,view) {
   if (view==='time') return;
   console.time("Time,chooseNode:");
   if (indexes.length===0)  {
-    drawTimeNode(timeLine.nodes);
+    for(let date in timeLine.nodes){
+      if (timeLine.nodes.hasOwnProperty(date)) {
+        timeLine.nodes[date].setDataValid(timeLine.nodes[date].data);
+      }
+    }
   } else {
     let nodes = {};
     let temp= {};
@@ -127,27 +152,37 @@ function chooseNode(indexes,view) {
       if (temp[date]) temp[date].push(indexes[i]);
       else temp[date] = [indexes[i]];
     }
+    for(let date in timeLine.nodes){
+      if (timeLine.nodes.hasOwnProperty(date)) {
+        timeLine.nodes[date].setDataValid([]);
+      }
+    }
     let dates = Object.keys(temp);
     for (let i = 0; i < dates.length;i++) {
-      nodes[dates[i]] = new TimeNode(dates[i],timeLine.nodes[dates[i]].position,temp[dates[i]]);
+      timeLine.nodes[dates[i]].setDataValid(temp[dates[i]]);
     }
-    drawTimeNode(nodes);
+
   }
+  drawTimeNode();
   console.timeEnd("Time,chooseNode:");
 }
-function TimeNode(time,position,dataValid) {
+function TimeNode(time,position,data,dataValid) {
   this.time = time;
   this.position = position;
-  this.dataValid = dataValid;
-  this.num = dataValid.length;
+  this.data = data;
+  if (dataValid) {
+    this.dataValid = dataValid;
+    this.num = dataValid.length;
+  }
+
 }
-TimeNode.prototype.setData = function (dataValid) {
+TimeNode.prototype.setDataValid = function (dataValid) {
   this.dataValid = dataValid;
   this.num = dataValid.length;
 };
 function init(dateList) {
   timeLine = new TimeLine(dateList);
-  drawTimeNode(timeLine.nodes);
+  drawTimeNode();
 }
 eventDispatcher.on('choose',chooseNode);
 module.exports = {

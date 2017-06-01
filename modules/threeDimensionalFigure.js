@@ -359,7 +359,7 @@ function render() {
       //检查刚才鼠标下是否有点
       if (intersectedPoint) {
         //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
-        eventDispatcher.emit('hover',intersectedPoint.index,true,'three');
+        eventDispatcher.emit('hover',[intersectedPoint.index],false,'three');
         if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
           changeColor(intersectedPoint.index,colorChosen);
         } else if  (relatedPointIndex.length!=0) {
@@ -383,10 +383,11 @@ function render() {
       intersectedPoint = intersects[ 0 ];
       changeColor(intersectedPoint.index,colorFloated);
       attributes.color.needsUpdate = true;
+      eventDispatcher.emit('hover',[intersectedPoint.index],true,'three');
     }
     //当前鼠标下没有点，但刚才有
   } else if (intersectedPoint) {
-    eventDispatcher.emit('hover',intersectedPoint.index,false,'three');
+    eventDispatcher.emit('hover',[intersectedPoint.index],false,'three');
     //检查刚才的点是不是被选中的点，不是回归正常色，是回归选中色
     if (chosenPoint && chosenPoint.index === intersectedPoint.index) {
       changeColor(intersectedPoint.index,colorChosen);
@@ -453,30 +454,34 @@ function choosePoints(indexes,view) {
   attributes.color.needsUpdate = true;
   console.timeEnd("three:choosePoints:");
 }
-function listHoverPoints(index,hoverFlag,view) {
+function listHoverPoints(indexes,hoverFlag,view) {
   if (view==='three') return;
-  index = Number(index);
-  if (hoverFlag) {
-    changeColor(index,colorChosen);
-  } else {
-    if (chosenPoint && chosenPoint.index === index) {
+  for (let k = 0;k < indexes.length;k++) {
+    let index = indexes[k];
+    index = Number(index);
+    if (hoverFlag) {
       changeColor(index,colorChosen);
-    } else if  (relatedPointIndex.length!==0) {
-      let flag = false;
-      for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
-        if (index===relatedPointIndex[i]) {
-          changeColor(index,colorRelated);
-          flag = true;
-          break;
-        }
-      }
-      if (!flag) {
-        changeColor(index,colorFade);
-      }
     } else {
-      changeColor(index,colorNormal);
+      if (chosenPoint && chosenPoint.index === index) {
+        changeColor(index,colorChosen);
+      } else if  (relatedPointIndex.length!==0) {
+        let flag = false;
+        for (let i = relatedPointIndex.length - 1;i >= 0;i--) {
+          if (index===relatedPointIndex[i]) {
+            changeColor(index,colorRelated);
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) {
+          changeColor(index,colorFade);
+        }
+      } else {
+        changeColor(index,colorNormal);
+      }
     }
   }
+
 
   attributes.color.needsUpdate = true;
 }

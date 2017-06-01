@@ -230,23 +230,8 @@ main {
         line-height: 14px; }
     main .right-nav .datas {
       overflow: auto; }
-      main .right-nav .datas .dataList {
-        padding: 5px 0;
-        overflow: auto; }
-        main .right-nav .datas .dataList li {
-          padding: 5px;
-          list-style: none;
-          overflow: hidden;
-          border-bottom: 1px solid transparent; }
-          main .right-nav .datas .dataList li span {
-            float: left; }
-          main .right-nav .datas .dataList li button {
-            float: right; }
-          main .right-nav .datas .dataList li:hover {
-            border-bottom: 1px solid #19a1f2;
-            cursor: pointer; }
-          main .right-nav .datas .dataList li.hover {
-            border-bottom: 1px solid #19a1f2; }
+      main .right-nav .datas #table .chosen {
+        background-color: #fff; }
 
 .tipBox {
   display: none;

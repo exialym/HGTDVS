@@ -10,6 +10,17 @@ module.exports = {
 let $Datas = $('.datas');
 let $Ops = $('.ops');
 let $RightNav = $('.right-nav');
+$('#table').on('click-row.bs.table',function(e,row,el){
+  if ($(el).hasClass("chosen")) {
+    eventDispatcher.emit('hover',[row.index],false,'list');
+    $(el).removeClass('chosen');
+  } else {
+    eventDispatcher.emit('hover',[row.index],true,'list');
+    $(el).addClass('chosen');
+  }
+
+
+});
 
 function changeDataList (indexes) {
   console.time("list:changeDataList:");
@@ -62,18 +73,28 @@ function changeDataList (indexes) {
     }
     data.push(obj);
   }
-  $('#table').bootstrapTable({columns});
+  $('#table').bootstrapTable('destroy').bootstrapTable({
+    columns,
+  });
   $('#table').bootstrapTable('load', data);
 
   console.timeEnd("list:changeDataList:");
 }
-function hoverData(index,hoverFlag,view) {
+function hoverData(indexes,hoverFlag,view) {
   if (view==='list') return;
-  if (hoverFlag) {
-    $(".dataList [data-index=\""+index+"\"]").addClass('hover');
-  } else {
-    $(".dataList li").removeClass('hover');
-  }
+  $('#table tr').each(function () {
+    for (let k = 0; k < indexes.length;k++) {
+      if ($(this).children().eq(0).html()==indexes[k]) {
+        if (hoverFlag) {
+          $(this).addClass('chosen');
+        } else {
+          $(this).removeClass('chosen');
+        }
+      }
+    }
+
+  });
+
 
 }
 eventDispatcher.on('hover',hoverData);
