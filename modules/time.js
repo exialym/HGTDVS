@@ -101,6 +101,7 @@ function TimeLine () {
     if (lastHover)
       eventDispatcher.emit('hover',lastHover.dataValid,false,'time');
     lastHover = null;
+    utils.hideTipBox();
   };
 
 

@@ -10,6 +10,18 @@ module.exports = {
 let $Datas = $('.datas');
 let $Ops = $('.ops');
 let $RightNav = $('.right-nav');
+let $toggleExpand = $('#toggleListOpen');
+let canExpend = false;
+
+$toggleExpand.on('click',function(){
+  if (canExpend) {
+    $toggleExpand.html("can't expand");
+  } else {
+    $toggleExpand.html("can expand");
+  }
+  canExpend = !canExpend;
+});
+
 $('#table').on('click-row.bs.table',function(e,row,el){
   if ($(el).hasClass("chosen")) {
     eventDispatcher.emit('hover',[row.index],false,'list');
@@ -18,7 +30,24 @@ $('#table').on('click-row.bs.table',function(e,row,el){
     eventDispatcher.emit('hover',[row.index],true,'list');
     $(el).addClass('chosen');
   }
+});
+$Datas.hover(function(){
+  if (canExpend) {
+    let tableWidth =$('#table').width();
+    if (tableWidth>$('body').width()) {
+      tableWidth = $('body').width();
+    }
+    $Datas.animate({
+      width:tableWidth+'px'
+    });
+  }
 
+},function(){
+  if (canExpend) {
+    $Datas.animate({
+      width:$RightNav.width()+'px'
+    });
+  }
 
 });
 
@@ -36,6 +65,7 @@ function changeDataList (indexes) {
   // $(".dataList").html(html);
   $Datas.height($RightNav.height()-$Ops.height());
   $Datas.width($RightNav.width());
+  $Datas.css({top:($Ops.height()+$('header').outerHeight()+($RightNav.outerHeight()-$RightNav.height())/2)+'px'});
   let columns = [{
     field: 'index',
     title: 'index',

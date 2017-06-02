@@ -55,6 +55,9 @@ utils.showTipBox = function (x,y,text) {
   $tipBox.html(text);
   $tipBox.show();
 };
+utils.hideTipBox = function () {
+  $tipBox.hide();
+};
 module.exports = utils;
 
 

@@ -257,40 +257,21 @@ main {
         line-height:14px;
       }
     }
-    .datas {
-      overflow: auto;
-      //.dataList {
-      //  padding:5px 0;
-      //  overflow: auto;
-      //  li {
-      //    padding:5px;
-      //    list-style:none;
-      //    overflow: hidden;
-      //    border-bottom:1px solid transparent;
-      //    span {
-      //      float: left;
-      //    }
-      //    button {
-      //      float:right;
-      //    }
-      //    &:hover{
-      //      border-bottom:1px solid #19a1f2;
-      //      cursor:pointer;
-      //    }
-      //    &.hover{
-      //      border-bottom:1px solid #19a1f2;
-      //    }
-      //  }
-      //
-      //}
-      #table{
-        .chosen {
-          background-color: #fff;
-        }
-      }
-    }
+
   }
 
+}
+.datas {
+  overflow: auto;
+  position: absolute;
+  right:0.3em;
+  top:0;
+  background: rgba(230, 243, 248, 0.8);
+  #table{
+    .chosen {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
 }
 .tipBox {
   display: none;

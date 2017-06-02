@@ -16,6 +16,7 @@
     <input type="file" id="rawData">
     <button id="chooseEmbeddingFile" class="btn">choose embedding file</button>
     <input type="file" id="embeddingData">
+    <button id="toggleListOpen" class="btn">can't expand</button>
   </header>
   <main>
     <div class="figures">
@@ -60,14 +61,14 @@
           <div id="tSNEState"></div>
         </div>
       </div>
-      <div class="datas">
-        <table id="table"></table>
-        <!--<ul class="dataList">-->
-          <!---->
-        <!--</ul>-->
-      </div>
     </nav>
   </main>
+  <div class="datas">
+    <table id="table"></table>
+    <!--<ul class="dataList">-->
+    <!---->
+    <!--</ul>-->
+  </div>
   <div class="modal fade" tabindex="-1" role="dialog" id="wait">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -228,10 +228,15 @@ main {
       main .right-nav .begin-op #tSNEState {
         float: left;
         line-height: 14px; }
-    main .right-nav .datas {
-      overflow: auto; }
-      main .right-nav .datas #table .chosen {
-        background-color: #fff; }
+
+.datas {
+  overflow: auto;
+  position: absolute;
+  right: 0.3em;
+  top: 0;
+  background: rgba(230, 243, 248, 0.8); }
+  .datas #table .chosen {
+    background-color: rgba(255, 255, 255, 0.8); }
 
 .tipBox {
   display: none;
