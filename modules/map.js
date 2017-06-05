@@ -2,6 +2,7 @@
  * Created by exialym on 2017/5/15 0015.
  */
 import eventDispatcher from './event'
+import '../lib/map/MarkerClusterer'
 
 let map = new BMap.Map("map", {});
 map.centerAndZoom(new BMap.Point(-94.63548,39.118077), 5);
@@ -17,6 +18,10 @@ function initPoints() {
   points = [];
   for (let i = 0; i < window.gps.length; i++) {
     let pt = new BMap.Point(window.gps[i][1], window.gps[i][0]);
+    // pt.addEventListener('click',function(e){
+    //   console.log('points click');
+    //   console.log(e);
+    // });
     points.push(pt);
   }
   displayPoints([]);
@@ -29,11 +34,15 @@ function displayPoints(indexes)  {
   let markers = [];
   if (indexes.length===0) {
     for (let i = 0; i < points.length; i++) {
-      markers.push(new BMap.Marker(points[i]));
+      let maker = new BMap.Marker(points[i]);
+      maker.dataIndex = i;
+      markers.push(maker);
     }
   } else {
     for (let i = 0; i < indexes.length; i++) {
-      markers.push(new BMap.Marker(points[indexes[i]]));
+      let maker = new BMap.Marker(points[indexes[i]]);
+      maker.dataIndex = indexes[i];
+      markers.push(maker);
     }
   }
   markerClusterer = new BMapLib.MarkerClusterer(map, {
@@ -60,7 +69,7 @@ let overlaycomplete = function(e){
   let chosenIndexes = [];
   for (let i = 0; i < points.length;i++) {
     if (points[i].lat<=right&&points[i].lat>=left&&points[i].lng<=bottom&&points[i].lng>=top) {
-      chosenIndexes.push([i]);
+      chosenIndexes.push(i);
     }
   }
   eventDispatcher.emit('choose',chosenIndexes,'map');
