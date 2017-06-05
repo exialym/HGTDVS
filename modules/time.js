@@ -78,14 +78,14 @@ function TimeLine () {
   };
   canvas.onmousemove = function(ev){
     let ev1 = ev || window.event;
-    let mousePosition = [ev1.clientX,ev1.clientY];
+    let mousePosition = [ev1.offsetX,ev1.offsetY,ev1.offsetX+$(ev1.target).offset().left,ev1.offsetY+$(ev1.target).offset().top];
     if (lastHover&&lastHover.position<mousePosition[0]&&lastHover.position+timeLine.nodeWidth>mousePosition[0]) {
-      utils.showTipBox(mousePosition[0],mousePosition[1]-40,lastHover.time);
+      utils.showTipBox(mousePosition[2],mousePosition[3]-40,lastHover.time);
     } else {
       for(let date in timeLine.nodes){
         if (timeLine.nodes.hasOwnProperty(date)) {
           if (timeLine.nodes[date].position<mousePosition[0]&&timeLine.nodes[date].position+timeLine.nodeWidth>mousePosition[0]) {
-            utils.showTipBox(mousePosition[0],mousePosition[1]-40,date);
+            utils.showTipBox(mousePosition[2],mousePosition[3]-40,date);
             if (lastHover)
               eventDispatcher.emit('hover',lastHover.dataValid,false,'time');
             eventDispatcher.emit('hover',timeLine.nodes[date].dataValid,true,'time');

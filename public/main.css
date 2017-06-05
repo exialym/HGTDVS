@@ -85,7 +85,8 @@ body {
   height: 100vh;
   margin: 0;
   font-family: 'Monaco', 'Monacohackwin', 'Monacohackie',Helvetica, Georgia, Arial, sans-serif;
-  min-width: 1280px; }
+  min-width: 1280px;
+  position: relative; }
 
 #wait .modal-body {
   overflow: hidden; }
