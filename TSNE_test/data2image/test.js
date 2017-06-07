@@ -23,11 +23,11 @@ $rawData.bind('change', function (e) {
             name:res.legend[i],
             type:'line',
             data:res.data[i],
-            // itemStyle:{
-            //   normal:{
-            //     color:lineOption.color[colorIndex]
-            //   }
-            // }
+            itemStyle:{
+              normal:{
+                color:lineOption.color[colorIndex]
+              }
+            }
           })
         }
         for (let i = 0;i < res.data[0].length;i++) {

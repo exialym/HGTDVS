@@ -35,8 +35,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    private static String basePath = "E:/Git/HGTDVS/";
-    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    //private static String basePath = "E:/Git/HGTDVS/";
+    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     //private static String dataPath = "/Users/exialym/Desktop/uspollution/";
     private static String dataPath = "E:/uspollution/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
@@ -66,7 +66,7 @@ public class TSneDemo {
         for (double f:fArr) {
             double[] tempKNNresult = new double[KNNNum+1];
             for (int j = 0; j < repeatNum;j++) {
-                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "   ");
+                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "\t");
                 BarnesHutTSne tsne;
                 boolean parallel = false;
                 if(parallel) {
@@ -222,13 +222,15 @@ public class TSneDemo {
     
     public static void main(String [] args) {
 //
-        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-        String LabelName = path + "mnist2500_labels.txt";
-        double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
+        //String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+        //String LabelName = path + "mnist2500_labels.txt";
+        String fileName = basePath + "TSNE_test/data/mnist_data/images.txt";
+        String LabelName = basePath + "TSNE_test/data/mnist_data/lables.txt";
+        //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
-        //double[] fArr = {2.0};
+        double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,false,true, fArr,55,20.0,100, 50);
+        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 1);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
