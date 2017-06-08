@@ -55,8 +55,9 @@ public class TSneDemo {
     }
 	
 
-    public static void test_workflow(String dataFile, String labelFile, boolean usePCA, boolean useRankorder, double[] fArr, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
-
+    public static void test_workflow(String dataFile, String labelFile, String savePath, boolean usePCA, boolean useRankorder, double[] fArr, int max_iter, int initial_dims, double perplexity, int KNNNum, int repeatNum) {
+        File dir = new File(savePath);
+        dir.mkdirs();
 	    String [] labels = MatrixUtils.simpleReadLines(new File(labelFile));
         for (int i = 0; i < labels.length; i++) {
             labels[i] = labels[i].trim().substring(0, 1);
@@ -74,8 +75,8 @@ public class TSneDemo {
                 } else {
                     tsne = new BHTSne();
                 }
-                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,20000,usePCA,useRankorder,0.5,f);
-                saveFile(new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
+                double [][] Y = tsne.tsne(X, 2, initial_dims, perplexity,max_iter,usePCA,useRankorder,0.5,f);
+                saveFile(new File(savePath+"MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".txt"), MatrixOps.doubleArrayToString(Y));
                 Plot2DPanel plot = new Plot2DPanel();
 
                 ColoredScatterPlot setosaPlot = new ColoredScatterPlot("setosa", Y, labels);
@@ -92,7 +93,7 @@ public class TSneDemo {
                 plot.paint(g);
                 g.dispose();
                 try {
-                    ImageIO.write(image, "png", new File("MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".png"));
+                    ImageIO.write(image, "png", new File(savePath+"MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"result_"+j+".png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -123,7 +124,7 @@ public class TSneDemo {
             }
             res += "\r\n";
         }
-        saveFile(new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
+        saveFile(new File(savePath+"MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
         Plot2DPanel plot = new Plot2DPanel();
 
 
@@ -147,7 +148,7 @@ public class TSneDemo {
         plot.paint(g);
         g.dispose();
         try {
-            ImageIO.write(image, "png", new File("MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.png"));
+            ImageIO.write(image, "png", new File(savePath+"MNIST_2500_F_"+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -222,15 +223,16 @@ public class TSneDemo {
     
     public static void main(String [] args) {
 //
-        //String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
-        //String LabelName = path + "mnist2500_labels.txt";
-        String fileName = basePath + "TSNE_test/data/mnist_data/images.txt";
-        String LabelName = basePath + "TSNE_test/data/mnist_data/lables.txt";
+//        String fileName = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/mnist2500_X.txt";
+//        String LabelName = path + "mnist2500_labels.txt";
+        String fileName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000.txt";
+        String LabelName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000_label.txt";
+        String savePath = "test/";
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,true,true, fArr,55,20.0,100, 1);
+        test_workflow(fileName,LabelName,savePath,true,true, fArr,1,55,20.0,100, 1);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
