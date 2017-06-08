@@ -104,7 +104,7 @@ public class TSneDemo {
                 eachKNNresult[0] = j;
                 for (int i = 1;i <= KNNNum; i++) {
                     double KNNResult = classifer.KNNAccurcy(Y,i,labels);
-                    eachKNNresult[i] = KNNResult;
+                    eachKNNresult[i] = KNNResult*100;
                     tempKNNresult[i] += KNNResult;
                 }
                 //同一f的所有结果
@@ -249,12 +249,12 @@ public class TSneDemo {
 //        String LabelName = path + "mnist2500_labels.txt";
         String fileName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000.txt";
         String LabelName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000_label.txt";
-        String savePath = "MNIST_10000_withPCA_noRank_2_P20_10times/";
+        String savePath = "MNIST_10000_withPCA_withRank_2_P20_10times_V9(V7)/";
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,savePath,true,false, fArr,20000,55,20.0,100, 10);
+        test_workflow(fileName,LabelName,savePath,true,true, fArr,20000,55,20.0,100, 10);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
