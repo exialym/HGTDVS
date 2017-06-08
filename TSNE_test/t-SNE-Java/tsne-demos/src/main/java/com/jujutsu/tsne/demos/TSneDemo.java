@@ -227,12 +227,12 @@ public class TSneDemo {
 //        String LabelName = path + "mnist2500_labels.txt";
         String fileName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000.txt";
         String LabelName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000_label.txt";
-        String savePath = "test/";
+        String savePath = "MNIST_10000_withPCA_noRank_2_P20_20times/";
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,savePath,true,true, fArr,1,55,20.0,100, 1);
+        test_workflow(fileName,LabelName,savePath,true,false, fArr,20000,55,20.0,100, 50);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
