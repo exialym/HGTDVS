@@ -66,6 +66,7 @@ public class TSneDemo {
         KNNClasifer classifer = new KNNClasifer();
         for (double f:fArr) {
             double[] tempKNNresult = new double[KNNNum+1];
+            ArrayList<double[]> tempfinalKNNResult = new ArrayList<double[]>();
             for (int j = 0; j < repeatNum;j++) {
                 double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "\t");
                 BarnesHutTSne tsne;
@@ -98,9 +99,16 @@ public class TSneDemo {
                     e.printStackTrace();
                 }
 
+                //记录每次降维结果的KNN分类结果
+                double[] eachKNNresult = new double[KNNNum+1];
+                eachKNNresult[0] = j;
                 for (int i = 1;i <= KNNNum; i++) {
-                    tempKNNresult[i] += classifer.KNNAccurcy(Y,i,labels);
+                    double KNNResult = classifer.KNNAccurcy(Y,i,labels);
+                    eachKNNresult[i] = KNNResult;
+                    tempKNNresult[i] += KNNResult;
                 }
+                //同一f的所有结果
+                tempfinalKNNResult.add(eachKNNresult);
 
             }
             tempKNNresult[0] = f;
@@ -108,7 +116,21 @@ public class TSneDemo {
                 tempKNNresult[i] /= repeatNum;
                 tempKNNresult[i] *= 100;
             }
+            //同一f的所有结果平均
             finalKNNResult.add(tempKNNresult);
+
+            String res = "";
+            for (int j = 0;j <= KNNNum; j++) {
+                for (int i = 0;i < tempfinalKNNResult.size(); i++) {
+                    if (i==0)
+                        res += j+"\t:\t" + String.format("%.4f", tempfinalKNNResult.get(i)[j]) + "\t";
+                    else
+                        res += String.format("%.4f", tempfinalKNNResult.get(i)[j]) + "\t";
+                }
+                res += "\r\n";
+            }
+            saveFile(new File(savePath+"MNIST_2500_F_"+f+(usePCA?"_withPCA_":"_noPCA_")+(useRankorder?"_withRank_":"_noRank_")+"KNN_compare.txt"), res);
+
 
 
         }
@@ -227,12 +249,12 @@ public class TSneDemo {
 //        String LabelName = path + "mnist2500_labels.txt";
         String fileName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000.txt";
         String LabelName = basePath + "TSNE_test/data/mnist_data/mnist_data_10000_label.txt";
-        String savePath = "MNIST_10000_withPCA_noRank_2_P20_20times/";
+        String savePath = "MNIST_10000_withPCA_noRank_2_P20_10times/";
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(fileName,LabelName,savePath,true,false, fArr,20000,55,20.0,100, 50);
+        test_workflow(fileName,LabelName,savePath,true,false, fArr,20000,55,20.0,100, 10);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
