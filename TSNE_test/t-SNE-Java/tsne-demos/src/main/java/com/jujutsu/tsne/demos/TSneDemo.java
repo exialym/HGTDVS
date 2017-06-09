@@ -257,17 +257,17 @@ public class TSneDemo {
 //        String savePath = "COIL-20_noPCA_withRank_2_P20_1times_V9(V7)/";
 //        String type = "COIL-20";
 
-        String type = "letter";
+        String type = "CIFAR_10_1_gray";
         String fileName = basePath + "TSNE_test/data/"+type+"/"+type+".txt";
         String LabelName = basePath + "TSNE_test/data/"+type+"/"+type+"_label.txt";
-        String savePath = type+"_withPCA_withRank_2_P20_1times_V9(V7)/";
+        String savePath = type+"_withPCA_noRank_2_P20_1times/";
 
 
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(type,fileName,LabelName,savePath,true,true, fArr,20000,55,20.0,100, 1);
+        test_workflow(type,fileName,LabelName,savePath,false,false, fArr,20000,55,20.0,100, 1);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
