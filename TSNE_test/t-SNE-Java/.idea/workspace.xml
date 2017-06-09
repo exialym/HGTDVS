@@ -29,57 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="KNNClasifer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/KNNClasifer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="22" column="18" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TSneDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2807">
-              <caret line="251" column="75" lean-forward="false" selection-start-line="251" selection-start-column="75" selection-end-line="251" selection-end-column="75" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MANIFEST.MF" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/META-INF/MANIFEST.MF">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MatrixUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/utils/MatrixUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#270#271#0" expanded="false" />
-                <element signature="e#313#314#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Plot3DPanel.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/github/yannrichet/JMathPlot/1.0.1/JMathPlot-1.0.1.jar!/org/math/plot/Plot3DPanel.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="42" />
+            <state relative-caret-position="511">
+              <caret line="269" column="65" lean-forward="false" selection-start-line="269" selection-start-column="65" selection-end-line="269" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -88,21 +42,11 @@
       <file leaf-file-name="BHTSne.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
+            <state relative-caret-position="261">
               <caret line="662" column="21" lean-forward="false" selection-start-line="662" selection-start-column="21" selection-end-line="662" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FractionalDistance.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/FractionalDistance.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="27" column="42" lean-forward="false" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -143,8 +87,6 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1440" />
-    <option name="y" value="338" />
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -1073,10 +1015,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="350676000" />
+    <option name="totallyTimeSpent" value="353711000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1440" y="338" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1088,7 +1031,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39058524" sideWeight="0.50296295" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36024097" sideWeight="0.49703702" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.213253" sideWeight="0.49703702" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1185,13 +1128,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java</url>
-          <line>381</line>
+          <line>394</line>
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java</url>
-          <line>447</line>
+          <line>460</line>
           <properties />
           <option name="timeStamp" value="84" />
         </line-breakpoint>
@@ -1587,7 +1530,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tsne-core/src/main/java/com/jujutsu/tsne/barneshut/BHTSne.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
+        <state relative-caret-position="261">
           <caret line="662" column="21" lean-forward="false" selection-start-line="662" selection-start-column="21" selection-end-line="662" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1597,8 +1540,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tsne-demos/src/main/java/com/jujutsu/tsne/demos/TSneDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2807">
-          <caret line="251" column="75" lean-forward="false" selection-start-line="251" selection-start-column="75" selection-end-line="251" selection-end-column="75" />
+        <state relative-caret-position="511">
+          <caret line="269" column="65" lean-forward="false" selection-start-line="269" selection-start-column="65" selection-end-line="269" selection-end-column="65" />
           <folding />
         </state>
       </provider>
