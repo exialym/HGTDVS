@@ -7,3 +7,5 @@ TSNE_test/data/CIFAR_10_1/CIFAR_10_1_label.txt
 TSNE_test/data/CIFAR_10_1/CIFAR_10_1.txt
 TSNE_test/data/MNIST_60000/MNIST_60000.txt
 TSNE_test/data/MNIST_60000/MNIST_60000_label.txt
+
+TSNE_test/data/uspollution
