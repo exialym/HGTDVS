@@ -35,8 +35,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     //private static String dataPath = "/Users/exialym/Desktop/uspollution/";
     private static String dataPath = "E:/uspollution/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
@@ -257,17 +257,17 @@ public class TSneDemo {
 //        String savePath = "COIL-20_noPCA_withRank_2_P20_1times_V9(V7)/";
 //        String type = "COIL-20";
 
-        String type = "CIFAR_10_1_gray";
+        String type = "USPS";
         String fileName = basePath + "TSNE_test/data/"+type+"/"+type+".txt";
         String LabelName = basePath + "TSNE_test/data/"+type+"/"+type+"_label.txt";
-        String savePath = type+"_withPCA_noRank_2_P20_1times/";
+        String savePath = type+"_withPCA_noRank_2_P20_10times/";
 
 
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(type,fileName,LabelName,savePath,false,false, fArr,20000,55,20.0,100, 1);
+        test_workflow(type,fileName,LabelName,savePath,true,false, fArr,20000,55,20.0,100, 10);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
