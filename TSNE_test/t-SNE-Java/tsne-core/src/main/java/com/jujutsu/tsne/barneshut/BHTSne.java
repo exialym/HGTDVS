@@ -651,8 +651,8 @@ public class BHTSne implements BarnesHutTSne {
 					boolean hasfound = false;
 					for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 						if (indices.get(indexInself).index()==nsn.get(indexInNeb).index()) {
-							if (indexInself==0) Oa=indexInNeb;
-							if (indexInNeb==0) Ob=indexInself;
+							if (indices.get(indexInself).index()==n) Oa=indexInNeb;
+							if (nsn.get(indexInNeb).index()==indices.get(k1).index()) Ob=indexInself;
 							nsUsedRecord[indexInNeb] = true;
 							Dab += indexInNeb;
 							Dba += indexInself;
@@ -665,9 +665,9 @@ public class BHTSne implements BarnesHutTSne {
 						//Dab += K+indexInself;
 
 						//V7
-						Dab += K+K-indexInself;
+						//Dab += K+K-indexInself;
 
-						//Dab += K+1;
+						Dab += K+1;
 					}
 				}
 				for (int i = 0;i<=K;i++) {
@@ -675,26 +675,29 @@ public class BHTSne implements BarnesHutTSne {
 						//V6
 						//Dba += K+i;
 						//V7
-						Dba += K+K-i;
+						//Dba += K+K-i;
 
-						//Dba += K+1;
+						Dba += K+1;
 
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
 				double Omin = Math.min(Oa,Ob);
-				double Rd = (Dab+Dba)/(2*K*K);
+				double Rd = (Dab+Dba);
 //				double RdNom = Math.exp(Rd);
 				double RdNom = Rd;
-//				distances.get(k1)._distant = Rd;
-				distances.get(k1)._distant = distances.get(k1)._distant*RdNom;
+				distances.get(k1)._distant = Rd;
+
+
+				//distances.get(k1)._distant = distances.get(k1)._distant*RdNom;
+				System.out.print(RdNom+"\n");
 				distances.get(k1).computed();
 //				if (distances.get(k1)._hasUpdated>2)
 //					System.out.print(" ");
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (n==nsn.get(indexInNeb).index()) {
-						nsdis.get(indexInNeb)._distant = nsdis.get(indexInNeb)._distant*RdNom;
-//						nsdis.get(indexInNeb)._distant = Rd;
+						//nsdis.get(indexInNeb)._distant = nsdis.get(indexInNeb)._distant*RdNom;
+						nsdis.get(indexInNeb)._distant = Rd;
 						nsdis.get(indexInNeb).computed();
 //						if (nsdis.get(indexInNeb)._hasUpdated>2)
 //							System.out.print(" ");
@@ -702,6 +705,7 @@ public class BHTSne implements BarnesHutTSne {
 					}
 				}
 			}
+			System.out.print("-----------------------------\n");
 
 
 

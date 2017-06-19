@@ -260,7 +260,7 @@ public class TSneDemo {
         String type = "MNIST_2500";
         String fileName = basePath + "TSNE_test/data/"+type+"/"+type+".txt";
         String LabelName = basePath + "TSNE_test/data/"+type+"/"+type+"_label.txt";
-        String savePath = type+"_withPCA_withRank_2_P20_1times_V10.1/";
+        String savePath = type+"_withPCA_withRank_2_P20_1times_test/";
 
 
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
