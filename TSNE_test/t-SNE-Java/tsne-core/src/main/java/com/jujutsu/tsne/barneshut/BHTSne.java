@@ -616,26 +616,33 @@ public class BHTSne implements BarnesHutTSne {
 		System.out.println("Building tree...");
 		//遍历所有点，将所有点的K邻居信息保存起来
 		List<List<DataPoint>> neighborPoints = new ArrayList<>();
-		List<List<Double>> neighborDistance = new ArrayList<>();
+		List<List<DistantRecord>> neighborDistance = new ArrayList<>();
 		for(int n = 0; n < N; n++) {
 			List<DataPoint> indices = new ArrayList<>();
 			List<Double> distances = new ArrayList<>();
+			List<DistantRecord> distantRecords = new ArrayList<>();
 			tree.search(obj_X[n], K + 1, indices, distances);
 			neighborPoints.add(indices);
-			neighborDistance.add(distances);
+			for (int i = 0; i < distances.size();i++) {
+				distantRecords.add(new DistantRecord(distances.get(i)));
+			}
+
+			neighborDistance.add(distantRecords);
 		}
 
 		//遍历所有点
 		for(int n = 0; n < N; n++) {
 
 			List<DataPoint> indices = neighborPoints.get(n);
-			List<Double> distances = neighborDistance.get(n);
+			List<DistantRecord> distances = neighborDistance.get(n);
 
 			if(n % 10000 == 0) System.out.printf(" - point %d of %d\n", n, N);
-			for (int k1 = 1; k1 <= K; k1++) {
-				if (indices.get(k1).hasComputed()) continue;
+			for (int k1 = 0; k1 <= K; k1++) {
+				if (indices.get(k1).index()==n) continue;
+				if (distances.get(k1).hasComputed()>0) continue;
+				boolean[] nsUsedRecord = new boolean[K+1];
 				List<DataPoint> nsn = neighborPoints.get(indices.get(k1).index());
-				List<Double> nsdis = neighborDistance.get(indices.get(k1).index());
+				List<DistantRecord> nsdis = neighborDistance.get(indices.get(k1).index());
 				double Dab = 0;
 				double Dba = 0;
 				double Oa = 0;
@@ -646,6 +653,7 @@ public class BHTSne implements BarnesHutTSne {
 						if (indices.get(indexInself).index()==nsn.get(indexInNeb).index()) {
 							if (indexInself==0) Oa=indexInNeb;
 							if (indexInNeb==0) Ob=indexInself;
+							nsUsedRecord[indexInNeb] = true;
 							Dab += indexInNeb;
 							Dba += indexInself;
 							hasfound = true;
@@ -654,22 +662,42 @@ public class BHTSne implements BarnesHutTSne {
 					}
 					if (!hasfound) {
 						//V6
-//						Dab += K+indexInself;
-//						Dba += K+indexInself;
+						//Dab += K+indexInself;
 
 						//V7
 						Dab += K+K-indexInself;
-						Dba += K+K-indexInself;
+
+						//Dab += K+1;
 					}
+				}
+				for (int i = 0;i<=K;i++) {
+					if (!nsUsedRecord[i])
+						//V6
+						//Dba += K+i;
+						//V7
+						Dba += K+K-i;
+
+						//Dba += K+1;
+
 				}
 				if (Oa==0) Oa=K;
 				if (Ob==0) Ob=K;
-				distances.set(k1,distances.get(k1)*Math.exp((Dab+Dba)/(2*K*K)-1));
-				indices.get(k1).computed();
+				double Omin = Math.min(Oa,Ob);
+				double Rd = (Dab+Dba)/(2*K*K);
+//				double RdNom = Math.exp(Rd);
+				double RdNom = Rd;
+//				distances.get(k1)._distant = Rd;
+				distances.get(k1)._distant = distances.get(k1)._distant*RdNom;
+				distances.get(k1).computed();
+//				if (distances.get(k1)._hasUpdated>2)
+//					System.out.print(" ");
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
-					if (indices.get(k1).index()==nsn.get(indexInNeb).index()) {
-						nsdis.set(indexInNeb,nsdis.get(indexInNeb)*Math.exp((Dab+Dba)/(2*K*K)-1));
-						nsn.get(indexInNeb).computed();
+					if (n==nsn.get(indexInNeb).index()) {
+						nsdis.get(indexInNeb)._distant = nsdis.get(indexInNeb)._distant*RdNom;
+//						nsdis.get(indexInNeb)._distant = Rd;
+						nsdis.get(indexInNeb).computed();
+//						if (nsdis.get(indexInNeb)._hasUpdated>2)
+//							System.out.print(" ");
 						break;
 					}
 				}
@@ -698,9 +726,9 @@ public class BHTSne implements BarnesHutTSne {
 				sum_P = Double.MIN_VALUE;
 				double H = .0;
 				for(int m = 0; m < K; m++) {
-					cur_P[m] = exp(-beta * distances.get(m + 1));
+					cur_P[m] = exp(-beta * distances.get(m + 1)._distant);
 					sum_P += cur_P[m];
-					H += beta * (distances.get(m + 1) * cur_P[m]);
+					H += beta * (distances.get(m + 1)._distant * cur_P[m]);
 				}
 				H = (H / sum_P) + log(sum_P);
 
