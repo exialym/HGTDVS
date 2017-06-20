@@ -654,30 +654,29 @@ public class BHTSne implements BarnesHutTSne {
 							if (indices.get(indexInself).index()==n) Oa=indexInNeb;
 							if (nsn.get(indexInNeb).index()==indices.get(k1).index()) Ob=indexInself;
 							nsUsedRecord[indexInNeb] = true;
-							Dab += indexInNeb;
-							Dba += indexInself;
+							Dab += (double)indexInNeb*(K+1-indexInself)/K;
+							Dba += (double)indexInself*(K+1-indexInNeb)/K;
+
+							//Dab += (double)indexInNeb*Math.pow(1.03,-indexInself);
+							//Dba += (double)indexInself*Math.pow(1.03,-indexInNeb);
+
 							hasfound = true;
 							break;
 						}
 					}
 					if (!hasfound) {
-						//V6
-						//Dab += K+indexInself;
 
-						//V7
-						//Dab += K+K-indexInself;
+						Dab += (double)(K+1)*(K+1-indexInself)/K;
 
-						Dab += K+1;
+
+						//Dab += (double)(K+1)*Math.pow(1.03,-indexInself);
 					}
 				}
 				for (int i = 0;i<=K;i++) {
 					if (!nsUsedRecord[i])
-						//V6
-						//Dba += K+i;
-						//V7
-						//Dba += K+K-i;
+						Dba += (double)(K+1)*(K+1-i)/K;
 
-						Dba += K+1;
+						//Dba += (double)(K+1)*Math.pow(1.03,-i);
 
 				}
 				if (Oa==0) Oa=K;
@@ -686,18 +685,18 @@ public class BHTSne implements BarnesHutTSne {
 				double Rd = (Dab+Dba);
 //				double RdNom = Math.exp(Rd);
 				double RdNom = Rd;
-				distances.get(k1)._distant = Rd;
+				distances.get(k1)._rDistant = Rd;
 
 
 				//distances.get(k1)._distant = distances.get(k1)._distant*RdNom;
-				System.out.print(RdNom+"\n");
+//				System.out.print(RdNom+"\n");
 				distances.get(k1).computed();
 //				if (distances.get(k1)._hasUpdated>2)
 //					System.out.print(" ");
 				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 					if (n==nsn.get(indexInNeb).index()) {
 						//nsdis.get(indexInNeb)._distant = nsdis.get(indexInNeb)._distant*RdNom;
-						nsdis.get(indexInNeb)._distant = Rd;
+						nsdis.get(indexInNeb)._rDistant = Rd;
 						nsdis.get(indexInNeb).computed();
 //						if (nsdis.get(indexInNeb)._hasUpdated>2)
 //							System.out.print(" ");
@@ -705,7 +704,15 @@ public class BHTSne implements BarnesHutTSne {
 					}
 				}
 			}
-			System.out.print("-----------------------------\n");
+			double avgRD = 0;
+			for(int m = 0; m < K; m++) {
+				avgRD += distances.get(m + 1)._rDistant;
+			}
+			avgRD/=K;
+			for(int m = 0; m < K; m++) {
+				distances.get(m + 1)._rDistant = distances.get(m + 1)._distant*distances.get(m + 1)._rDistant/avgRD;
+			}
+//			System.out.print("-----------------------------\n");
 
 
 
@@ -730,9 +737,9 @@ public class BHTSne implements BarnesHutTSne {
 				sum_P = Double.MIN_VALUE;
 				double H = .0;
 				for(int m = 0; m < K; m++) {
-					cur_P[m] = exp(-beta * distances.get(m + 1)._distant);
+					cur_P[m] = exp(-beta * distances.get(m + 1)._rDistant);
 					sum_P += cur_P[m];
-					H += beta * (distances.get(m + 1)._distant * cur_P[m]);
+					H += beta * (distances.get(m + 1)._rDistant * cur_P[m]);
 				}
 				H = (H / sum_P) + log(sum_P);
 

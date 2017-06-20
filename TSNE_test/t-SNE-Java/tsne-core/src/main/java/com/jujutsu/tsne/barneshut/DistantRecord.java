@@ -6,6 +6,7 @@ import static java.lang.Math.sqrt;
 public class DistantRecord {
 
 	double _distant;
+	double _rDistant;
 	int _hasUpdated = 0;
 
 
@@ -15,7 +16,7 @@ public class DistantRecord {
 	
 	@Override
 	public String toString() {
-		return "DistantRecord (distant=" + _distant+ ", hasUpdated=" + _hasUpdated + ")";
+		return "D=" + _distant+ ", RD=" + _rDistant+ ", hasUpdated=" + _hasUpdated;
 	}
 
 	public int hasComputed() { return _hasUpdated; }
