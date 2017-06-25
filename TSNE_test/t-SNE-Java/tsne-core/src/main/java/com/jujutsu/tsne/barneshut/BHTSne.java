@@ -710,7 +710,14 @@ public class BHTSne implements BarnesHutTSne {
 			}
 			avgRD/=K;
 			for(int m = 0; m < K; m++) {
-				distances.get(m + 1)._rDistant = distances.get(m + 1)._distant*distances.get(m + 1)._rDistant/avgRD;
+				double nom = distances.get(m + 1)._rDistant/avgRD;
+				if (nom>1) {
+					//System.out.print(nom+"\n");
+					distances.get(m + 1)._rDistant = distances.get(m + 1)._distant*nom;
+				} else {
+					distances.get(m + 1)._rDistant = distances.get(m + 1)._distant;
+				}
+
 			}
 //			System.out.print("-----------------------------\n");
 
