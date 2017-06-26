@@ -654,11 +654,11 @@ public class BHTSne implements BarnesHutTSne {
 							if (indices.get(indexInself).index()==n) Oa=indexInNeb;
 							if (nsn.get(indexInNeb).index()==indices.get(k1).index()) Ob=indexInself;
 							nsUsedRecord[indexInNeb] = true;
-							Dab += (double)indexInNeb;//*(K+1-indexInself)/K;
-							Dba += (double)indexInself;//*(K+1-indexInNeb)/K;
+							//Dab += (double)indexInNeb*(K+1-indexInself)/K;
+							//Dba += (double)indexInself*(K+1-indexInNeb)/K;
 
-							//Dab += (double)indexInNeb*Math.pow(1.03,-indexInself);
-							//Dba += (double)indexInself*Math.pow(1.03,-indexInNeb);
+							Dab += (double)indexInNeb*Math.pow(1.03,-indexInself);
+							Dba += (double)indexInself*Math.pow(1.03,-indexInNeb);
 
 							hasfound = true;
 							break;
@@ -666,17 +666,17 @@ public class BHTSne implements BarnesHutTSne {
 					}
 					if (!hasfound) {
 
-						Dab += (double)(K+1);//*(K+1-indexInself)/K;
+						//Dab += (double)(K+1)*(K+1-indexInself)/K;
 
 
-						//Dab += (double)(K+1)*Math.pow(1.03,-indexInself);
+						Dab += (double)(K+1)*Math.pow(1.03,-indexInself);
 					}
 				}
 				for (int i = 0;i<=K;i++) {
 					if (!nsUsedRecord[i])
-						Dba += (double)(K+1);//*(K+1-i)/K;
+						//Dba += (double)(K+1)*(K+1-i)/K;
 
-						//Dba += (double)(K+1)*Math.pow(1.03,-i);
+						Dba += (double)(K+1)*Math.pow(1.03,-i);
 
 				}
 				if (Oa==0) Oa=K;
