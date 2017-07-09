@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/public";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -44339,12 +44339,14 @@ var _event = __webpack_require__(0);
 
 var _event2 = _interopRequireDefault(_event);
 
+__webpack_require__(11);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var map = new BMap.Map("map", {}); /**
-                                    * Created by exialym on 2017/5/15 0015.
-                                    */
-
+/**
+ * Created by exialym on 2017/5/15 0015.
+ */
+var map = new BMap.Map("map", {});
 map.centerAndZoom(new BMap.Point(-94.63548, 39.118077), 5);
 map.enableScrollWheelZoom();
 var points = [];
@@ -44358,6 +44360,10 @@ function initPoints() {
   points = [];
   for (var i = 0; i < window.gps.length; i++) {
     var pt = new BMap.Point(window.gps[i][1], window.gps[i][0]);
+    // pt.addEventListener('click',function(e){
+    //   console.log('points click');
+    //   console.log(e);
+    // });
     points.push(pt);
   }
   displayPoints([]);
@@ -44370,11 +44376,15 @@ function displayPoints(indexes) {
   var markers = [];
   if (indexes.length === 0) {
     for (var i = 0; i < points.length; i++) {
-      markers.push(new BMap.Marker(points[i]));
+      var maker = new BMap.Marker(points[i]);
+      maker.dataIndex = i;
+      markers.push(maker);
     }
   } else {
     for (var _i = 0; _i < indexes.length; _i++) {
-      markers.push(new BMap.Marker(points[indexes[_i]]));
+      var _maker = new BMap.Marker(points[indexes[_i]]);
+      _maker.dataIndex = indexes[_i];
+      markers.push(_maker);
     }
   }
   markerClusterer = new BMapLib.MarkerClusterer(map, {
@@ -44397,7 +44407,7 @@ var overlaycomplete = function overlaycomplete(e) {
   var chosenIndexes = [];
   for (var i = 0; i < points.length; i++) {
     if (points[i].lat <= right && points[i].lat >= left && points[i].lng <= bottom && points[i].lng >= top) {
-      chosenIndexes.push([i]);
+      chosenIndexes.push(i);
     }
   }
   _event2.default.emit('choose', chosenIndexes, 'map');
@@ -44639,7 +44649,7 @@ var _three = __webpack_require__(3);
 
 var THREE = _interopRequireWildcard(_three);
 
-var _tsne = __webpack_require__(12);
+var _tsne = __webpack_require__(13);
 
 var _tsne2 = _interopRequireDefault(_tsne);
 
@@ -44651,7 +44661,7 @@ var _example_data = __webpack_require__(2);
 
 var exampleRaw = _interopRequireWildcard(_example_data);
 
-var _kdTree = __webpack_require__(11);
+var _kdTree = __webpack_require__(12);
 
 var _kdTree2 = _interopRequireDefault(_kdTree);
 
@@ -44712,7 +44722,7 @@ controls.dynamicDampingFactor = 0.3;
 
 var geometry = new THREE.BufferGeometry();
 var attributes = geometry.attributes;
-var sprite = new THREE.TextureLoader().load(__webpack_require__(13));
+var sprite = new THREE.TextureLoader().load(__webpack_require__(14));
 var material = new THREE.PointsMaterial({
   size: PARTICLE_SIZE,
   vertexColors: THREE.VertexColors,
@@ -45225,14 +45235,14 @@ function TimeLine() {
   };
   canvas.onmousemove = function (ev) {
     var ev1 = ev || window.event;
-    var mousePosition = [ev1.clientX, ev1.clientY];
+    var mousePosition = [ev1.offsetX, ev1.offsetY, ev1.offsetX + $(ev1.target).offset().left, ev1.offsetY + $(ev1.target).offset().top];
     if (lastHover && lastHover.position < mousePosition[0] && lastHover.position + timeLine.nodeWidth > mousePosition[0]) {
-      utils.showTipBox(mousePosition[0], mousePosition[1] - 40, lastHover.time);
+      utils.showTipBox(mousePosition[2], mousePosition[3] - 40, lastHover.time);
     } else {
       for (var date in timeLine.nodes) {
         if (timeLine.nodes.hasOwnProperty(date)) {
           if (timeLine.nodes[date].position < mousePosition[0] && timeLine.nodes[date].position + timeLine.nodeWidth > mousePosition[0]) {
-            utils.showTipBox(mousePosition[0], mousePosition[1] - 40, date);
+            utils.showTipBox(mousePosition[2], mousePosition[3] - 40, date);
             if (lastHover) _event2.default.emit('hover', lastHover.dataValid, false, 'time');
             _event2.default.emit('hover', timeLine.nodes[date].dataValid, true, 'time');
             lastHover = timeLine.nodes[date];
@@ -45327,6 +45337,378 @@ module.exports = {
 
 /***/ }),
 /* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_event__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_event___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__modules_event__);
+
+var BMapLib = window.BMapLib;// = BMapLib || {};
+(function() {
+  let hoverPoints = [];
+  var getExtendedBounds = function(map, bounds, gridSize) {
+    bounds = cutBoundsInRange(bounds);
+    var pixelNE = map.pointToPixel(bounds.getNorthEast());
+    var pixelSW = map.pointToPixel(bounds.getSouthWest());
+    pixelNE.x += gridSize;
+    pixelNE.y -= gridSize;
+    pixelSW.x -= gridSize;
+    pixelSW.y += gridSize;
+    var newNE = map.pixelToPoint(pixelNE);
+    var newSW = map.pixelToPoint(pixelSW);
+    return new BMap.Bounds(newSW, newNE)
+  };
+  var cutBoundsInRange = function(bounds) {
+    var maxX = getRange(bounds.getNorthEast().lng, -180, 180);
+    var minX = getRange(bounds.getSouthWest().lng, -180, 180);
+    var maxY = getRange(bounds.getNorthEast().lat, -74, 74);
+    var minY = getRange(bounds.getSouthWest().lat, -74, 74);
+    return new BMap.Bounds(new BMap.Point(minX, minY), new BMap.Point(maxX, maxY))
+  };
+  var getRange = function(i, mix, max) {
+    mix && (i = Math.max(i, mix));
+    max && (i = Math.min(i, max));
+    return i
+  };
+  var isArray = function(source) {
+    return '[object Array]' === Object.prototype.toString.call(source)
+  };
+  var indexOf = function(item, source) {
+    var index = -1;
+    if (isArray(source)) {
+      if (source.indexOf) {
+        index = source.indexOf(item)
+      } else {
+        for (var i = 0, m; m = source[i]; i++) {
+          if (m === item) {
+            index = i;
+            break
+          }
+        }
+      }
+    }
+    return index
+  };
+  var MarkerClusterer = BMapLib.MarkerClusterer = function(map, options) {
+    if (!map) {
+      return
+    }
+    this._map = map;
+    this._markers = [];
+    this._clusters = [];
+    var opts = options || {};
+    this._gridSize = opts["gridSize"] || 60;
+    this._maxZoom = opts["maxZoom"] || 18;
+    this._minClusterSize = opts["minClusterSize"] || 0;
+    this._isAverageCenter = false;
+    if (opts['isAverageCenter'] != undefined) {
+      this._isAverageCenter = opts['isAverageCenter']
+    }
+    this._styles = opts["styles"] || [];
+    var that = this;
+    this._map.addEventListener("zoomend", function() {
+      that._redraw()
+    });
+    this._map.addEventListener("moveend", function() {
+      that._redraw()
+    });
+    var mkrs = opts["markers"];
+    isArray(mkrs) && this.addMarkers(mkrs)
+  };
+  MarkerClusterer.prototype.addMarkers = function(markers) {
+    for (var i = 0, len = markers.length; i < len; i++) {
+      this._pushMarkerTo(markers[i])
+    }
+    this._createClusters()
+  };
+  MarkerClusterer.prototype._pushMarkerTo = function(marker) {
+    var index = indexOf(marker, this._markers);
+    if (index === -1) {
+      marker.isInCluster = false;
+      this._markers.push(marker)
+    }
+  };
+  MarkerClusterer.prototype.addMarker = function(marker) {
+    this._pushMarkerTo(marker);
+    this._createClusters()
+  };
+  MarkerClusterer.prototype._createClusters = function() {
+    var mapBounds = this._map.getBounds();
+    var extendedBounds = getExtendedBounds(this._map, mapBounds, this._gridSize);
+    for (var i = 0, marker; marker = this._markers[i]; i++) {
+      if (!marker.isInCluster && extendedBounds.containsPoint(marker.getPosition())) {
+        this._addToClosestCluster(marker)
+      }
+    }
+    for (var i = 0, cluster; cluster = this._clusters[i]; i++) {
+      cluster.drawToMap()
+    }
+  };
+  MarkerClusterer.prototype._addToClosestCluster = function(marker) {
+    var distance = 4000000;
+    var clusterToAddTo = null;
+    var position = marker.getPosition();
+    for (var i = 0, cluster; cluster = this._clusters[i]; i++) {
+      var center = cluster.getCenter();
+      if (center) {
+        var d = this._map.getDistance(center, marker.getPosition());
+        if (d < distance) {
+          distance = d;
+          clusterToAddTo = cluster
+        }
+      }
+    }
+    if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
+      clusterToAddTo.addMarker(marker)
+    } else {
+      var cluster = new Cluster(this);
+      cluster.addMarker(marker);
+      this._clusters.push(cluster)
+    }
+  };
+  MarkerClusterer.prototype._clearLastClusters = function() {
+    for (var i = 0, cluster; cluster = this._clusters[i]; i++) {
+      cluster.remove()
+    }
+    this._clusters = [];
+    this._removeMarkersFromCluster()
+  };
+  MarkerClusterer.prototype._removeMarkersFromCluster = function() {
+    for (var i = 0, marker; marker = this._markers[i]; i++) {
+      marker.isInCluster = false
+    }
+  };
+  MarkerClusterer.prototype._removeMarkersFromMap = function() {
+    for (var i = 0, marker; marker = this._markers[i]; i++) {
+      marker.isInCluster = false;
+      this._map.removeOverlay(marker)
+    }
+  };
+  MarkerClusterer.prototype._removeMarker = function(marker) {
+    var index = indexOf(marker, this._markers);
+    if (index === -1) {
+      return false
+    }
+    this._map.removeOverlay(marker);
+    this._markers.splice(index, 1);
+    return true
+  };
+  MarkerClusterer.prototype.removeMarker = function(marker) {
+    var success = this._removeMarker(marker);
+    if (success) {
+      this._clearLastClusters();
+      this._createClusters()
+    }
+    return success
+  };
+  MarkerClusterer.prototype.removeMarkers = function(markers) {
+    var success = false;
+    for (var i = 0; i < markers.length; i++) {
+      var r = this._removeMarker(markers[i]);
+      success = success || r
+    }
+    if (success) {
+      this._clearLastClusters();
+      this._createClusters()
+    }
+    return success
+  };
+  MarkerClusterer.prototype.clearMarkers = function() {
+    this._clearLastClusters();
+    this._removeMarkersFromMap();
+    this._markers = []
+  };
+  MarkerClusterer.prototype._redraw = function() {
+    this._clearLastClusters();
+    this._createClusters()
+  };
+  MarkerClusterer.prototype.getGridSize = function() {
+    return this._gridSize
+  };
+  MarkerClusterer.prototype.setGridSize = function(size) {
+    this._gridSize = size;
+    this._redraw()
+  };
+  MarkerClusterer.prototype.getMaxZoom = function() {
+    return this._maxZoom
+  };
+  MarkerClusterer.prototype.setMaxZoom = function(maxZoom) {
+    this._maxZoom = maxZoom;
+    this._redraw()
+  };
+  MarkerClusterer.prototype.getStyles = function() {
+    return this._styles
+  };
+  MarkerClusterer.prototype.setStyles = function(styles) {
+    this._styles = styles;
+    this._redraw()
+  };
+  MarkerClusterer.prototype.getMinClusterSize = function() {
+    return this._minClusterSize
+  };
+  MarkerClusterer.prototype.setMinClusterSize = function(size) {
+    this._minClusterSize = size;
+    this._redraw()
+  };
+  MarkerClusterer.prototype.isAverageCenter = function() {
+    return this._isAverageCenter
+  };
+  MarkerClusterer.prototype.getMap = function() {
+    return this._map
+  };
+  MarkerClusterer.prototype.getMarkers = function() {
+    return this._markers
+  };
+  MarkerClusterer.prototype.getClustersCount = function() {
+    var count = 0;
+    for (var i = 0, cluster; cluster = this._clusters[i]; i++) {
+      cluster.isReal() && count++
+    }
+    return count
+  };
+
+  function Cluster(markerClusterer) {
+    this._markerClusterer = markerClusterer;
+    this._map = markerClusterer.getMap();
+    this._minClusterSize = markerClusterer.getMinClusterSize();
+    this._isAverageCenter = markerClusterer.isAverageCenter();
+    this._center = null;
+    this._markers = [];
+    this._gridBounds = null;
+    this._isReal = false;
+    this._clusterMarker = new BMapLib.TextIconOverlay(this._center, this._markers.length, {
+      "styles": this._markerClusterer.getStyles()
+    })
+  }
+  Cluster.prototype.addMarker = function(marker) {
+    if (this.isMarkerInCluster(marker)) {
+      return false
+    }
+    if (!this._center) {
+      this._center = marker.getPosition();
+      this.updateGridBounds()
+    } else {
+      if (this._isAverageCenter) {
+        var l = this._markers.length + 1;
+        var lat = (this._center.lat * (l - 1) + marker.getPosition().lat) / l;
+        var lng = (this._center.lng * (l - 1) + marker.getPosition().lng) / l;
+        this._center = new BMap.Point(lng, lat);
+        this.updateGridBounds()
+      }
+    }
+    marker.isInCluster = true;
+    this._markers.push(marker);
+    var len = this._markers.length;
+    if (len < this._minClusterSize) {
+      this._map.addOverlay(marker);
+      return true
+    } else if (len === this._minClusterSize) {
+      for (var i = 0; i < len; i++) {
+        this._markers[i].getMap() && this._map.removeOverlay(this._markers[i])
+      }
+    }
+    this._map.addOverlay(this._clusterMarker);
+    this._isReal = true;
+    this.updateClusterMarker();
+    return true
+  };
+  Cluster.prototype.isMarkerInCluster = function(marker) {
+    if (this._markers.indexOf) {
+      return this._markers.indexOf(marker) != -1
+    } else {
+      for (var i = 0, m; m = this._markers[i]; i++) {
+        if (m === marker) {
+          return true
+        }
+      }
+    }
+    return false
+  };
+  Cluster.prototype.isMarkerInClusterBounds = function(marker) {
+    return this._gridBounds.containsPoint(marker.getPosition())
+  };
+  Cluster.prototype.isReal = function(marker) {
+    return this._isReal
+  };
+  Cluster.prototype.updateGridBounds = function() {
+    var bounds = new BMap.Bounds(this._center, this._center);
+    this._gridBounds = getExtendedBounds(this._map, bounds, this._markerClusterer.getGridSize())
+  };
+  Cluster.prototype.drawToMap = function() {
+    this._clusterMarker.setPosition(this._center);
+    this._clusterMarker.setText(this._markers.length);
+    var that = this;
+    this._clusterMarker.addEventListener("mouseover", function(event) {
+      // console.log(event);
+      // console.log(that._markers);
+      //that.set
+      if (hoverPoints.length>0) {
+        __WEBPACK_IMPORTED_MODULE_0__modules_event___default.a.emit('hover',hoverPoints,false,'map');
+        hoverPoints = [];
+      }
+      for (let i = 0;i < that._markers.length;i++) {
+        hoverPoints.push(that._markers[i].dataIndex);
+      }
+      __WEBPACK_IMPORTED_MODULE_0__modules_event___default.a.emit('hover',hoverPoints,true,'map');
+    });
+    this._clusterMarker.addEventListener("mouseout", function(event) {
+      if (hoverPoints.length>0) {
+        __WEBPACK_IMPORTED_MODULE_0__modules_event___default.a.emit('hover',hoverPoints,false,'map');
+        hoverPoints = [];
+      }
+    });
+    //return;
+    // var thatMap = this._map;
+    // var thatBounds = this.getBounds();
+    // this._clusterMarker.addEventListener("click", function(event) {
+    //   thatMap.setViewport(thatBounds)
+    // })
+  }
+  Cluster.prototype.updateClusterMarker = function() {
+    if (this._map.getZoom() > this._markerClusterer.getMaxZoom()) {
+      this._clusterMarker && this._map.removeOverlay(this._clusterMarker);
+      for (var i = 0, marker; marker = this._markers[i]; i++) {
+        this._map.addOverlay(marker)
+      }
+      return
+    }
+    if (this._markers.length < this._minClusterSize) {
+      this._clusterMarker.hide();
+      return
+    }
+    return;
+    this._clusterMarker.setPosition(this._center);
+    this._clusterMarker.setText(this._markers.length);
+    var thatMap = this._map;
+    var thatBounds = this.getBounds();
+    this._clusterMarker.addEventListener("click", function(event) {
+      thatMap.setViewport(thatBounds)
+    })
+  };
+  Cluster.prototype.remove = function() {
+    for (var i = 0, m; m = this._markers[i]; i++) {
+      this._markers[i].getMap() && this._map.removeOverlay(this._markers[i])
+    }
+    this._map.removeOverlay(this._clusterMarker);
+    this._markers.length = 0;
+    delete this._markers
+  }
+  Cluster.prototype.getBounds = function() {
+    var bounds = new BMap.Bounds(this._center, this._center);
+    for (var i = 0, marker; marker = this._markers[i]; i++) {
+      bounds.extend(marker.getPosition())
+    }
+    return bounds
+  };
+  Cluster.prototype.getCenter = function() {
+    return this._center
+  }
+})();
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -45802,7 +46184,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 // create main global object
@@ -46183,13 +46565,13 @@ var tsnejs = tsnejs || { REVISION: 'ALPHA' };
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sHDgwCEMBJZu0AAAAdaVRYdENvbW1lbnQAAAAAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAABM5JREFUWMO1V0tPG2cUPZ4Hxh6DazIOrjFNqJs0FIMqWFgWQkatsmvVbtggKlSVRVf5AWz4AWz4AUSKEChll19QJYSXkECuhFxsHjEhxCYm+DWGMZ5HF72DJq4bAzFXurI0M/I5997v3u9cC65vTJVn2lX/xHINQOYSBLTLEuIuCWw4Z3IGAEvf6ASmVHjNzHCXBG4A0AjACsAOwEbO0nsFQBnAGYASAIl+ZRMR7SolMEdsByD09fV5R0ZGgg8ePPjW5/N1iqLYpuu6RZblciKR2I9Go69evnwZnZ+fjwI4IS8AKBIRzeQfJWCANwKwh0KhtrGxsYehUOin1tbW+zzP23ietzY2NnIAoGmaLsuyUiqVyvl8XtrY2NiamZn589mzZxsAUgCOAeQAnFI2tI+VxIjaAeDzoaGh7xYWFuZOTk6OZVk+12uYqqq6JEnn0Wg0OT4+/geAXwGEAdwDIFJQXC1wO4DWR48e/RCPxxclSSroVzRFUbSDg4P848ePFwH8DuAhkWih83TRQWxFOXgAwvDwcOfo6OhvXV1d39tsNtuVBwTDWBwOh1UUxVsMw1hXVlbSdCgNV43uYSvrHg6H24aHh38eHBz85TrgF9FYLHA4HLzH43FvbW2d7u/vG+dANp8FpqIlbd3d3V8Fg8EfBUFw4BONZVmL3+9vHhkZCQL4AoAHgJPK8G+yzC0XDofdoVAo5PP5vkadTBAEtr+/39ff3x8gAp/RPOEqx2qjx+NpvXv3bk9DQ0NDvQgwDIOWlhZrMBj8kgi0UJdxRgYMArzL5XJ7vd57qLPZ7Xamp6fnNgBXtQxcjFuHw+Hyer3t9SYgCAITCAScAJoBNNEY/08GOFVVrfVMv7kMNDntFD1vjIAPrlRN0xjckOm6biFQ3jwNPwDMZrOnqVTqfb3Bi8Wivru7W/VCYkwPlKOjo0IikXh7EwQikYgE4Nw0CfXKDCipVCoTj8df3QABbW1tLUc6oUgkFPMkVACUNjc337148eKvw8PDbJ2jP1taWkoCyNDVXDSECmNSK4qiKNLq6urW8+fPI/UicHx8rD59+jSVy+WOAKSJhKENwFItLtoxk8mwsixzHR0dHe3t7c5PAU+n09rs7OzJkydPYqVSaQfANoDXALIk31S2smU1TWMPDg7K5XKZ7+3t9TudTut1U7+wsFCcmJiIpdPpbQBxADsAknQWymYCOukBHYCuKApisdhpMpnURFEU79y503TVyKenpzOTk5M7e3t7MQKPV0Zv1gNm+awB0MvlshqLxfLb29uyJElWURSbXC4XXyvqxcXFs6mpqeTc3Nzu3t7e3wQcA7BPZ8Cov1pNlJplmQtAG8MwHV6v95tAINA5MDBwPxAIuLu6upr8fr/VAN3c3JQjkcjZ+vp6fnl5+d2bN29SuVzuNYAEpf01CdRChUL+X1VskHACuA3Ay3Fcu9vt7nA6nZ7m5uYWQRCaNE3jVVW15PP580KhIGUymWw2m00DOAJwSP4WwPtq4LX2Ao6USxNlQyS/RcQcdLGwlNIz6vEMAaZpNzCk2Pll94LK/cDYimxERiBwG10sxjgvEZBE0UpE6vxj+0Ct5bTaXthgEhRmja8QWNkkPGsuIpfdjpkK+cZUWTC0KredVmtD/gdlSl6EG4AMvQAAAABJRU5ErkJggg=="
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
