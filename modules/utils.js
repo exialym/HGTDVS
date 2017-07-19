@@ -3,6 +3,7 @@
  */
 let utils = {};
 let $wait = $('#wait');
+let $modalDialog = $('.modal-dialog');
 let $waitTips = $wait.find('.waitTips');
 let $waitButton = $wait.find('.waitButton');
 let $waitLoader = $wait.find('.loading');
@@ -14,7 +15,16 @@ utils.showWaitingModel = function(event, tips, model, callback) {
   $waitTips.html(tips);
   utils.switchMod(model);
   $wait.on(event,callback);
-  $wait.modal({backdrop: 'static', keyboard: false});
+  if (model==='tips') {
+      $modalDialog.width(1000);
+      $wait.modal({backdrop: true, keyboard: true});
+  }
+  else {
+      $modalDialog.width(600);
+      $wait.modal({backdrop: false, keyboard: false});
+  }
+
+
 };
 utils.changeWaitingTips = function (tips) {
   $waitTips.html(tips);
@@ -42,6 +52,12 @@ utils.switchMod = function (model) {
       $waitWarning.hide();
       $waitOK.hide();
       break;
+    case 'tips':
+        $waitButton.show();
+        $waitLoader.hide();
+        $waitWarning.hide();
+        $waitOK.hide();
+        break;
     default:
       $waitButton.hide();
       $waitLoader.show();

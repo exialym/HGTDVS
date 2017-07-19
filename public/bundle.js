@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/public";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,6 +119,7 @@ exports.default = eventDispatcher;
  */
 var utils = {};
 var $wait = $('#wait');
+var $modalDialog = $('.modal-dialog');
 var $waitTips = $wait.find('.waitTips');
 var $waitButton = $wait.find('.waitButton');
 var $waitLoader = $wait.find('.loading');
@@ -130,7 +131,13 @@ utils.showWaitingModel = function (event, tips, model, callback) {
   $waitTips.html(tips);
   utils.switchMod(model);
   $wait.on(event, callback);
-  $wait.modal({ backdrop: 'static', keyboard: false });
+  if (model === 'tips') {
+    $modalDialog.width(1000);
+    $wait.modal({ backdrop: true, keyboard: true });
+  } else {
+    $modalDialog.width(600);
+    $wait.modal({ backdrop: false, keyboard: false });
+  }
 };
 utils.changeWaitingTips = function (tips) {
   $waitTips.html(tips);
@@ -155,6 +162,12 @@ utils.switchMod = function (model) {
     case 'Processing':
       $waitButton.hide();
       $waitLoader.show();
+      $waitWarning.hide();
+      $waitOK.hide();
+      break;
+    case 'tips':
+      $waitButton.show();
+      $waitLoader.hide();
       $waitWarning.hide();
       $waitOK.hide();
       break;
@@ -44339,7 +44352,7 @@ var _event = __webpack_require__(0);
 
 var _event2 = _interopRequireDefault(_event);
 
-__webpack_require__(11);
+__webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44649,7 +44662,7 @@ var _three = __webpack_require__(3);
 
 var THREE = _interopRequireWildcard(_three);
 
-var _tsne = __webpack_require__(13);
+var _tsne = __webpack_require__(14);
 
 var _tsne2 = _interopRequireDefault(_tsne);
 
@@ -44661,7 +44674,7 @@ var _example_data = __webpack_require__(2);
 
 var exampleRaw = _interopRequireWildcard(_example_data);
 
-var _kdTree = __webpack_require__(12);
+var _kdTree = __webpack_require__(13);
 
 var _kdTree2 = _interopRequireDefault(_kdTree);
 
@@ -44722,7 +44735,7 @@ controls.dynamicDampingFactor = 0.3;
 
 var geometry = new THREE.BufferGeometry();
 var attributes = geometry.attributes;
-var sprite = new THREE.TextureLoader().load(__webpack_require__(14));
+var sprite = new THREE.TextureLoader().load(__webpack_require__(15));
 var material = new THREE.PointsMaterial({
   size: PARTICLE_SIZE,
   vertexColors: THREE.VertexColors,
@@ -45337,6 +45350,19 @@ module.exports = {
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var a = "\n    <h4>\u7B80\u4ECB</h4>\n    <p>\u8FD9\u662F\u4E00\u4E2A\u9AD8\u7EF4\u65F6\u7A7A\u6570\u636E\u53EF\u89C6\u5316\u7CFB\u7EDF\uFF0C\u5982\u679C\u4F60\u7684\u9AD8\u7EF4\u6570\u636E\u540C\u65F6\u5177\u6709\u65F6\u95F4\uFF0C\u7A7A\u95F4\u4FE1\u606F\uFF0C\u53EF\u4EE5\u5229\u7528\u8FD9\u4E2A\u7CFB\u7EDF\u53EF\u89C6\u5316\u4F60\u7684\u6570\u636E\u3002\u8FD9\u4E2A\u7CFB\u7EDF\u5185\u7F6E\u4E86\u6570\u636E\u964D\u7EF4\u6A21\u5757\uFF0C\u6700\u5927\u9650\u5EA6\u7684\u5229\u7528\u4E09\u7EF4\u7A7A\u95F4\u5C55\u793A\u9AD8\u7EF4\u6570\u636E\u95F4\u7684\u5173\u7CFB\uFF0C\u7ED3\u5408\u5404\u4E2A\u4E0D\u540C\u7684\u89C6\u56FE\uFF0C\u5E2E\u52A9\u4F60\u5728\u6570\u636E\u4E2D\u627E\u5230\u6F5C\u5728\u7684\u5173\u7CFB\u548C\u6A21\u5F0F\u3002</p>\n    <p>Demo\u6570\u636E\u662F\u7F8E\u56FD2000\u5E74-2016\u5E74\u7684\u5404\u5730\u7A7A\u6C14\u6C61\u67D3\u7269\u7EC4\u6210\uFF08\u6309\u5E74\u7EDF\u8BA1\uFF09\u3002</p>\n    <p>\u964D\u7EF4\u5B8C\u6210\u7684\u6570\u636E\u6587\u4EF6Demo\uFF1A<a href=\"https://github.com/exialym/HGTDVS/blob/master/pollution_data_withGPS_filled_combined_month_embedding.csv\">\u7F8E\u56FD2000\u5E74-2016\u5E74\u7684\u5404\u5730\u7A7A\u6C14\u6C61\u67D3\u7269\u7EC4\u6210\uFF08\u6309\u6708\u7EDF\u8BA1\uFF09</a>\uFF0C\u6570\u636E\u89C4\u6A21\u6BD4\u8F83\u5927\uFF0C\u4E0B\u8F7D\u4E0B\u6765\u540E\u70B9\u51FBchoose embedding file\u6309\u94AE\u5BFC\u5165\u3002</p>\n    <h4>\u5982\u4F55\u64CD\u4F5C</h4>\n    <p>\n      \u7CFB\u7EDF\u75314\u4E2A\u89C6\u56FE\u548C1\u4E2A\u5DE5\u5177\u8FB9\u680F\u7EC4\u6210\uFF0C\u5730\u56FE\u89C6\u56FE\u663E\u793A\u6570\u636E\u7684\u5730\u7406\u5206\u5E03\uFF0C\u4E09\u7EF4\u89C6\u56FE\u663E\u793A\u6570\u636E\u964D\u7EF4\u7684\u8FC7\u7A0B\u548C\u7ED3\u679C\uFF0C\u5E73\u884C\u5750\u6807\u89C6\u56FE\u663E\u793A\u6570\u636E\u5728\u5404\u4E2A\u7EF4\u5EA6\u7684\u5206\u5E03\uFF0C\u65F6\u95F4\u89C6\u56FE\u663E\u793A\u6570\u636E\u5728\u65F6\u95F4\u4E0A\u7684\u5206\u5E03\u3002\n    </p>\n    <p>\n      \u8FD94\u4E2A\u89C6\u56FE\u662F\u8054\u52A8\u7684\uFF0C\u9F20\u6807\u7684\u9009\u4E2D\uFF0C\u6D6E\u52A8\uFF0C\u5237\u53D6\u7B49\u64CD\u4F5C\u4F1A\u5728\u5176\u4ED6\u89C6\u56FE\u4E2D\u770B\u5230\u5BF9\u5E94\u7684\u6548\u679C\u3002\u9009\u4E2D\u7684\u70B9\u7684\u8BE6\u7EC6\u4FE1\u606F\u4E5F\u4F1A\u663E\u793A\u5728\u8FB9\u680F\u7684\u8868\u683C\u4E2D\uFF0C\u8868\u683C\u662F\u5426\u53EF\u4EE5\u5C55\u5F00\u5728\u5934\u90E8\u8FDB\u884C\u8BBE\u7F6E\u3002\n    </p>\n    <p>\n      \u5DE5\u5177\u680F\u53EF\u4EE5\u914D\u7F6E\u964D\u7EF4\u7B97\u6CD5\u7684\u53C2\u6570\uFF0C\u4EE5\u53CA\u5728\u4E09\u7EF4\u89C6\u56FE\u4E2D\u9009\u62E9\u4E00\u4E2A\u70B9\u4F1A\u627E\u51FA\u4ED6\u7684\u51E0\u4E2A\u90BB\u5C45\u3002\u70B9\u51FBbegin\u5F00\u59CB\u964D\u7EF4\u7684\u8FC7\u7A0B\uFF0C\u964D\u7EF4\u7B97\u6CD5\u4F7F\u7528t-SNE\u3002\n    </p>\n    <p>\u5982\u679C\u4F60\u8981\u53EF\u89C6\u5316\u81EA\u5DF1\u7684\u6570\u636E\uFF0C\u4F60\u53EF\u4EE5\u5728\u5934\u90E8\u9009\u62E9\u5BFC\u5165\u539F\u59CB\u6570\u636E\u5E76\u5728\u672C\u7CFB\u7EDF\u4E2D\u8FDB\u884C\u964D\u7EF4\u5E76\u89C2\u5BDF\u964D\u7EF4\u7684\u8FC7\u7A0B\uFF0C\u4E5F\u53EF\u4EE5\u76F4\u63A5\u5BFC\u5165\u964D\u7EF4\u5B8C\u6210\u7684\u6570\u636E\u3002</p>\n    <h4>\u539F\u59CB\u6570\u636E\u9700\u6EE1\u8DB3\u4EE5\u4E0B\u683C\u5F0F\uFF1A</h4>\n    <p>CSV\u683C\u5F0F\u6587\u4EF6\uFF0C\u7B2C\u4E00\u5217\u662F\u6570\u636E\u7F16\u53F7\uFF0C\u7B2C\u4E8C\u5217\u662FGPS\u7EAC\u5EA6\uFF0C\u7B2C\u4E09\u5217\u662FGPS\u7ECF\u5EA6\uFF0C\u7B2C\u56DB\u5217\u662F\u65F6\u95F4\uFF0C\u5269\u4F59\u5217\u662F\u9AD8\u7EF4\u6570\u636E\u3002\u9AD8\u7EF4\u6570\u636E\u5E94\u90FD\u662F\u6570\u503C\u3002</p>\n    <h4>\u964D\u7EF4\u5B8C\u6210\u7684\u6570\u636E\u9700\u6EE1\u8DB3\u4EE5\u4E0B\u683C\u5F0F\uFF1A</h4>\n    <p>CSV\u683C\u5F0F\u6587\u4EF6\uFF0C\u7B2C\u4E00\u5217\u662F\u6570\u636E\u7F16\u53F7\uFF0C\u7B2C\u4E8C\u5217\u662FGPS\u7EAC\u5EA6\uFF0C\u7B2C\u4E09\u5217\u662FGPS\u7ECF\u5EA6\uFF0C\u7B2C\u56DB\u5217\u662F\u65F6\u95F4\uFF0C\u7B2C\u4E94-\u4E03\u5217\u662F\u964D\u7EF4\u52303\u7EF4\u7684\u6570\u636E\uFF0C\u5269\u4F59\u5217\u662F\u539F\u59CB\u9AD8\u7EF4\u6570\u636E\u3002\u9AD8\u7EF4\u6570\u636E\u5E94\u90FD\u662F\u6570\u503C\u3002</p>\n";
+exports.default = a;
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45708,7 +45734,7 @@ var BMapLib = window.BMapLib;// = BMapLib || {};
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -46184,7 +46210,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 // create main global object
@@ -46565,13 +46591,13 @@ var tsnejs = tsnejs || { REVISION: 'ALPHA' };
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sHDgwCEMBJZu0AAAAdaVRYdENvbW1lbnQAAAAAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAABM5JREFUWMO1V0tPG2cUPZ4Hxh6DazIOrjFNqJs0FIMqWFgWQkatsmvVbtggKlSVRVf5AWz4AWz4AUSKEChll19QJYSXkECuhFxsHjEhxCYm+DWGMZ5HF72DJq4bAzFXurI0M/I5997v3u9cC65vTJVn2lX/xHINQOYSBLTLEuIuCWw4Z3IGAEvf6ASmVHjNzHCXBG4A0AjACsAOwEbO0nsFQBnAGYASAIl+ZRMR7SolMEdsByD09fV5R0ZGgg8ePPjW5/N1iqLYpuu6RZblciKR2I9Go69evnwZnZ+fjwI4IS8AKBIRzeQfJWCANwKwh0KhtrGxsYehUOin1tbW+zzP23ietzY2NnIAoGmaLsuyUiqVyvl8XtrY2NiamZn589mzZxsAUgCOAeQAnFI2tI+VxIjaAeDzoaGh7xYWFuZOTk6OZVk+12uYqqq6JEnn0Wg0OT4+/geAXwGEAdwDIFJQXC1wO4DWR48e/RCPxxclSSroVzRFUbSDg4P848ePFwH8DuAhkWih83TRQWxFOXgAwvDwcOfo6OhvXV1d39tsNtuVBwTDWBwOh1UUxVsMw1hXVlbSdCgNV43uYSvrHg6H24aHh38eHBz85TrgF9FYLHA4HLzH43FvbW2d7u/vG+dANp8FpqIlbd3d3V8Fg8EfBUFw4BONZVmL3+9vHhkZCQL4AoAHgJPK8G+yzC0XDofdoVAo5PP5vkadTBAEtr+/39ff3x8gAp/RPOEqx2qjx+NpvXv3bk9DQ0NDvQgwDIOWlhZrMBj8kgi0UJdxRgYMArzL5XJ7vd57qLPZ7Xamp6fnNgBXtQxcjFuHw+Hyer3t9SYgCAITCAScAJoBNNEY/08GOFVVrfVMv7kMNDntFD1vjIAPrlRN0xjckOm6biFQ3jwNPwDMZrOnqVTqfb3Bi8Wivru7W/VCYkwPlKOjo0IikXh7EwQikYgE4Nw0CfXKDCipVCoTj8df3QABbW1tLUc6oUgkFPMkVACUNjc337148eKvw8PDbJ2jP1taWkoCyNDVXDSECmNSK4qiKNLq6urW8+fPI/UicHx8rD59+jSVy+WOAKSJhKENwFItLtoxk8mwsixzHR0dHe3t7c5PAU+n09rs7OzJkydPYqVSaQfANoDXALIk31S2smU1TWMPDg7K5XKZ7+3t9TudTut1U7+wsFCcmJiIpdPpbQBxADsAknQWymYCOukBHYCuKApisdhpMpnURFEU79y503TVyKenpzOTk5M7e3t7MQKPV0Zv1gNm+awB0MvlshqLxfLb29uyJElWURSbXC4XXyvqxcXFs6mpqeTc3Nzu3t7e3wQcA7BPZ8Cov1pNlJplmQtAG8MwHV6v95tAINA5MDBwPxAIuLu6upr8fr/VAN3c3JQjkcjZ+vp6fnl5+d2bN29SuVzuNYAEpf01CdRChUL+X1VskHACuA3Ay3Fcu9vt7nA6nZ7m5uYWQRCaNE3jVVW15PP580KhIGUymWw2m00DOAJwSP4WwPtq4LX2Ao6USxNlQyS/RcQcdLGwlNIz6vEMAaZpNzCk2Pll94LK/cDYimxERiBwG10sxjgvEZBE0UpE6vxj+0Ct5bTaXthgEhRmja8QWNkkPGsuIpfdjpkK+cZUWTC0KredVmtD/gdlSl6EG4AMvQAAAABJRU5ErkJggg=="
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46580,6 +46606,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABz
 var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
+
+var _tips = __webpack_require__(11);
+
+var _tips2 = _interopRequireDefault(_tips);
 
 __webpack_require__(4);
 
@@ -46619,10 +46649,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Created by exialym on 2017/2/6.
- */
-window.relatedPointsNum = 100;
+window.relatedPointsNum = 100; /**
+                                * Created by exialym on 2017/2/6.
+                                */
+
 window.threepositions = new Float32Array([]);
 window.beginTSNE = 0; //0:停止；1：进行；2：暂停
 window.rawData = exampleRaw.data;
@@ -46642,6 +46672,7 @@ $(document).ready(function () {
   var $embeddingData = $('#embeddingData');
   var $clearFile = $('#clearFile');
   var $DataSourceLabel = $('#DataSourceLabel');
+  var $help = $('#help');
 
   //utils.showWaitingModel('shown.bs.modal', 'Please Use Chrome or Firefox for better experience!', 'Warning');
   //utils.showWaitingModel('shown.bs.modal', 'Use Chrome or Firefox for better experience!', 'Processing');
@@ -46738,7 +46769,7 @@ $(document).ready(function () {
             mapView.initPoints();
             parallelView.init(window.rawData);
             threeDFigure.showEmbedding();
-            dataView.changeDataList([]);
+
             timeView.init();
             window.beginTSNE = 0;
             $DataSourceLabel.html('Embedding:' + file.name);
@@ -46747,6 +46778,7 @@ $(document).ready(function () {
             document.getElementById('tSNEState').innerHTML = '';
             _utils2.default.switchMod('OK');
             _utils2.default.changeWaitingTips('Success, You Can Use Your File Now.');
+            dataView.changeDataList([]);
           } else {
             _utils2.default.switchMod('Warning');
             _utils2.default.changeWaitingTips(res.error);
@@ -46778,7 +46810,7 @@ $(document).ready(function () {
             window.colName = res.colName;
             mapView.initPoints();
             parallelView.init(window.rawData);
-            dataView.changeDataList([]);
+
             timeView.init();
             $(".sne").show();
             window.beginTSNE = 0;
@@ -46788,6 +46820,7 @@ $(document).ready(function () {
             $beginTSNE.removeAttr('disabled');
             _utils2.default.switchMod('OK');
             _utils2.default.changeWaitingTips('Success, You Can Use Your File Now.');
+            dataView.changeDataList([]);
           } else {
             _utils2.default.switchMod('Warning');
             _utils2.default.changeWaitingTips(res.error);
@@ -46811,13 +46844,19 @@ $(document).ready(function () {
     window.date = exampleRaw.date;
     window.gps = exampleRaw.gps;
     parallelView.init(window.rawData);
+    threeDFigure.init();
     mapView.initPoints();
-    dataView.changeDataList([]);
+
+    timeView.init();
     $(".sne").show();
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');
     document.getElementById('tSNEState').innerHTML = '';
+    dataView.changeDataList([]);
+  });
+  $help.bind('click', function () {
+    _utils2.default.showWaitingModel('', _tips2.default, 'tips');
   });
   // $Datas.on('mouseenter','li',function(e){
   //   if (e.target.dataset.index) {

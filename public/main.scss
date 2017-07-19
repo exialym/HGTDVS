@@ -104,10 +104,9 @@ body {
   position: relative;
 }
 #wait {
-  //.modal-dialog {
-  //  position: relative;
-  //  top:40%;
-  //}
+  .modal-dialog {
+    //width:1000px;
+  }
   .modal-body{
     overflow: hidden;
     div {

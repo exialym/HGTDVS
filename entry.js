@@ -2,6 +2,7 @@
  * Created by exialym on 2017/2/6.
  */
 import utils from './modules/utils'
+import tips from './modules/tips'
 
 import './lib/three/TrackballControls'
 import eventDispatcher from './modules/event'
@@ -37,6 +38,7 @@ $(document).ready(function () {
   let $embeddingData = $('#embeddingData');
   let $clearFile = $('#clearFile');
   let $DataSourceLabel = $('#DataSourceLabel');
+  let $help = $('#help');
 
 
 
@@ -138,7 +140,7 @@ $(document).ready(function () {
             mapView.initPoints();
             parallelView.init(window.rawData);
             threeDFigure.showEmbedding();
-            dataView.changeDataList([]);
+
             timeView.init();
             window.beginTSNE = 0;
             $DataSourceLabel.html('Embedding:' + file.name);
@@ -147,6 +149,7 @@ $(document).ready(function () {
             document.getElementById( 'tSNEState' ).innerHTML = '';
             utils.switchMod('OK');
             utils.changeWaitingTips('Success, You Can Use Your File Now.');
+              dataView.changeDataList([]);
           } else {
             utils.switchMod('Warning');
             utils.changeWaitingTips(res.error);
@@ -178,7 +181,7 @@ $(document).ready(function () {
             window.colName  = res.colName;
             mapView.initPoints();
             parallelView.init(window.rawData);
-            dataView.changeDataList([]);
+
             timeView.init();
             $(".sne").show();
             window.beginTSNE = 0;
@@ -188,6 +191,7 @@ $(document).ready(function () {
             $beginTSNE.removeAttr('disabled');
             utils.switchMod('OK');
             utils.changeWaitingTips('Success, You Can Use Your File Now.');
+            dataView.changeDataList([]);
           } else {
             utils.switchMod('Warning');
             utils.changeWaitingTips(res.error);
@@ -211,13 +215,19 @@ $(document).ready(function () {
     window.date = exampleRaw.date;
     window.gps = exampleRaw.gps;
     parallelView.init(window.rawData);
+    threeDFigure.init();
     mapView.initPoints();
-    dataView.changeDataList([]);
+
+    timeView.init();
     $(".sne").show();
     $DataSourceLabel.html('Source:example data');
     $beginTSNE.html('begin');
     $beginTSNE.removeAttr('disabled');
     document.getElementById( 'tSNEState' ).innerHTML = '';
+      dataView.changeDataList([]);
+  });
+  $help.bind('click',function () {
+      utils.showWaitingModel('',tips,'tips')
   });
   // $Datas.on('mouseenter','li',function(e){
   //   if (e.target.dataset.index) {
