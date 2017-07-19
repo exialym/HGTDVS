@@ -2,7 +2,7 @@ let a = `
     <h4>简介</h4>
     <p>这是一个高维时空数据可视化系统，如果你的高维数据同时具有时间，空间信息，可以利用这个系统可视化你的数据。这个系统内置了数据降维模块，最大限度的利用三维空间展示高维数据间的关系，结合各个不同的视图，帮助你在数据中找到潜在的关系和模式。</p>
     <p>Demo数据是美国2000年-2016年的各地空气污染物组成（按年统计）。</p>
-    <p>降维完成的数据文件Demo：<a href="https://github.com/exialym/HGTDVS/blob/master/pollution_data_withGPS_filled_combined_month_embedding.csv">美国2000年-2016年的各地空气污染物组成（按月统计）</a>，数据规模比较大，下载下来后点击choose embedding file按钮导入。</p>
+    <p>降维完成的数据文件Demo：<a target="_blank" href="https://github.com/exialym/HGTDVS/blob/master/pollution_data_withGPS_filled_combined_month_embedding.csv">美国2000年-2016年的各地空气污染物组成（按月统计）</a>，数据规模比较大，下载下来后点击choose embedding file按钮导入。</p>
     <h4>如何操作</h4>
     <p>
       系统由4个视图和1个工具边栏组成，地图视图显示数据的地理分布，三维视图显示数据降维的过程和结果，平行坐标视图显示数据在各个维度的分布，时间视图显示数据在时间上的分布。
