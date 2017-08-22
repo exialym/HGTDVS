@@ -572,6 +572,220 @@ public class BHTSne implements BarnesHutTSne {
 			}
 		}
 	}
+//	// Compute input similarities with Rank-order distance using ball trees
+//	void computeGaussianPerplexityWithRankorder(double [] X, int N, int D, int [] _row_P, int [] _col_P, double [] _val_P, double perplexity, int K) {
+//		if(perplexity > K) System.out.println("Perplexity should be lower than K!");
+//
+//		// Allocate the memory we need
+//		/**_row_P = (int*)    malloc((N + 1) * sizeof(int));
+//		 *_col_P = (int*)    calloc(N * K, sizeof(int));
+//		 *_val_P = (double*) calloc(N * K, sizeof(double));
+//		 if(*_row_P == null || *_col_P == null || *_val_P == null) { Rcpp::stop("Memory allocation failed!\n"); }*/
+//		int [] row_P = _row_P;
+//		int [] col_P = _col_P;
+//		double [] val_P = _val_P;
+//		double [] cur_P = new double[N - 1];
+//
+//		row_P[0] = 0;
+//		for(int n = 0; n < N; n++) row_P[n + 1] = row_P[n] + K;
+//
+//		// 初始化一个VP树，传入自定义的距离，这里是欧拉距离
+//		VpTree<DataPoint> tree = new VpTree<DataPoint>(distance);
+//		//DataPoint是一个保存数据点的结构，包括：数据点在所有点中的索引，维数，具体的坐标数组。
+//		final DataPoint [] obj_X = new DataPoint [N];
+//		//将被拍平的数据转移到DataPoint数组中
+//		for(int n = 0; n < N; n++) {
+//			double [] row = MatrixOps.extractRowFromFlatMatrix(X,n,D);
+//			obj_X[n] = new DataPoint(D, n, row);
+//		}
+//		//构建VP树
+//		tree.create(obj_X);
+//
+//		// VERIFIED THAT TREES LOOK THE SAME
+//		//System.out.println("Created Tree is: ");
+//		//			AdditionalInfoProvider pp = new AdditionalInfoProvider() {
+//		//				@Override
+//		//				public String provideInfo(Node node) {
+//		//					return "" + obj_X[node.index].index();
+//		//				}
+//		//			};
+//		//			TreePrinter printer = new TreePrinter(pp);
+//		//			printer.printTreeHorizontal(tree.getRoot());
+//
+//		// Loop over all points to find nearest neighbors
+//		System.out.println("Building tree...");
+//		//遍历所有点，将所有点的K邻居信息保存起来
+//		List<List<DataPoint>> neighborPoints = new ArrayList<>();
+//		List<List<DistantRecord>> neighborDistance = new ArrayList<>();
+//		for(int n = 0; n < N; n++) {
+//			List<DataPoint> indices = new ArrayList<>();
+//			List<Double> distances = new ArrayList<>();
+//			List<DistantRecord> distantRecords = new ArrayList<>();
+//			tree.search(obj_X[n], K + 1, indices, distances);
+//			neighborPoints.add(indices);
+//			for (int i = 0; i < distances.size();i++) {
+//				distantRecords.add(new DistantRecord(distances.get(i)));
+//			}
+//
+//			neighborDistance.add(distantRecords);
+//		}
+//
+//		//遍历所有点
+//		for(int n = 0; n < N; n++) {
+//
+//			List<DataPoint> indices = neighborPoints.get(n);
+//			List<DistantRecord> distances = neighborDistance.get(n);
+//
+//			if(n % 10000 == 0) System.out.printf(" - point %d of %d\n", n, N);
+//			for (int k1 = 0; k1 <= K; k1++) {
+//				if (indices.get(k1).index()==n) continue;
+//				if (distances.get(k1).hasComputed()>0) continue;
+//				boolean[] nsUsedRecord = new boolean[K+1];
+//				List<DataPoint> nsn = neighborPoints.get(indices.get(k1).index());
+//				List<DistantRecord> nsdis = neighborDistance.get(indices.get(k1).index());
+//				double Dab = 0;
+//				double Dba = 0;
+//				double Oa = 0;
+//				double Ob = 0;
+//				for (int indexInself = 0; indexInself<=K;indexInself++) {
+//					boolean hasfound = false;
+//					for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
+//						if (indices.get(indexInself).index()==nsn.get(indexInNeb).index()) {
+//							if (indices.get(indexInself).index()==n) Oa=indexInNeb;
+//							if (nsn.get(indexInNeb).index()==indices.get(k1).index()) Ob=indexInself;
+//							nsUsedRecord[indexInNeb] = true;
+//							//Dab += (double)indexInNeb*(K+1-indexInself)/K;
+//							//Dba += (double)indexInself*(K+1-indexInNeb)/K;
+//
+//							Dab += (double)indexInNeb*Math.pow(1.03,-indexInself);
+//							Dba += (double)indexInself*Math.pow(1.03,-indexInNeb);
+//
+//							hasfound = true;
+//							break;
+//						}
+//					}
+//					if (!hasfound) {
+//
+//						//Dab += (double)(K+1)*(K+1-indexInself)/K;
+//
+//
+//						Dab += (double)(K+1)*Math.pow(1.03,-indexInself);
+//					}
+//				}
+//				for (int i = 0;i<=K;i++) {
+//					if (!nsUsedRecord[i])
+//						//Dba += (double)(K+1)*(K+1-i)/K;
+//
+//						Dba += (double)(K+1)*Math.pow(1.03,-i);
+//
+//				}
+//				if (Oa==0) Oa=K;
+//				if (Ob==0) Ob=K;
+//				double Omin = Math.min(Oa,Ob);
+//				double Rd = (Dab+Dba);
+////				double RdNom = Math.exp(Rd);
+//				double RdNom = Rd;
+//				distances.get(k1)._rDistant = Rd;
+//
+//
+//				//distances.get(k1)._distant = distances.get(k1)._distant*RdNom;
+////				System.out.print(RdNom+"\n");
+//				distances.get(k1).computed();
+////				if (distances.get(k1)._hasUpdated>2)
+////					System.out.print(" ");
+//				for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
+//					if (n==nsn.get(indexInNeb).index()) {
+//						//nsdis.get(indexInNeb)._distant = nsdis.get(indexInNeb)._distant*RdNom;
+//						nsdis.get(indexInNeb)._rDistant = Rd;
+//						nsdis.get(indexInNeb).computed();
+////						if (nsdis.get(indexInNeb)._hasUpdated>2)
+////							System.out.print(" ");
+//						break;
+//					}
+//				}
+//			}
+//			double avgRD = 0;
+//			for(int m = 0; m < K; m++) {
+//				avgRD += distances.get(m + 1)._rDistant;
+//			}
+//			avgRD/=K;
+//			for(int m = 0; m < K; m++) {
+//				double nom = distances.get(m + 1)._rDistant/avgRD;
+//				if (nom>1) {
+//					//System.out.print(nom+"\n");
+//					distances.get(m + 1)._rDistant = distances.get(m + 1)._distant*nom;
+//				} else {
+//					distances.get(m + 1)._rDistant = distances.get(m + 1)._distant;
+//				}
+//
+//			}
+////			System.out.print("-----------------------------\n");
+//
+//
+//
+//			//System.out.println("Looking at: " + obj_X.get(n).index());
+//			//找出当前点的K临近点和当前点与它们的距离，分别存在数组indices, distances
+////			tree.search(obj_X[n], K + 1, indices, distances);
+//
+//			// Initialize some variables for binary search
+//			//对于每一个点使用二分法找到符合设置的perplexity的那个theta值
+//			boolean found = false;
+//			double beta = 1.0;
+//			double min_beta = -Double.MAX_VALUE;
+//			double max_beta =  Double.MAX_VALUE;
+//			double tol = 1e-5;
+//
+//			// Iterate until we found a good perplexity
+//			int iter = 0;
+//			double sum_P = 0.;
+//			while(!found && iter < 200) {
+//
+//				// Compute Gaussian kernel row and entropy of current row
+//				sum_P = Double.MIN_VALUE;
+//				double H = .0;
+//				for(int m = 0; m < K; m++) {
+//					cur_P[m] = exp(-beta * distances.get(m + 1)._rDistant);
+//					sum_P += cur_P[m];
+//					H += beta * (distances.get(m + 1)._rDistant * cur_P[m]);
+//				}
+//				H = (H / sum_P) + log(sum_P);
+//
+//				// Evaluate whether the entropy is within the tolerance level
+//				double Hdiff = H - log(perplexity);
+//				if(Hdiff < tol && -Hdiff < tol) {
+//					found = true;
+//				}
+//				else {
+//					if(Hdiff > 0) {
+//						min_beta = beta;
+//						if(max_beta == Double.MAX_VALUE || max_beta == -Double.MAX_VALUE)
+//							beta *= 2.0;
+//						else
+//							beta = (beta + max_beta) / 2.0;
+//					}
+//					else {
+//						max_beta = beta;
+//						if(min_beta == -Double.MAX_VALUE || min_beta == Double.MAX_VALUE)
+//							beta /= 2.0;
+//						else
+//							beta = (beta + min_beta) / 2.0;
+//					}
+//				}
+//
+//				// Update iteration counter
+//				iter++;
+//			}
+//
+//			// Row-normalize current row of P and store in matrix
+//			for(int m = 0; m < K; m++) {
+//				cur_P[m] /= sum_P;
+//				col_P[row_P[n] + m] = indices.get(m + 1).index();
+//				val_P[row_P[n] + m] = cur_P[m];
+//			}
+//		}
+//		System.out.print("");
+//	}
+
 	// Compute input similarities with Rank-order distance using ball trees
 	void computeGaussianPerplexityWithRankorder(double [] X, int N, int D, int [] _row_P, int [] _col_P, double [] _val_P, double perplexity, int K) {
 		if(perplexity > K) System.out.println("Perplexity should be lower than K!");
@@ -645,20 +859,29 @@ public class BHTSne implements BarnesHutTSne {
 				List<DistantRecord> nsdis = neighborDistance.get(indices.get(k1).index());
 				double Dab = 0;
 				double Dba = 0;
-				double Oa = 0;
-				double Ob = 0;
-				for (int indexInself = 0; indexInself<=K;indexInself++) {
+				double Oa = K;
+				double Ob = K;
+				for (int i = 0; i<=K;i++) {
+					if (indices.get(0).index()==nsn.get(i).index()) {
+						Oa = i;
+						break;
+					}
+				}
+				for (int i = 0; i<=K;i++) {
+					if (indices.get(i).index()==nsn.get(0).index()) {
+						Ob = i;
+						break;
+					}
+				}
+				for (int indexInself = 0; indexInself <= Ob;indexInself++) {
 					boolean hasfound = false;
 					for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
 						if (indices.get(indexInself).index()==nsn.get(indexInNeb).index()) {
-							if (indices.get(indexInself).index()==n) Oa=indexInNeb;
-							if (nsn.get(indexInNeb).index()==indices.get(k1).index()) Ob=indexInself;
-							nsUsedRecord[indexInNeb] = true;
-							//Dab += (double)indexInNeb*(K+1-indexInself)/K;
-							//Dba += (double)indexInself*(K+1-indexInNeb)/K;
 
-							Dab += (double)indexInNeb*Math.pow(1.03,-indexInself);
-							Dba += (double)indexInself*Math.pow(1.03,-indexInNeb);
+							Dab += (double)indexInNeb;
+							if (indexInNeb<=Oa) {
+								Dba += (double)indexInself;
+							}
 
 							hasfound = true;
 							break;
@@ -669,20 +892,31 @@ public class BHTSne implements BarnesHutTSne {
 						//Dab += (double)(K+1)*(K+1-indexInself)/K;
 
 
-						Dab += (double)(K+1)*Math.pow(1.03,-indexInself);
+						Dab += (double)(K+1);
 					}
 				}
-				for (int i = 0;i<=K;i++) {
-					if (!nsUsedRecord[i])
-						//Dba += (double)(K+1)*(K+1-i)/K;
+				for (int indexInself = 0; indexInself <= Oa;indexInself++) {
+					boolean hasfound = false;
+					for (int indexInNeb = 0; indexInNeb <= K; indexInNeb++) {
+						if (nsn.get(indexInself).index()==indices.get(indexInNeb).index()) {
 
-						Dba += (double)(K+1)*Math.pow(1.03,-i);
+							Dba += (double)indexInself;
 
+							hasfound = true;
+							break;
+						}
+					}
+					if (!hasfound) {
+
+						//Dab += (double)(K+1)*(K+1-indexInself)/K;
+
+
+						Dba += (double)(K+1);
+					}
 				}
-				if (Oa==0) Oa=K;
-				if (Ob==0) Ob=K;
+
 				double Omin = Math.min(Oa,Ob);
-				double Rd = (Dab+Dba);
+				double Rd = (Dab+Dba)/Omin;
 //				double RdNom = Math.exp(Rd);
 				double RdNom = Rd;
 				distances.get(k1)._rDistant = Rd;
