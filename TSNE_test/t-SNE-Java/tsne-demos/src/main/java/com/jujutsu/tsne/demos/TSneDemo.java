@@ -35,8 +35,8 @@ public class TSneDemo {
 	
 	static double perplexity = 20.0;
 	private static int initial_dims = 50;
-    //private static String basePath = "E:/Git/HGTDVS/";
-    private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
+    private static String basePath = "E:/Git/HGTDVS/";
+    //private static String basePath = "/Users/exialym/Desktop/Git/HGTDVS/";
     //private static String dataPath = "/Users/exialym/Desktop/uspollution/";
     private static String dataPath = "E:/uspollution/";
     private static String path = basePath + "TSNE_test/t-SNE-Java/tsne-demos/src/main/resources/datasets/";
@@ -68,7 +68,7 @@ public class TSneDemo {
             double[] tempKNNresult = new double[KNNNum+1];
             ArrayList<double[]> tempfinalKNNResult = new ArrayList<double[]>();
             for (int j = 0; j < repeatNum;j++) {
-                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "  ");
+                double [][] X = MatrixUtils.simpleRead2DMatrix(new File(dataFile), "\t");
                 BarnesHutTSne tsne;
                 boolean parallel = false;
                 if(parallel) {
@@ -257,17 +257,17 @@ public class TSneDemo {
 //        String savePath = "COIL-20_noPCA_withRank_2_P20_1times_V9(V7)/";
 //        String type = "COIL-20";
 
-        String type = "MNIST_2500";
+        String type = "wine";
         String fileName = basePath + "TSNE_test/data/"+type+"/"+type+".txt";
         String LabelName = basePath + "TSNE_test/data/"+type+"/"+type+"_label.txt";
-        String savePath = type+"_withPCA_withRank_2_P20_O_test_avg/";
+        String savePath = type+"_withPCA_withRank_2_P20_O_50times/";
 
 
         //double[] fArr = {2.0,0.99,0.95,0.90,0.85,0.80,0.75,0.70,0.65,0.60,0.55,0.50};
         //double[] fArr = {2.0,0.90,0.80,0.70,0.60,0.50};
         double[] fArr = {2.0};
 
-        test_workflow(type,fileName,LabelName,savePath,true,true, fArr,20000,55,20.0,100, 5);
+        test_workflow(type,fileName,LabelName,savePath,true,true, fArr,20000,55,20.0,100, 50);
 
 
         //calculate_air_pollution(true,100.0,false,500000,0.5,2,dataPath+"pollution_data_withGPS_filled_combined_month_raw.csv");
